@@ -4,8 +4,8 @@
     </description>
 
     <target name="copyAssets">
-        <echo message="Copying ../Shared/media/**/* to ${OutputPath}/media"/>
-        <copy todir="${OutputPath}/media" overwrite="false">
+        <echo message="Copying ../Shared/media/**/* to ../out/production/Mobile/media"/>
+        <copy todir="../out/production/Mobile/media" overwrite="true">
             <fileset dir="../Shared/media">
                 <include name="**/*" />
             </fileset>

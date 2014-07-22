@@ -4,15 +4,23 @@ import citrus.core.starling.StarlingCitrusEngine;
 import citrus.core.starling.ViewportMode;
 
 import flash.events.Event;
-import flash.filesystem.File;
 import flash.geom.Rectangle;
+import flash.utils.getTimer;
+
+import starling.utils.AssetManager;
 
 public class Startup extends StarlingCitrusEngine {
     private var viewPort:Rectangle = new Rectangle();
+    private var scale:Number;
+    private var startTime:Number;
+    private var debug:Boolean;
 
     public function Startup() {
+        startTime = getTimer();
         super();
 
+        debug = true;
+        scale = 2;
         _viewportMode = ViewportMode.MANUAL;
 
         stage.color = 0xEEEEFF;
@@ -21,23 +29,44 @@ public class Startup extends StarlingCitrusEngine {
         trace("**************************************************");
         Constants.getDeviceInfo();
         trace("(" + stage.stageWidth + ", " + stage.stageHeight + ") full(" + stage.fullScreenWidth + ", " + stage.fullScreenHeight + ")");
-        trace("Working Directory[" + File.applicationDirectory.nativePath + "]");
         trace("**************************************************");
     }
 
     override public function initialize():void {
         super.initialize();
-        setUpStarling(true);
+        setUpStarling(debug);
     }
 
     override public function handleStarlingReady():void {
         super.handleStarlingReady();
 
         setupView();
-
+        initializeAssets(scale);
+        loadAssets();
         state = new GameState();
 
         stage.addEventListener(Event.RESIZE, handleResize1);
+    }
+
+    protected function initializeAssets(scale:Number):void {
+        Assets.assets = new AssetManager(scale);
+        Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.fnt");
+        Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.png");
+    }
+
+    protected function loadAssets():void {
+        Assets.assets.verbose = debug;
+        Assets.assets.loadQueue(function(ratio:Number):void {
+            if(ratio == 1) loadingComplete();
+        });
+    }
+
+    protected function loadingComplete():void {
+        var diff:Number = (getTimer() - startTime) / 1000;
+        diff = int(diff * 1000) / 1000;
+        trace("Assets Loaded in " + diff + " seconds");
+
+        state = new GameState();
     }
 
     private function setupView():void {
@@ -72,7 +101,7 @@ public class Startup extends StarlingCitrusEngine {
     }
 
     private function handleResize1(event:Event):void {
-        trace("RESIZE (" + stage.stageWidth + ", " + stage.stageHeight + ") Orient[" + this.stage.deviceOrientation + "] target[" + event.target + "] currTar[" + event.currentTarget + "] " + event);
+        trace("RESIZE (" + stage.stageWidth + ", " + stage.stageHeight + ") target[" + event.target + "] currTar[" + event.currentTarget + "] " + event);
         setupView();
     }
 }

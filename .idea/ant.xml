@@ -3,15 +3,9 @@
   <component name="AntConfiguration">
     <buildFile url="file://$PROJECT_DIR$/Desktop/build.xml">
       <customJdkName value="Java 1.7 JDK" />
-      <properties>
-        <property name="OutputPath" value="$OutputPath$" />
-      </properties>
     </buildFile>
     <buildFile url="file://$PROJECT_DIR$/Mobile/build.xml">
       <customJdkName value="Java 1.7 JDK" />
-      <properties>
-        <property name="OutputPath" value="$OutputPath$" />
-      </properties>
     </buildFile>
   </component>
 </project>

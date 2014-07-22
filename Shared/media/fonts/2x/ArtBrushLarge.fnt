@@ -1,8 +1,8 @@
 <font>
-  <info face="ArtBrush72" size="72" bold="0" italic="0" charset="" unicode="" stretchH="100" smooth="1" aa="1" padding="2,2,2,2" spacing="0,0" outline="0"/>
+  <info face="ArtBrushLarge" size="72" bold="0" italic="0" charset="" unicode="" stretchH="100" smooth="1" aa="1" padding="2,2,2,2" spacing="0,0" outline="0"/>
   <common lineHeight="78" base="59" scaleW="512" scaleH="512" pages="1" packed="0"/>
   <pages>
-    <page id="0" file="ArtBrush72.png"/>
+    <page id="0" file="ArtBrushLarge.png"/>
   </pages>
   <chars count="84">
     <char id="97" x="2" y="2" width="41" height="40" xoffset="-1" yoffset="27" xadvance="31" page="0" chnl="15"/>
