@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="iOS">
+    <configurations>
+      <configuration name="iOS" target-platform="Mobile" pure-as="true" main-class="MobileStartup" output-file="iOS.swf" output-folder="$MODULE_DIR$/../out/production/Mobile">
+        <dependencies target-player="11.9">
+          <entries>
+            <entry module-name="Shared" build-configuration-name="Shared">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="Adobe Air 14.0 SDK" />
+        </dependencies>
+        <compiler-options>
+          <option name="additionalOptions" value="-inline" />
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Mobile-app.xml" package-file-name="Mobile" />
+        <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/iOS-app.xml" package-file-name="Mobile">
+          <files-to-package>
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media/system" path-in-package="." />
+          </files-to-package>
+          <AirSigningOptions adt-options="-useLegacyAOT no" keystore-path="$MODULE_DIR$/../../../iOS Developer: David Payt.p12" provisioning-profile-path="$MODULE_DIR$/../../../iOS_Team_Provisioning_Profile_-2.mobileprovision" />
+        </packaging-ios>
+      </configuration>
+      <configuration name="Android" target-platform="Mobile" pure-as="true" main-class="MobileStartup" output-file="Android.swf" output-folder="$MODULE_DIR$/../out/production/Mobile">
+        <dependencies>
+          <entries>
+            <entry module-name="Shared" build-configuration-name="Shared">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="Adobe Air 14.0 SDK" />
+        </dependencies>
+        <compiler-options>
+          <option name="additionalOptions" value="-inline" />
+        </compiler-options>
+        <packaging-air-desktop />
+        <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Android-app.xml" package-file-name="Android" />
+        <packaging-ios package-file-name="Android" />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="Adobe Air 14.0 SDK" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Shared" exported="" />
+  </component>
+</module>
+

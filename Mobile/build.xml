@@ -1,0 +1,15 @@
+<project name="MobileAnt" default="copyAssets" basedir=".">
+    <description>
+        simple example build file
+    </description>
+
+    <target name="copyAssets">
+        <echo message="Copying ../Shared/media/**/* to ${OutputPath}/media"/>
+        <copy todir="${OutputPath}/media" overwrite="false">
+            <fileset dir="../Shared/media">
+                <include name="**/*" />
+            </fileset>
+        </copy>
+    </target>
+
+</project>
