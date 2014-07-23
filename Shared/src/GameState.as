@@ -37,42 +37,30 @@ public class GameState extends StarlingState {
 
         var divisions:int = 3;
         var padding:int = 10;
-        var pixelsPerQuad:int = Math.min(
+        var size:int = Math.min(
                 (stage.stageWidth - 2 * padding) / divisions,
                 (stage.stageHeight - 2 * padding) / divisions);
-        var board:Board = new Board(divisions);
-        board.x = padding;
-        board.y = padding;
-        board.scaleX = pixelsPerQuad;
-        board.scaleY = pixelsPerQuad;
+        var board:Board = new Board(divisions, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        board.pivotX = divisions / 2;
+        board.pivotY = divisions / 2;
+        board.x = stage.stageWidth / 2;
+        board.y = stage.stageHeight / 2;
+        board.scaleX = size;
+        board.scaleY = size;
+
+//        board.x = 50;
+//        board.y = 50;
+//        board.scaleX = 10;
+//        board.scaleY = 10;
+//        board.pivotX = 0;
+//        board.pivotY = 0;
         addChild(board);
 
         var stopwatch:StopwatchSprite;
 
-        stopwatch = new StopwatchSprite(24);
-        stopwatch.x = _ce.stage.stageWidth * 0.75;
-        stopwatch.y = _ce.stage.stageHeight * 0.65;
-        addChild(stopwatch);
-        Starling.juggler.add(stopwatch);
-
-        stopwatch.getStopwatch().start();
-        stopwatch= new StopwatchSprite(36);
-        stopwatch.x = _ce.stage.stageWidth * 0.75;
-        stopwatch.y = _ce.stage.stageHeight * 0.70;
-        addChild(stopwatch);
-        Starling.juggler.add(stopwatch);
-        stopwatch.getStopwatch().start();
-
         stopwatch = new StopwatchSprite(72);
-        stopwatch.x = _ce.stage.stageWidth * 0.75;
-        stopwatch.y = _ce.stage.stageHeight * 0.75;
-        addChild(stopwatch);
-        Starling.juggler.add(stopwatch);
-        stopwatch.getStopwatch().start();
-
-        stopwatch = new StopwatchSprite(92);
-        stopwatch.x = _ce.stage.stageWidth * 0.75;
-        stopwatch.y = _ce.stage.stageHeight * 0.85;
+        stopwatch.x = _ce.stage.stageWidth * 0.5;
+        stopwatch.y = _ce.stage.stageHeight * 0.075;
         addChild(stopwatch);
         Starling.juggler.add(stopwatch);
         stopwatch.getStopwatch().start();
