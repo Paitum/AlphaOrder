@@ -43,7 +43,6 @@ public class Startup extends StarlingCitrusEngine {
         setupView();
         initializeAssets(scale);
         loadAssets();
-        state = new GameState();
 
         stage.addEventListener(Event.RESIZE, handleResize1);
     }
