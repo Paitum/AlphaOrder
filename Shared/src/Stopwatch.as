@@ -30,7 +30,8 @@ public class Stopwatch {
 
     [Inline]
     final public function getAccumulatedTime():uint {
-        return getTimer() - startTime + accumulatedTime;
+        return isRunning ? getTimer() - startTime + accumulatedTime :
+                accumulatedTime;
     }
 }
 }

@@ -11,6 +11,9 @@
             <entry module-name="Shared" build-configuration-name="Shared">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-name="Feathers" library-level="application">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="Adobe Air 14.0 SDK" />
         </dependencies>
@@ -33,6 +36,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Citrus-Engine" level="application" />
     <orderEntry type="module" module-name="Shared" exported="" />
+    <orderEntry type="library" exported="" name="Feathers" level="application" />
   </component>
 </module>
 

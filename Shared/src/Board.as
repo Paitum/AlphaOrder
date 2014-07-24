@@ -1,10 +1,15 @@
 package {
+import feathers.controls.Button;
+
 import flash.geom.Point;
 import flash.utils.Dictionary;
 
 import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
 import starling.text.TextField;
 
 public class Board extends Sprite {
@@ -12,17 +17,26 @@ public class Board extends Sprite {
     private var alphabet:String;
     // Uppercase and Lowercase Text Sprites
     private var letterSprites:Dictionary;
+    protected var nextSolutionPosition:int = 0;
     protected var nextPosition:int = 0;
     // [letter:String] -> position:Point
     private var letterToPosition:Dictionary;
     // [r:int][c:int] -> letter:String
     private var positionToLetter:Vector.<Vector.<String>>;
+    private var mark:Quad;
+    private var callback:Function;
 
     // cache
+    private var touchPoint:Point = new Point();
     private var positionVector:Vector.<Point> = new Vector.<Point>();
-    public function Board(divisions:int, alphabet:String) {
+
+    public static const START:int = 0;
+    public static const FINISH:int = 1;
+
+    public function Board(divisions:int, alphabet:String, callback:Function) {
         this.divisions = divisions;
         this.alphabet = alphabet;
+        this.callback = callback;
 
         letterSprites = new Dictionary();
 
@@ -37,10 +51,16 @@ public class Board extends Sprite {
         addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
     }
 
+    public function stop():void {
+        callback(FINISH);
+    }
+
     public function reset():void {
         nextPosition = 0;
+        nextSolutionPosition = 0;
         clear();
         populateBoard();
+        callback(START);
     }
 
     protected function clear():void {
@@ -84,7 +104,6 @@ trace("clear");
         for(var i:int = 0; i < length; i++) {
             var letter:String = alphabet.charAt(i);
             letterSprites[letter] = new TextField(1, 1, letter, "ArtBrushLarge", 0.9, 0xFFFFFF);
-            trace(letterSprites[letter].textBounds);
             letterSprites[letter].hAlign = "center";
             letterSprites[letter].vAlign = "center";
             letterSprites[letter].pivotX = letterSprites[letter].width / 2;
@@ -95,11 +114,17 @@ trace("clear");
             letterToPosition[letter] = new Point(-1, -1);
         }
 
+        mark = new Quad(0.1, 0.1, 0xFF0000);
+        mark.pivotX = mark.width / 2;
+        mark.pivotY = mark.width / 2;
+        addChild(mark);
+
         populateBoard();
+        addEventListener(TouchEvent.TOUCH, handleTouch);
     }
 
     protected function populateBoard():void {
-        while(hasEmptyPosition()) {
+        while(hasEmptyPosition() && hasNextLetter()) {
             addLetter();
         }
     }
@@ -109,6 +134,11 @@ trace("clear");
 
         if(position != null) {
             var letter:String = getLetter(nextPosition);
+
+            if(letter == null) {
+                return;
+            }
+
             nextPosition++;
 
             letterToPosition[letter].copyFrom(position);
@@ -123,7 +153,7 @@ trace("clear");
 
     protected function getLetter(position:int):String {
         // Natural Order
-        return alphabet.charAt(position);
+        return position >= alphabet.length ? null: alphabet.charAt(position);
     }
 
     protected function getRandomEmptyPosition():Point {
@@ -152,8 +182,58 @@ trace("clear");
         return getRandomEmptyPosition() != null;
     }
 
+    protected function hasNextLetter():Boolean {
+        return nextPosition < alphabet.length;
+    }
+
+    protected function hasNextSolutionLetter():Boolean {
+        return nextSolutionPosition < alphabet.length;
+    }
+
+
     private static function randomColor():uint {
         return uint(Math.random() * 255) << 16 | uint(Math.random() * 255) << 8 | uint(Math.random() * 255);
+    }
+
+    private function positionTouched(point:Point):void {
+        var c:int = int(point.x);
+        var r:int = int(point.y);
+        var letter:String = positionToLetter[c][r];
+
+        if(letter != null) {
+            var correctLetter:String = alphabet.charAt(nextSolutionPosition);
+
+            if(letter == correctLetter) {
+                nextSolutionPosition++;
+                removeChild(letterSprites[letter]);
+                positionToLetter[c][r] = null;
+
+                if(hasNextLetter()) {
+                    addLetter();
+                } else if(!hasNextSolutionLetter()) {
+                    callback(FINISH);
+                }
+            } else {
+                trace("wrong: expect[" + correctLetter + "] not [" + letter + "]");
+            }
+        }
+    }
+
+    private function handleTouch(event:TouchEvent):void {
+        var touch:Touch = event.getTouch(this);
+
+        if(touch == null) {
+            trace("null touch");
+            return;
+        }
+
+        touch.getLocation(this, touchPoint);
+        mark.x = touchPoint.x;
+        mark.y = touchPoint.y;
+
+        if(touch.phase == TouchPhase.BEGAN) {
+            positionTouched(touchPoint);
+        }
     }
 }
 }

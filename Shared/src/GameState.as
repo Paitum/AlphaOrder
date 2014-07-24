@@ -2,13 +2,16 @@ package {
 
 import citrus.core.starling.StarlingState;
 
-import starling.animation.IAnimatable;
+import feathers.controls.Button;
 
 import starling.core.Starling;
 
-import starling.display.Quad;
+import starling.events.Event;
 
 public class GameState extends StarlingState {
+    private var startStopButton:Button;
+    private var stopwatch:StopwatchSprite;
+    private var board:Board;
 
     public function GameState() {
         super();
@@ -40,7 +43,8 @@ public class GameState extends StarlingState {
         var size:int = Math.min(
                 (stage.stageWidth - 2 * padding) / divisions,
                 (stage.stageHeight - 2 * padding) / divisions);
-        var board:Board = new Board(divisions, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        board = new Board(divisions, "ABCDEFGHIJKXYZ", boardCallback);
+//        board = new Board(divisions, "ABC", boardCallback);
         board.pivotX = divisions / 2;
         board.pivotY = divisions / 2;
         board.x = stage.stageWidth / 2;
@@ -56,14 +60,38 @@ public class GameState extends StarlingState {
 //        board.pivotY = 0;
         addChild(board);
 
-        var stopwatch:StopwatchSprite;
-
         stopwatch = new StopwatchSprite(72);
         stopwatch.x = _ce.stage.stageWidth * 0.5;
         stopwatch.y = _ce.stage.stageHeight * 0.075;
         addChild(stopwatch);
         Starling.juggler.add(stopwatch);
         stopwatch.getStopwatch().start();
+
+        startStopButton = new Button();
+        startStopButton.label = "Restart";
+        startStopButton.width = 150;
+        startStopButton.height = 75;
+        startStopButton.pivotX = startStopButton.width / 2;
+        startStopButton.pivotY = startStopButton.height / 2;
+        startStopButton.x =  _ce.stage.stageWidth * 0.5;
+        startStopButton.y =  _ce.stage.stageHeight * 0.925;
+        startStopButton.addEventListener(Event.TRIGGERED, handleStartStop);
+        addChild(startStopButton);
+
+    }
+
+    private function boardCallback(op:int):void {
+trace("CALLBACK[" + op+ "]");
+        if(op == Board.START) {
+            stopwatch.getStopwatch().reset();
+            stopwatch.getStopwatch().start();
+        } else if(op == Board.FINISH) {
+            stopwatch.getStopwatch().stop();
+        }
+    }
+
+    private function handleStartStop(event:Event):void {
+        board.reset();
     }
 }
 }

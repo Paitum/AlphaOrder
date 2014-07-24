@@ -6,7 +6,6 @@
     <mapping directory="$PROJECT_DIR$/../../Libs/Starling-Extension-Graphics" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../Libs/Starling-Framework" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../Libs/as3commons-collections" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../../Libs/feathers" vcs="Git" />
   </component>
 </project>
 

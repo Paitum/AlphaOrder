@@ -3,9 +3,13 @@ package {
 import citrus.core.starling.StarlingCitrusEngine;
 import citrus.core.starling.ViewportMode;
 
+import feathers.themes.MetalWorksMobileTheme;
+
 import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.utils.getTimer;
+
+import starling.display.DisplayObjectContainer;
 
 import starling.utils.AssetManager;
 
@@ -66,6 +70,9 @@ public class Startup extends StarlingCitrusEngine {
         trace("Assets Loaded in " + diff + " seconds");
 
         state = new GameState();
+
+        // Initialize Feather's theme
+        var theme:MetalWorksMobileTheme = new MetalWorksMobileTheme(DisplayObjectContainer(state), false);
     }
 
     private function setupView():void {
