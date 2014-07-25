@@ -28,8 +28,10 @@ public class GameState extends StarlingState {
         var size:int = Math.min(
                 (stage.stageWidth - 2 * padding) / columns,
                 (stage.stageHeight - 2 * padding) / rows);
-        board = new Board(columns, rows, "ABCXYZ", boardCallback);
-//        board = new Board(divisions, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", boardCallback);
+        var alphabet:String = "ABCXYZ"
+//        var alphabet:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        var model:BoardModel = BoardModel.createBoardModelForLetters(rows, columns, alphabet);
+        board = new StringBoard(model, boardCallback);
         board.pivotX = columns / 2;
         board.pivotY = rows / 2;
         board.x = stage.stageWidth / 2;
@@ -63,10 +65,10 @@ public class GameState extends StarlingState {
         startStopButton.addEventListener(Event.TRIGGERED, handleStartStop);
         addChild(startStopButton);
 
+        board.resetAndStart();
     }
 
     private function boardCallback(op:int):void {
-trace("CALLBACK[" + op+ "]");
         if(op == Board.START) {
             stopwatch.getStopwatch().reset();
             stopwatch.getStopwatch().start();
@@ -76,7 +78,7 @@ trace("CALLBACK[" + op+ "]");
     }
 
     private function handleStartStop(event:Event):void {
-        board.reset();
+        board.resetAndStart();
     }
 }
 }
