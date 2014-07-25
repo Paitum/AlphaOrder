@@ -135,30 +135,38 @@ public class BoardModel {
     }
 
     /**
-     * Checks whether the supplied coordinate is the solution or not.
+     * Checks whether the supplied coordinate is the solution or not. The
+     * solution token will be returned if correct, null otherwise
+     *
+     * @param row       the row of the suspected solution
+     * @param column    the column of the suspected solution
+     * @return  the solution token if correct, null otherwise
+     */
+    public function isSolution(row:int, column:int):String {
+        var token:String = getTokenOnBoard(row, column);
+        var solution:String = getCurrentSolutionToken();
+        return token == solution ? solution : null;
+    }
+
+    /**
+     * Process the coordinate for solution, and increment the solution.
      *
      * @param row       the row of the suspected solution
      * @param column    the column of the suspected solution
      * @return  if the coordinate contains the solution then return the token,
      *          otherwise return null.
      */
-    public function checkSolution(row:int, column:int):String {
-        var token:String = getTokenOnBoard(row, column);
+    public function processSolution(row:int, column:int):String {
+        var solution:String = isSolution(row, column);
 
-        if(token != null) {
-            var solution:String = getCurrentSolutionToken();
-
-            if(token == solution) {
-                nextSolution++;
-                availablePositions.push(letterToPosition[token]);
-                letterToPosition[token] = null;
-                positionToToken[row][column] = null;
-
-                return token;
-            }
+        if(solution != null) {
+            nextSolution++;
+            availablePositions.push(letterToPosition[solution]);
+            letterToPosition[solution] = null;
+            positionToToken[row][column] = null;
         }
 
-        return null;
+        return solution;
     }
 
     public function hasEmptyPosition():Boolean {
