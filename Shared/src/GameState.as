@@ -32,8 +32,9 @@ public class GameState extends StarlingState {
 //        var alphabet:String = "ABCXYZ";
         var alphabet:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var model:BoardModel = BoardModel.createBoardModelForLetters(rows, columns, alphabet);
-        var fontSize:Number = 200 / size;
-        var offset:Point = new Point(15 / size, -15 / size);
+        var fontSize:Number = stage.stageWidth / 3.2 / size;
+        var offsetValue:Number = stage.stageWidth / 42.66667;
+        var offset:Point = new Point(offsetValue / size, -offsetValue / size);
         board = new StringBoard(model, "ArtBrushLarge", fontSize, offset, boardCallback);
         board.pivotX = columns / 2;
         board.pivotY = rows / 2;
@@ -50,8 +51,9 @@ public class GameState extends StarlingState {
 //        board.pivotY = 0;
         addChild(board);
 
-        stopwatch = new StopwatchSprite(125);
-        stopwatch.x = _ce.stage.stageWidth * 0.5;
+        fontSize = stage.stageWidth / 5.12;
+        stopwatch = new StopwatchSprite(fontSize);
+        stopwatch.x = _ce.stage.stageWidth * 0.55;
         stopwatch.y = _ce.stage.stageHeight * 0.08;
         addChild(stopwatch);
         Starling.juggler.add(stopwatch);
