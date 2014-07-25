@@ -30,7 +30,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
     }
 
     private function handleAddedToStage(event:Event):void {
-        var separationOffset:int = 0;
+        var separationOffset:int = -fontsize / 5;
         var msOffset:int = fontsize / 4;
 
         secondsField = new TextField(500, 500, "0", "ArtBrushLarge", fontsize, 0xFFFFFF);

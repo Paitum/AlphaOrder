@@ -21,13 +21,6 @@ public class GameState extends StarlingState {
     override public function initialize():void {
         super.initialize();
 
-        // 1 0xC348CC 0xF45AFF Pink
-        // 2 0x4631D6 0x4C35E8 Dark Blue
-        // 3 0x358FBF 0x47BFFF Light Blue
-        // 4 0x31D68A 0x35E895 Green
-        // 5 0x61BF2C 0x82FF3A Bright Green
-
-
         stage.color = 0x195BB2;
 
         var columns:int = 3;
