@@ -1,5 +1,4 @@
 package {
-import feathers.controls.Button;
 
 import flash.geom.Point;
 import flash.utils.Dictionary;
@@ -13,7 +12,8 @@ import starling.events.TouchPhase;
 import starling.text.TextField;
 
 public class Board extends Sprite {
-    private var divisions:int;
+    private var columns:int;
+    private var rows:int;
     private var alphabet:String;
     // Uppercase and Lowercase Text Sprites
     private var letterSprites:Dictionary;
@@ -33,17 +33,18 @@ public class Board extends Sprite {
     public static const START:int = 0;
     public static const FINISH:int = 1;
 
-    public function Board(divisions:int, alphabet:String, callback:Function) {
-        this.divisions = divisions;
+    public function Board(columns:int, rows:int, alphabet:String, callback:Function) {
+        this.columns = columns;
+        this.rows = rows;
         this.alphabet = alphabet;
         this.callback = callback;
 
         letterSprites = new Dictionary();
 
         positionToLetter = new Vector.<Vector.<String>>();
-        for(var r:int = 0; r < divisions; r++) {
+        for(var r:int = 0; r < rows; r++) {
             positionToLetter[r] = new Vector.<String>();
-            for(var c:int = 0; c < divisions; c++) {
+            for(var c:int = 0; c < columns; c++) {
                 positionToLetter[r][c] = null;
             }
         }
@@ -64,12 +65,12 @@ public class Board extends Sprite {
     }
 
     protected function clear():void {
-        for(var r:int = 0; r < divisions; r++) {
-            for(var c:int = 0; c < divisions; c++) {
+        for(var r:int = 0; r < rows; r++) {
+            for(var c:int = 0; c < columns; c++) {
                 positionToLetter[r][c] = null;
             }
         }
-trace("clear");
+
         var length:int = alphabet.length;
         for(var i:int = 0; i < length; i++) {
             var letter:String = alphabet.charAt(i);
@@ -79,18 +80,18 @@ trace("clear");
     }
 
     override public function get width():Number {
-        return divisions;
+        return columns;
     }
 
     override public function get height():Number {
-        return divisions;
+        return rows;
     }
 
     private function handleAddedToStage(event:Event):void {
         var quad:Quad;
 
-        for(var r:int = 0; r < divisions; r++) {
-            for(var c:int = 0; c < divisions; c++) {
+        for(var r:int = 0; r < rows; r++) {
+            for(var c:int = 0; c < columns; c++) {
                 quad = new Quad(1, 1, randomColor());
                 quad.x = c;
                 quad.y = r;
@@ -108,8 +109,8 @@ trace("clear");
             letterSprites[letter].vAlign = "center";
             letterSprites[letter].pivotX = letterSprites[letter].width / 2;
             letterSprites[letter].pivotY = letterSprites[letter].height / 2;
-            letterSprites[letter].x = int(Math.random() * divisions) + 0.5;
-            letterSprites[letter].y = int(Math.random() * divisions) + 0.5;
+            letterSprites[letter].x = int(Math.random() * columns) + 0.5;
+            letterSprites[letter].y = int(Math.random() * rows) + 0.5;
 //            addChild(letterSprites[letter]);
             letterToPosition[letter] = new Point(-1, -1);
         }
@@ -142,7 +143,7 @@ trace("clear");
             nextPosition++;
 
             letterToPosition[letter].copyFrom(position);
-            positionToLetter[position.x][position.y] = letter;
+            positionToLetter[position.y][position.x] = letter;
 
             letterSprites[letter].x = position.x + 0.5;
             letterSprites[letter].y = position.y + 0.5;
@@ -161,13 +162,13 @@ trace("clear");
         // TODO Ugh, implement an intelligent randomization
         var length:int = 0;
         positionVector.length = 0;
-        for(var r:int = 0; r < divisions; r++) {
-            for(var c:int = 0; c < divisions; c++) {
+        for(var r:int = 0; r < rows; r++) {
+            for(var c:int = 0; c < columns; c++) {
                 if(positionToLetter[r][c] == null) {
                     if(length >= positionVector.length) {
-                        positionVector.push(new Point(r, c));
+                        positionVector.push(new Point(c, r));
                     } else {
-                        positionVector[length].setTo(r, c);
+                        positionVector[length].setTo(c, r);
                     }
                     length++;
                 }
@@ -198,7 +199,7 @@ trace("clear");
     private function positionTouched(point:Point):void {
         var c:int = int(point.x);
         var r:int = int(point.y);
-        var letter:String = positionToLetter[c][r];
+        var letter:String = positionToLetter[r][c];
 
         if(letter != null) {
             var correctLetter:String = alphabet.charAt(nextSolutionPosition);
@@ -206,7 +207,7 @@ trace("clear");
             if(letter == correctLetter) {
                 nextSolutionPosition++;
                 removeChild(letterSprites[letter]);
-                positionToLetter[c][r] = null;
+                positionToLetter[r][c] = null;
 
                 if(hasNextLetter()) {
                     addLetter();

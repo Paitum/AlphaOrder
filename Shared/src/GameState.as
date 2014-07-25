@@ -22,31 +22,16 @@ public class GameState extends StarlingState {
 
         stage.color = 0x222288;
 
-//        var quad:Quad = new Quad(300,200, 0xEEEEEE);
-//        quad.pivotX = quad.width / 2;
-//        quad.pivotY = quad.height;
-//        quad.x = _ce.baseWidth / 2;
-//        quad.y = _ce.baseHeight;
-//        addChild(quad);
-//
-//        textField = new TextField(quad.width, quad.height, "000", "ArtBrushLarge", 150, 0xFFFFFF);
-//        textField.hAlign = "left";
-//        textField.vAlign = "bottom";
-//        textField.pivotX = quad.pivotX;
-//        textField.pivotY = quad.pivotY;
-//        textField.x = quad.x;
-//        textField.y = quad.y;
-//        addChild(textField);
-
-        var divisions:int = 3;
+        var columns:int = 3;
+        var rows:int = 3;
         var padding:int = 10;
         var size:int = Math.min(
-                (stage.stageWidth - 2 * padding) / divisions,
-                (stage.stageHeight - 2 * padding) / divisions);
-        board = new Board(divisions, "ABCDEFGHIJKXYZ", boardCallback);
-//        board = new Board(divisions, "ABC", boardCallback);
-        board.pivotX = divisions / 2;
-        board.pivotY = divisions / 2;
+                (stage.stageWidth - 2 * padding) / columns,
+                (stage.stageHeight - 2 * padding) / rows);
+        board = new Board(columns, rows, "ABCXYZ", boardCallback);
+//        board = new Board(divisions, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", boardCallback);
+        board.pivotX = columns / 2;
+        board.pivotY = rows / 2;
         board.x = stage.stageWidth / 2;
         board.y = stage.stageHeight / 2;
         board.scaleX = size;
