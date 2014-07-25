@@ -14,6 +14,8 @@ import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 
+import test.ShakeTween;
+
 public class Board extends Sprite {
 
     // [r][c] -> tile:Quad
@@ -24,6 +26,8 @@ public class Board extends Sprite {
     private var highlightTweens:Vector.<Vector.<Tween>>;
     // name:String -> DisplayObjectContainer
     private var pieces:Dictionary;
+    private var wiggleTween:ShakeTween;
+    private var wiggleToken:String;
 
     protected var callback:Function;
     protected var model:BoardModel;
@@ -65,6 +69,9 @@ public class Board extends Sprite {
      */
     protected function initialize():void {
         var r:int, c:int;
+
+        wiggleTween = new ShakeTween(0.05, 0.3);
+        Starling.juggler.add(wiggleTween);
 
         tiles = new Vector.<Vector.<Quad>>();
         highlightTiles = new Vector.<Vector.<Quad>>();
@@ -141,7 +148,7 @@ public class Board extends Sprite {
 
     private static function getTileColor(row:int, columns:int):uint {
         var shade:uint = ((row % 2 + columns) % 2) * 128 + 128;
-        return (shade << 16) | (shade << 8) | (shade * 255);
+        return (255 << 16) | (shade << 8) | shade;
 //        return uint(Math.random() * 255) << 16 | uint(Math.random() * 255) << 8 | uint(Math.random() * 255);
     }
 
@@ -174,30 +181,80 @@ public class Board extends Sprite {
         var success:Boolean = false;
         var newTileTouched:Boolean = column != lastTileTouched.x || row != lastTileTouched.y;
 
+        if(touch.phase == TouchPhase.HOVER) {
+            return;
+        }
+
         if(touch.phase == TouchPhase.BEGAN) {
             success = positionTouched(row, column);
-            highlightTile(row, column, success ? 0x00FF00 : 0xFF0000);
+            setHighlightTileColor(row, column, success ? 0x00FF00 : 0xFF0000);
         }
         else if(touch.phase == TouchPhase.MOVED) {
-//            success = model.isSolution(row, column);
-            success = positionTouched(row, column);
+            success = model.isSolution(row, column);
+//            success = positionTouched(row, column);
+
             if(newTileTouched) {
-                highlightTile(row, column, success ? 0x00FF00 : 0xFF0000);
+                setHighlightTileColor(row, column, success ? 0x00FF00 : 0xFF0000);
             }
+        } else if(touch.phase == TouchPhase.ENDED) {
+            fadeHighlightTile(row, column);
+        }
+
+        if(!success && touch.phase == TouchPhase.BEGAN) {
+            wigglePiece(model.getTokenOnBoard(row, column));
+        }
+
+        if(newTileTouched && lastTileTouched.y != -1 && lastTileTouched.x != -1) {
+            fadeHighlightTile(lastTileTouched.y, lastTileTouched.x);
         }
 
         lastTileTouched.setTo(column, row);
     }
 
-    private function highlightTile(row:int, column:int, color:uint):void {
+    private function setHighlightTileColor(row:int, column:int, color:uint):void {
         var tile:Quad = highlightTiles[row][column];
-        var tween:Tween = highlightTweens[row][column];
-        Starling.juggler.remove(tween);
+        Starling.juggler.remove(highlightTweens[row][column]);
         tile.color = color;
         tile.alpha = 1.0;
-        tween.reset(tile, 0.2, "linear");
+    }
+
+    private function fadeHighlightTile(row:int, column:int):void {
+        var tile:Quad = highlightTiles[row][column];
+        var tween:Tween = highlightTweens[row][column];
+        tween.reset(tile, 0.5, "linear");
         tween.animate("alpha", 0.0);
         Starling.juggler.add(tween);
+    }
+
+    private function wigglePiece(token:String):void {
+        if(token == null) {
+            return;
+        }
+
+        var point:Point;
+
+        // Undo active wiggling
+        if(wiggleToken != token) {
+            wiggleTween.stop();
+            Starling.juggler.remove(wiggleTween);
+            point = model.getPosition(wiggleToken);
+            if(point != null) {
+                pieces[wiggleToken].x = point.x + 0.5;
+                pieces[wiggleToken].y = point.y + 0.5;
+            }
+        }
+
+        point = model.getPosition(token);
+        if(point == null) {
+            return;
+        }
+
+        var piece:DisplayObjectContainer = pieces[token];
+        wiggleToken = token;
+        if(wiggleToken != token || wiggleTween.isComplete()) {
+            wiggleTween.setTarget(piece);
+            Starling.juggler.add(wiggleTween);
+        }
     }
 
     private function positionTouched(row:int, column:int):Boolean {

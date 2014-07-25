@@ -199,5 +199,9 @@ public class BoardModel {
             nextSolution++;
         }
     }
+
+    public function getPosition(token:String):Point {
+        return letterToPosition[token];
+    }
 }
 }

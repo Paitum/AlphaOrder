@@ -4,6 +4,8 @@ import citrus.core.starling.StarlingState;
 
 import feathers.controls.Button;
 
+import flash.geom.Point;
+
 import starling.core.Starling;
 
 import starling.events.Event;
@@ -32,7 +34,8 @@ public class GameState extends StarlingState {
         var alphabet:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var model:BoardModel = BoardModel.createBoardModelForLetters(rows, columns, alphabet);
         var fontSize:Number = 200 / size;
-        board = new StringBoard(model, "ArtBrushLarge", fontSize, boardCallback);
+        var offset:Point = new Point(15 / size, -15 / size);
+        board = new StringBoard(model, "ArtBrushLarge", fontSize, offset, boardCallback);
         board.pivotX = columns / 2;
         board.pivotY = rows / 2;
         board.x = stage.stageWidth / 2;
