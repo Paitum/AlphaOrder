@@ -28,10 +28,11 @@ public class GameState extends StarlingState {
         var size:int = Math.min(
                 (stage.stageWidth - 2 * padding) / columns,
                 (stage.stageHeight - 2 * padding) / rows);
-        var alphabet:String = "ABCXYZ"
-//        var alphabet:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+//        var alphabet:String = "ABCXYZ";
+        var alphabet:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var model:BoardModel = BoardModel.createBoardModelForLetters(rows, columns, alphabet);
-        board = new StringBoard(model, boardCallback);
+        var fontSize:Number = 200 / size;
+        board = new StringBoard(model, "ArtBrushLarge", fontSize, boardCallback);
         board.pivotX = columns / 2;
         board.pivotY = rows / 2;
         board.x = stage.stageWidth / 2;

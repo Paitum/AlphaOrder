@@ -165,6 +165,12 @@ public class Board extends Sprite {
         mark.y = touchPoint.y;
         var column:int = int(touchPoint.x);
         var row:int = int(touchPoint.y);
+
+        if(column < 0 || column >= model.getColumns() ||
+                row < 0 || row >= model.getRows()) {
+            return;
+        }
+
         var success:Boolean = false;
         var newTileTouched:Boolean = column != lastTileTouched.x || row != lastTileTouched.y;
 
@@ -173,7 +179,8 @@ public class Board extends Sprite {
             highlightTile(row, column, success ? 0x00FF00 : 0xFF0000);
         }
         else if(touch.phase == TouchPhase.MOVED) {
-            success = model.isSolution(row, column);
+//            success = model.isSolution(row, column);
+            success = positionTouched(row, column);
             if(newTileTouched) {
                 highlightTile(row, column, success ? 0x00FF00 : 0xFF0000);
             }

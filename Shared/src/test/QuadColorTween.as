@@ -14,7 +14,7 @@ public class QuadColorTween extends EventDispatcher implements IAnimatable {
     private var duration:Number;
     private var transitionFunc:Function;
     private var totalTime:Number = 0;
-    private var initializedFromColor = false;
+    private var initializedFromColor:Boolean = false;
 
     public function QuadColorTween(target:Quad, duration:Number, transition:Object="linear") {
         this.target = target;
