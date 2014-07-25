@@ -10,7 +10,6 @@ import flash.geom.Rectangle;
 import flash.utils.getTimer;
 
 import starling.display.DisplayObjectContainer;
-
 import starling.utils.AssetManager;
 
 public class Startup extends StarlingCitrusEngine {

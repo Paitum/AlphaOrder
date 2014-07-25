@@ -37,7 +37,6 @@ public class Board extends Sprite {
 
     // cache
     private var touchPoint:Point = new Point();
-    private var positionVector:Vector.<Point> = new Vector.<Point>();
 
     public static const START:int = 0;
     public static const FINISH:int = 1;
@@ -85,11 +84,12 @@ public class Board extends Sprite {
                 tiles[r][c] = new Quad(1, 1, getTileColor(r, c));
                 tiles[r][c].x = c;
                 tiles[r][c].y = r;
-                tiles[r][c].alpha = 0.5;
+                tiles[r][c].alpha = 1.0;
                 highlightTiles[r][c] = new Quad(1, 1, 0xFF0000);
                 highlightTiles[r][c].x = c;
                 highlightTiles[r][c].y = r;
                 highlightTiles[r][c].alpha = 0.0;
+                highlightTiles[r][c].touchable = false;
                 highlightTweens[r][c] = new Tween(highlightTiles[r][c], 0.25, "linear");
                 highlightTweens[r][c].animate("alpha", 0.0);
                 Starling.juggler.add(highlightTweens[r][c]);
@@ -103,6 +103,8 @@ public class Board extends Sprite {
         for(var i:int = 0; i < tokenCount; i++) {
             var token:String = model.getToken(i);
             pieces[token] = createPiece(token);
+            pieces[token].color = 0xFFED26;
+            pieces[token].touchable = false;
         }
 
         mark = new Quad(0.05, 0.05, 0xFF0000);
@@ -147,8 +149,9 @@ public class Board extends Sprite {
     }
 
     private static function getTileColor(row:int, columns:int):uint {
-        var shade:uint = ((row % 2 + columns) % 2) * 128 + 128;
-        return (255 << 16) | (shade << 8) | shade;
+        return ((row % 2 + columns) % 2) == 0 ? 0x9BC6FF : 0x64A7FF;
+//        var shade:uint = ((row % 2 + columns) % 2) * 128 + 128;
+//        return (255 << 16) | (shade << 8) | shade;
 //        return uint(Math.random() * 255) << 16 | uint(Math.random() * 255) << 8 | uint(Math.random() * 255);
     }
 
@@ -173,8 +176,8 @@ public class Board extends Sprite {
         var column:int = int(touchPoint.x);
         var row:int = int(touchPoint.y);
 
-        if(column < 0 || column >= model.getColumns() ||
-                row < 0 || row >= model.getRows()) {
+        if(touchPoint.x < 0 || touchPoint.x >= model.getColumns() ||
+                touchPoint.y < 0 || touchPoint.y >= model.getRows()) {
             return;
         }
 
