@@ -7,6 +7,7 @@ import feathers.controls.Button;
 import flash.geom.Point;
 
 import starling.core.Starling;
+import starling.display.Quad;
 import starling.events.Event;
 
 public class GameState extends StarlingState {
@@ -22,6 +23,12 @@ public class GameState extends StarlingState {
         super.initialize();
 
         stage.color = 0x195BB2;
+        var background:Quad = new Quad(stage.stageWidth, stage.stageHeight, 0x195BB2);
+        background.setVertexColor(0, 0x001240);
+        background.setVertexColor(1, 0x00237F);
+        background.setVertexColor(2, 0x00237F);
+        background.setVertexColor(3, 0x0046FF);
+        addChild(background);
 
         var columns:int = 3;
         var rows:int = 3;
@@ -51,7 +58,7 @@ public class GameState extends StarlingState {
 //        board.pivotY = 0;
         addChild(board);
 
-        fontSize = stage.stageWidth / 5.12;
+        fontSize = stage.stageWidth / 5.12; // 125
         stopwatch = new StopwatchSprite(fontSize);
         stopwatch.x = _ce.stage.stageWidth * 0.55;
         stopwatch.y = _ce.stage.stageHeight * 0.08;

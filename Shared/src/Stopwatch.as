@@ -1,10 +1,9 @@
 package {
 
-import flash.utils.getTimer;
+import starling.animation.IAnimatable;
 
-public class Stopwatch {
-    private var startTime:uint = 0;
-    private var accumulatedTime:uint = 0;
+public class Stopwatch implements IAnimatable {
+    private var accumulatedTime:Number = 0;
     private var isRunning:Boolean = false;
 
     public function Stopwatch() {
@@ -18,20 +17,22 @@ public class Stopwatch {
 
     [Inline]
     final public function start():void {
-        this.startTime = getTimer();
         isRunning = true;
     }
 
     [Inline]
     final public function stop():void {
-        accumulatedTime = getAccumulatedTime();
         isRunning = false;
     }
 
     [Inline]
-    final public function getAccumulatedTime():uint {
-        return isRunning ? getTimer() - startTime + accumulatedTime :
-                accumulatedTime;
+    final public function getAccumulatedTime():Number {
+        return accumulatedTime;
+    }
+
+    [Inline]
+    final public function advanceTime(passedTime:Number):void {
+        if(isRunning) accumulatedTime += passedTime;
     }
 }
 }

@@ -95,15 +95,16 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
     }
 
     public function advanceTime(passedTime:Number):void {
-        var time:uint = stopwatch.getAccumulatedTime();
-        var seconds:uint      = uint(time / 1000);
-        var milliseconds:uint = int((time - seconds * 1000) / 10);
+        stopwatch.advanceTime(passedTime)
+        var time:Number = stopwatch.getAccumulatedTime();
+        var seconds:uint      = uint(time);
+        var milliseconds:uint = int((time - seconds) * 100);
         var secondsStr:String = seconds.toString();
         var msStr:String = milliseconds.toString();
 
         secondsField.text = secondsStr;
         secondsField.width = -widths[secondsStr.length];
-        secondsField.pivotX = secondsField.width - 20;
+        secondsField.pivotX = secondsField.width - fontsize / 5;
 
 //        millisecondsField.text = msStr;
         millisecondsField.text = msStr.length == 1 ? "0" + msStr : msStr;
