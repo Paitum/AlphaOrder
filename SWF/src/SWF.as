@@ -5,6 +5,7 @@ import starling.text.TextField;
 import starling.textures.Texture;
 import starling.utils.AssetManager;
 
+[SWF(width="480", height="720", frameRate="30", backgroundColor="#0000AA")]
 public class SWF extends Startup {
     [Embed(source="../../Shared/media/fonts/1x/ArtBrushLarge.fnt", mimeType="application/octet-stream")]
     public static const ArtBrushLarge_1xFNT:Class;
