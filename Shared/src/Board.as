@@ -189,16 +189,21 @@ public class Board extends Sprite {
         touch.getLocation(this, touchPoint);
         mark.x = touchPoint.x;
         mark.y = touchPoint.y;
-        var column:int = int(touchPoint.x);
-        var row:int = int(touchPoint.y);
-
-        if(touchPoint.x < 0 || touchPoint.x >= model.getColumns() ||
-                touchPoint.y < 0 || touchPoint.y >= model.getRows()) {
-            return;
-        }
-
+        var column:int = Math.floor(touchPoint.x);
+        var row:int = Math.floor(touchPoint.y);
         var success:Boolean = false;
         var newTileTouched:Boolean = column != lastTileTouched.x || row != lastTileTouched.y;
+
+//trace(touch.phase + " (" + column + ", " + row + ") (" + touchPoint.x + ", " + touchPoint.y + ") " + newTileTouched + " " + lastTileTouched);
+        if(touchPoint.x < 0 || touchPoint.x >= model.getColumns() ||
+                touchPoint.y < 0 || touchPoint.y >= model.getRows())
+        {
+            if(newTileTouched && lastTileTouched.y != -1 && lastTileTouched.x != -1) {
+                fadeHighlightTile(lastTileTouched.y, lastTileTouched.x);
+            }
+            lastTileTouched.setTo(-1, -1);
+            return;
+        }
 
         if(touch.phase == TouchPhase.HOVER) {
             return;

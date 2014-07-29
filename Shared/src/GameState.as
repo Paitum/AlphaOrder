@@ -3,6 +3,8 @@ package {
 import citrus.core.starling.StarlingState;
 
 import feathers.controls.Button;
+import feathers.controls.TabBar;
+import feathers.data.ListCollection;
 
 import flash.geom.Point;
 
@@ -15,6 +17,7 @@ import starling.textures.Texture;
 public class GameState extends StarlingState {
     private var startStopButton:Button;
     private var stopwatch:StopwatchSprite;
+    private var modeBar:TabBar;
     private var board:Board;
 
     public function GameState() {
@@ -88,18 +91,6 @@ public class GameState extends StarlingState {
         var controlsCenterX:int = boardCenterX;
         var controlsCenterY:int = padding + controlsHeight / 2;
 
-//        var border:int = 1;
-//        quad1 = new Quad(controlsWidth, controlsHeight, 0xFFFF00);
-//        quad1.x = padding;
-//        quad1.y = padding;
-//        addChild(quad1);
-//
-//        quad2 = new Quad(quad1.width - 2 * border, quad1.height - 2 * border, 0x001240);
-//        quad2.x = quad1.x + border;
-//        quad2.y = quad1.y + border;
-//        addChild(quad2);
-
-//        fontSize = stage.stageWidth / 5.12; // 125
         fontSize = stage.stageWidth / 5.12; // 125
         stopwatch = new StopwatchSprite(fontSize);
         stopwatch.pivotX = stopwatch.width/ 2;
@@ -125,7 +116,29 @@ public class GameState extends StarlingState {
         startStopButton.addEventListener(Event.TRIGGERED, handleStartStop);
         addChild(startStopButton);
 
+        modeBar = new TabBar();
+        modeBar.dataProvider = new ListCollection(
+        [
+            { label: "A" },
+            { label: "a" },
+            { label: "Aa" },
+        ]);
+        modeBar.height = 92;
+        modeBar.pivotX = modeBar.width / 2;
+        modeBar.pivotY = modeBar.height / 2;
+        modeBar.scaleX = 0.75;
+        modeBar.scaleY  = 0.75;
+        modeBar.x = padding + modeBar.width / 2;
+        modeBar.y = controlsCenterY;
+        this.addChild( modeBar );
+        modeBar.addEventListener( Event.CHANGE, handleModeChange);
+
         board.resetAndStart();
+    }
+
+    private function handleModeChange(event:Event):void {
+        var tabs:TabBar = TabBar( event.currentTarget );
+        trace( "selectedIndex:", tabs.selectedIndex );
     }
 
     private function boardCallback(op:int):void {
