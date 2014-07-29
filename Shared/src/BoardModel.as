@@ -16,7 +16,7 @@ public class BoardModel {
     private var availablePositions:Vector.<Point>;
 
     public static function createBoardModelForLetters(
-            columns:int, rows:int, letters:String):BoardModel
+            rows:int, columns:int, letters:String):BoardModel
     {
         var names:Vector.<String> = new Vector.<String>();
         for(var i:int = 0; i < letters.length; i++) {

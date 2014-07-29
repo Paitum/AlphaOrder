@@ -5,8 +5,10 @@ import flash.utils.Dictionary;
 
 import starling.animation.Tween;
 import starling.core.Starling;
+import starling.display.BlendMode;
 
 import starling.display.DisplayObjectContainer;
+import starling.display.Image;
 import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
@@ -81,7 +83,11 @@ public class Board extends Sprite {
             highlightTweens[r] = new Vector.<Tween>();
 
             for(c = 0; c < model.getColumns(); c++) {
-                tiles[r][c] = new Quad(1, 1, getTileColor(r, c));
+                tiles[r][c] = new Image(Assets.assets.getTexture("ConstructionPaper"));
+                tiles[r][c].width = 1;
+                tiles[r][c].height = 1;
+                tiles[r][c].color = getTileColor(r,c);
+//                tiles[r][c] = new Quad(1, 1, getTileColor(r, c));
                 tiles[r][c].x = c;
                 tiles[r][c].y = r;
                 tiles[r][c].alpha = 1.0;
@@ -89,14 +95,24 @@ public class Board extends Sprite {
                 highlightTiles[r][c].x = c;
                 highlightTiles[r][c].y = r;
                 highlightTiles[r][c].alpha = 0.0;
+//                highlightTiles[r][c].blendMode = BlendMode.SCREEN;
                 highlightTiles[r][c].touchable = false;
-                highlightTweens[r][c] = new Tween(highlightTiles[r][c], 0.25, "linear");
+                highlightTweens[r][c] = new Tween(highlightTiles[r][c], 0.25, "easeOut");   // this declaration does nothing
                 highlightTweens[r][c].animate("alpha", 0.0);
                 Starling.juggler.add(highlightTweens[r][c]);
                 addChild(tiles[r][c]);
                 addChild(highlightTiles[r][c]);
             }
         }
+
+        // Add a gradient to make less repetitive
+        var background:Quad = new Quad(model.getColumns(), model.getRows(), 0xFF0000);
+        background.setVertexColor(0, 0xBBBBBB);
+        background.setVertexColor(1, 0xEEEEEE);
+        background.setVertexColor(2, 0xFFFFFF);
+        background.setVertexColor(3, 0xFFFFFF);
+        background.blendMode = BlendMode.MULTIPLY;
+        addChild(background);
 
         pieces = new Dictionary();
         var tokenCount:int = model.getTokenCount();
@@ -224,7 +240,7 @@ public class Board extends Sprite {
     private function fadeHighlightTile(row:int, column:int):void {
         var tile:Quad = highlightTiles[row][column];
         var tween:Tween = highlightTweens[row][column];
-        tween.reset(tile, 0.5, "linear");
+        tween.reset(tile, 0.5, "easeOut");
         tween.animate("alpha", 0.0);
         Starling.juggler.add(tween);
     }

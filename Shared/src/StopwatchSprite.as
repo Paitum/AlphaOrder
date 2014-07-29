@@ -30,7 +30,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
     }
 
     private function handleAddedToStage(event:Event):void {
-        var separationOffset:int = -fontsize / 25;
+        var separationOffset:int = -fontsize / 15;
         var msOffset:int = fontsize / 4;
 
         secondsField = new TextField(500, 500, "0", "ArtBrushLarge", fontsize, 0xFFFFFF);
@@ -48,7 +48,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         secondsField.pivotX = secondsField.width + separationOffset;
         secondsField.pivotY = secondsField.textBounds.height / 2;
         secondsField.x = 0;
-        secondsField.y = 0;
+        secondsField.y = separationOffset;
 //trace("(" + secondsField.x + ", " + secondsField.y + ")[" + secondsField.width + ", " + secondsField.height + "] pivot[" + secondsField.pivotX + ", " + secondsField.pivotY + "]");
         secondsField.color = 0x00FF00;
 
@@ -95,7 +95,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
     }
 
     public function advanceTime(passedTime:Number):void {
-        stopwatch.advanceTime(passedTime)
+        stopwatch.advanceTime(passedTime);
         var time:Number = stopwatch.getAccumulatedTime();
         var seconds:uint      = uint(time);
         var milliseconds:uint = int((time - seconds) * 100);

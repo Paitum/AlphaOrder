@@ -3,13 +3,18 @@ package {
 import citrus.core.starling.StarlingCitrusEngine;
 import citrus.core.starling.ViewportMode;
 
+import feathers.controls.Button;
+
 import feathers.themes.MetalWorksMobileTheme;
+import feathers.themes.MinimalMobileTheme;
 
 import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.utils.getTimer;
 
 import starling.display.DisplayObjectContainer;
+import starling.display.Image;
+import starling.textures.Texture;
 import starling.utils.AssetManager;
 
 public class Startup extends StarlingCitrusEngine {
@@ -17,6 +22,7 @@ public class Startup extends StarlingCitrusEngine {
     private var scale:Number;
     private var startTime:Number;
     private var debug:Boolean;
+    private var theme:MetalWorksMobileTheme;
 
     public function Startup() {
         startTime = getTimer();
@@ -54,6 +60,11 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets = new AssetManager(scale);
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.fnt");
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.png");
+        Assets.assets.enqueue("media/textures/" + scale + "x/ConstructionPaper.png");
+        Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
+        Assets.assets.enqueue("media/textures/" + scale + "x/button-down-skin.png");
+        Assets.assets.enqueue("media/textures/" + scale + "x/button-up-skin.png");
+        Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
     }
 
     protected function loadAssets():void {
@@ -67,11 +78,17 @@ public class Startup extends StarlingCitrusEngine {
         var diff:Number = (getTimer() - startTime) / 1000;
         diff = int(diff * 1000) / 1000;
         trace("Assets Loaded in " + diff + " seconds");
+        // Initialize Feather's theme
+        theme = new MetalWorksMobileTheme(DisplayObjectContainer(state), false);
+        theme.setInitializerForClass(Button, initializeButton, "restart");
 
         state = new GameState();
+    }
 
-        // Initialize Feather's theme
-        var theme:MetalWorksMobileTheme = new MetalWorksMobileTheme(DisplayObjectContainer(state), false);
+    private function initializeButton(button:Button):void {
+        button.defaultSkin = new Image(Assets.assets.getTexture("button-up-skin"));
+        button.downSkin = new Image(Assets.assets.getTexture("button-down-skin"));
+        button.defaultIcon = new Image(Assets.assets.getTexture("restart"));
     }
 
     private function setupView():void {
