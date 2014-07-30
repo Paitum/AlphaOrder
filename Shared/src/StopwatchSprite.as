@@ -33,6 +33,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         var separationOffset:int = -fontsize / 15;
         var msOffset:int = fontsize / 4;
 
+        // TODO Don't instantiate again just because added back to stage
         secondsField = new TextField(500, 500, "0", "ArtBrushLarge", fontsize, 0xFFFFFF);
         secondsField.touchable = false;
 

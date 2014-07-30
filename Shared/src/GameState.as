@@ -18,7 +18,9 @@ public class GameState extends StarlingState {
     private var startStopButton:Button;
     private var stopwatch:StopwatchSprite;
     private var modeBar:TabBar;
-    private var board:Board;
+    private var models:Vector.<BoardModel> = new Vector.<BoardModel>(2);
+    private var boards:Vector.<Board> = new Vector.<Board>(2);
+    private var currentBoard:int = -1;
 
     public function GameState() {
         super();
@@ -67,24 +69,26 @@ public class GameState extends StarlingState {
 
 //        var alphabet:String = "ABCXYZ";
         var alphabet:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        var model:BoardModel = BoardModel.createBoardModelForLetters(rows, columns, alphabet);
+        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
         var fontSize:Number = 0.979729;
         var offset:Point = new Point(0.06, -0.10);
-        board = new StringBoard(model, "ArtBrushLarge", fontSize, offset, boardCallback);
-        board.pivotX = columns / 2;
-        board.pivotY = rows / 2;
-        board.x = boardCenterX;
-        board.y = yDivider + boardCenterY;
-        board.scaleX = scale;
-        board.scaleY = scale;
-
-//        board.x = 50;
-//        board.y = 50;
-//        board.scaleX = 10;
-//        board.scaleY = 10;
-//        board.pivotX = 0;
-//        board.pivotY = 0;
-        addChild(board);
+        for(var i:int = 0; i < models.length; i++) {
+            boards[i] = new StringBoard(models[i], "ArtBrushLarge", fontSize, offset, boardCallback);
+            boards[i].pivotX = columns / 2;
+            boards[i].pivotY = rows / 2;
+            boards[i].x = boardCenterX;
+            boards[i].y = yDivider + boardCenterY;
+            boards[i].scaleX = scale;
+            boards[i].scaleY = scale;
+    
+    //        board.x = 50;
+    //        board.y = 50;
+    //        board.scaleX = 10;
+    //        board.scaleY = 10;
+    //        board.pivotX = 0;
+    //        board.pivotY = 0;
+        }
 
         var controlsWidth:int = boardWidth;
         var controlsHeight:int = yDivider - 2 * padding;
@@ -113,7 +117,6 @@ public class GameState extends StarlingState {
         startStopButton.scaleY  = 0.75;
         startStopButton.x = stage.stageWidth - padding - startStopButton.width / 2;
         startStopButton.y = controlsCenterY;
-        startStopButton.addEventListener(Event.TRIGGERED, handleStartStop);
         addChild(startStopButton);
 
         modeBar = new TabBar();
@@ -121,7 +124,7 @@ public class GameState extends StarlingState {
         [
             { label: "A" },
             { label: "a" },
-            { label: "Aa" },
+//            { label: "Aa" },
         ]);
         modeBar.height = 92;
         modeBar.pivotX = modeBar.width / 2;
@@ -131,14 +134,25 @@ public class GameState extends StarlingState {
         modeBar.x = padding + modeBar.width / 2;
         modeBar.y = controlsCenterY;
         this.addChild( modeBar );
-        modeBar.addEventListener( Event.CHANGE, handleModeChange);
 
-        board.resetAndStart();
+        showBoard();
+
+        startStopButton.addEventListener(Event.TRIGGERED, handleStartStop);
+        modeBar.addEventListener( Event.CHANGE, handleModeChange);
     }
 
     private function handleModeChange(event:Event):void {
-        var tabs:TabBar = TabBar( event.currentTarget );
-        trace( "selectedIndex:", tabs.selectedIndex );
+        showBoard();
+    }
+
+    private function showBoard():void {
+        if(currentBoard != -1) {
+            removeChild(boards[currentBoard]);
+        }
+
+        currentBoard = modeBar.selectedIndex;
+        addChild(boards[currentBoard]);
+        boards[currentBoard].resetAndStart();
     }
 
     private function boardCallback(op:int):void {
@@ -151,7 +165,7 @@ public class GameState extends StarlingState {
     }
 
     private function handleStartStop(event:Event):void {
-        board.resetAndStart();
+        boards[currentBoard].resetAndStart();
     }
 }
 }

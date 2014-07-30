@@ -62,7 +62,9 @@ public class Board extends Sprite {
     }
 
     private function handleAddedToStage(event:Event):void {
-        initialize();
+        if(tiles == null) {
+            initialize();
+        }
     }
 
     /**
