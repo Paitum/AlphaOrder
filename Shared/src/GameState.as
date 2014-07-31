@@ -183,13 +183,11 @@ public class GameState extends StarlingState {
             stopwatch.y = yDivider + boardCenterY;
             stopwatch.scaleX = 2;
             stopwatch.scaleY = 2;
-            stopwatch.showMilliseconds(true);
         } else {
             stopwatch.x = controlsCenterX;
             stopwatch.y = controlsCenterY;
             stopwatch.scaleX = 0.5;
             stopwatch.scaleY = 0.5;
-            stopwatch.showMilliseconds(false);
         }
     }
 

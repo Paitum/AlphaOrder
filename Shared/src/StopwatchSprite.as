@@ -38,7 +38,8 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
     }
 
     private function initialize():void {
-        var separationOffset:int = -fontsize / 15;
+        var separationOffset:int = -fontsize / 2.5;
+        var pivotOffset:int = -fontsize / 15;
         var msOffset:int = fontsize / 4;
 
         // TODO Don't instantiate again just because added back to stage
@@ -54,10 +55,10 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         secondsField.text = "0";
         secondsField.hAlign = "left";
         secondsField.vAlign = "top";
-        secondsField.pivotX = secondsField.width + separationOffset;
+        secondsField.pivotX = secondsField.width + pivotOffset;
         secondsField.pivotY = secondsField.textBounds.height / 2;
         secondsField.x = 0;
-        secondsField.y = separationOffset;
+        secondsField.y = pivotOffset;
 //trace("(" + secondsField.x + ", " + secondsField.y + ")[" + secondsField.width + ", " + secondsField.height + "] pivot[" + secondsField.pivotX + ", " + secondsField.pivotY + "]");
         secondsField.color = 0x00FF00;
 
