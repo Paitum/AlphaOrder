@@ -13,6 +13,8 @@ import starling.display.BlendMode;
 import starling.display.Image;
 import starling.display.Quad;
 import starling.events.Event;
+import starling.extensions.particles.PDParticleSystem;
+import starling.extensions.particles.ParticleSystem;
 import starling.textures.Texture;
 
 public class GameState extends StarlingState {
@@ -25,6 +27,7 @@ public class GameState extends StarlingState {
     private var currentModel:int = -1;
     private var yDivider:int;
     private var padding:int;
+    private var particleSystem:ParticleSystem;
 
     public function GameState() {
         super();
@@ -106,6 +109,14 @@ public class GameState extends StarlingState {
         blackhole.alpha = 0;
         blackhole.touchable = false;
         addChild(blackhole);
+
+        var xml:XML = XML(Assets.assets.getXml("particleConfig"));
+        texture = Assets.assets.getTexture("particleTexture");
+        particleSystem = new PDParticleSystem(xml, texture);
+        particleSystem.emitterX = board.x;
+        particleSystem.emitterY = board.y;
+        particleSystem.alpha = 0;
+        addChild(particleSystem);
 
         var controlsWidth:int = boardWidth;
         var controlsHeight:int = yDivider - 2 * padding;
@@ -192,10 +203,16 @@ public class GameState extends StarlingState {
             stopwatch.getStopwatch().reset();
             stopwatch.getStopwatch().start();
             blackhole.alpha = 0;
+            particleSystem.alpha = 0;
+            particleSystem.stop();
+            Starling.juggler.remove(particleSystem);
             stopWatchPosition(false);
         } else if(op == Board.FINISH) {
             stopwatch.getStopwatch().stop();
             blackhole.alpha = 0.9;
+            particleSystem.alpha = 1;
+            particleSystem.start();
+            Starling.juggler.add(particleSystem);
             stopWatchPosition(true);
         }
     }

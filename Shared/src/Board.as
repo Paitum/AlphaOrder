@@ -325,8 +325,6 @@ public class Board extends Sprite implements IAnimatable {
         celebrateYDir = 0;
     }
 
-
-
     public function advanceTime(time:Number):void {
         if(!celebrate) return;
 
@@ -350,7 +348,7 @@ public class Board extends Sprite implements IAnimatable {
                 celebrateXDir = 1;
                 celebrateYDir = 0;
             }
-//trace(celebrateX + ", " + celebrateY);
+
             setHighlightTileColor(celebrateY, celebrateX, 0x00FF00);
             fadeHighlightTile(celebrateY, celebrateX);
 

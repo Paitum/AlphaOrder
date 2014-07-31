@@ -11,6 +11,9 @@
             <entry library-name="Feathers" library-level="application">
               <dependency linkage="Merged" />
             </entry>
+            <entry library-name="Starling-Extension-Particle-System" library-level="application">
+              <dependency linkage="Merged" />
+            </entry>
           </entries>
           <sdk name="Adobe Air 14.0 SDK" />
         </dependencies>
@@ -36,6 +39,7 @@
     <orderEntry type="library" exported="" name="flash" level="application" />
     <orderEntry type="library" exported="" name="Feathers" level="application" />
     <orderEntry type="library" exported="" name="Citrus-Engine" level="application" />
+    <orderEntry type="library" exported="" name="Starling-Extension-Particle-System" level="application" />
   </component>
 </module>
 
