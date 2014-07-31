@@ -15,6 +15,8 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
     protected var millisecondsQuad:Quad;
     protected var pivotQuad:Quad;
     protected var fontsize:int;
+    protected var msShow:Boolean = false;
+    protected var msAdded:Boolean = false;
 
     private static const DEBUG:Boolean = false;
 
@@ -30,6 +32,12 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
     }
 
     private function handleAddedToStage(event:Event):void {
+        if(secondsField == null) {
+            initialize();
+        }
+    }
+
+    private function initialize():void {
         var separationOffset:int = -fontsize / 15;
         var msOffset:int = fontsize / 4;
 
@@ -80,10 +88,8 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
             millisecondsQuad.x = millisecondsField.x;
             millisecondsQuad.y = millisecondsField.y;
             millisecondsQuad.alpha = 0.25;
-            addChild(millisecondsQuad);
         }
 
-        addChild(millisecondsField);
         addChild(secondsField);
 
         if(DEBUG) {
@@ -92,6 +98,34 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
             pivotQuad.pivotX = pivotQuad.width / 2;
             pivotQuad.pivotY = pivotQuad.height / 2;
             addChild(pivotQuad);
+        }
+
+        processMilliseconds(msShow);
+    }
+
+    public function showMilliseconds(show:Boolean):void {
+        msShow = show;
+        processMilliseconds(show);
+    }
+
+    public function getShowMilliseconds():Boolean {
+        return msShow;
+    }
+
+    private function processMilliseconds(show:Boolean):void {
+        // wait until initialized
+        if(millisecondsField == null) {
+            return;
+        }
+
+        if(show && !msAdded) {
+            if(DEBUG) addChild(millisecondsQuad);
+            addChild(millisecondsField);
+            msAdded = true;
+        } else if(!show && msAdded) {
+            if(DEBUG) removeChild(millisecondsQuad);
+            removeChild(millisecondsField);
+            msAdded = false;
         }
     }
 

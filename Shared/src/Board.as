@@ -3,6 +3,7 @@ package {
 import flash.geom.Point;
 import flash.utils.Dictionary;
 
+import starling.animation.IAnimatable;
 import starling.animation.Tween;
 import starling.core.Starling;
 import starling.display.BlendMode;
@@ -18,30 +19,38 @@ import starling.events.TouchPhase;
 
 import test.ShakeTween;
 
-public class Board extends Sprite {
+public class Board extends Sprite implements IAnimatable {
 
     // [r][c] -> tile:Quad
-    private var tiles:Vector.<Vector.<Quad>>;
+    protected var tiles:Vector.<Vector.<Quad>>;
     // [r][c] -> highlightTile:Quad
-    private var highlightTiles:Vector.<Vector.<Quad>>;
+    protected var highlightTiles:Vector.<Vector.<Quad>>;
     // [r][c] -> tween:Tween
-    private var highlightTweens:Vector.<Vector.<Tween>>;
+    protected var highlightTweens:Vector.<Vector.<Tween>>;
     // name:String -> DisplayObjectContainer
-    private var pieces:Dictionary;
-    private var wiggleTween:ShakeTween;
-    private var wiggleToken:String;
+    protected var pieces:Dictionary;
+    protected var wiggleTween:ShakeTween;
+    protected var wiggleToken:String;
+
+    protected var celebrate:Boolean = false;
+    protected var lastCelebrateTime:Number = 0;
 
     protected var callback:Function;
     protected var model:BoardModel;
 
     private var mark:Quad;
     private var lastTileTouched:Point = new Point(-1, -1);
+    private var celebrateX:int = 0;
+    private var celebrateY:int = 0;
+    private var celebrateXDir:int = 0;
+    private var celebrateYDir:int = 0;
 
     // cache
     private var touchPoint:Point = new Point();
 
     public static const START:int = 0;
     public static const FINISH:int = 1;
+    private const DEBUG:Boolean = false;
 
     public function Board(model:BoardModel, callback:Function) {
         this.model = model;
@@ -50,8 +59,14 @@ public class Board extends Sprite {
         addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
     }
 
-    public function stop():void {
-        callback(FINISH);
+    public function changeModel(model:BoardModel):void {
+        if(this.model.getColumns() != model.getColumns() || this.model.getRows() != model.getRows()) {
+            throw new Error("New Model mustn't change board dimensions")
+        }
+
+        reset();
+        this.model = model;
+        resetAndStart();
     }
 
     public function resetAndStart():void {
@@ -116,19 +131,14 @@ public class Board extends Sprite {
         background.blendMode = BlendMode.MULTIPLY;
         addChild(background);
 
-        pieces = new Dictionary();
-        var tokenCount:int = model.getTokenCount();
-        for(var i:int = 0; i < tokenCount; i++) {
-            var token:String = model.getToken(i);
-            pieces[token] = createPiece(token);
-            pieces[token].color = 0xFFED26;
-            pieces[token].touchable = false;
-        }
+        initializePieces();
 
-        mark = new Quad(0.05, 0.05, 0xFF0000);
-        mark.pivotX = mark.width / 2;
-        mark.pivotY = mark.width / 2;
-        addChild(mark);
+        if(DEBUG) {
+            mark = new Quad(0.05, 0.05, 0xFF0000);
+            mark.pivotX = mark.width / 2;
+            mark.pivotY = mark.width / 2;
+            addChild(mark);
+        }
 
         addEventListener(TouchEvent.TOUCH, handleTouch);
     }
@@ -137,6 +147,8 @@ public class Board extends Sprite {
      * Sets the data structures to neutral values
      */
     protected function reset():void {
+        celebrate = false;
+        lastCelebrateTime = 0;
         lastTileTouched.setTo(-1, -1);
 
         var tokenCount:int = model.getTokenCount();
@@ -144,12 +156,10 @@ public class Board extends Sprite {
             var token:String = model.getToken(i);
             removeChild(pieces[token]);
         }
-
-        populateBoard();
     }
 
-    protected function createPiece(token:String):DisplayObjectContainer {
-        throw new Error("Subclass must override");
+    protected function initializePieces():void {
+        throw new Error("Subclass to implement");
     }
 
     protected function populateBoard():void {
@@ -189,8 +199,12 @@ public class Board extends Sprite {
         }
 
         touch.getLocation(this, touchPoint);
-        mark.x = touchPoint.x;
-        mark.y = touchPoint.y;
+
+        if(DEBUG) {
+            mark.x = touchPoint.x;
+            mark.y = touchPoint.y;
+        }
+
         var column:int = Math.floor(touchPoint.x);
         var row:int = Math.floor(touchPoint.y);
         var success:Boolean = false;
@@ -294,11 +308,55 @@ public class Board extends Sprite {
             }
 
             if(model.getCurrentSolutionToken() == null) {
-                stop();
+                callback(FINISH);
+                startCelebration();
+
             }
         }
 
         return token != null;
+    }
+
+    private function startCelebration():void {
+        celebrate = true;
+        celebrateX = 0;
+        celebrateY = 0;
+        celebrateXDir = 1;
+        celebrateYDir = 0;
+    }
+
+
+
+    public function advanceTime(time:Number):void {
+        if(!celebrate) return;
+
+        lastCelebrateTime += time;
+
+        const interval:Number = 0.05;
+        if(lastCelebrateTime > interval) {
+            celebrateX += celebrateXDir;
+            celebrateY += celebrateYDir;
+
+            if(celebrateXDir > 0 && celebrateX == model.getColumns() - 1) {
+                celebrateXDir = 0;
+                celebrateYDir = 1;
+            } else if(celebrateXDir < 0 && celebrateX == 0) {
+                celebrateXDir = 0;
+                celebrateYDir = -1;
+            } else if(celebrateYDir > 0 && celebrateY >= model.getRows() - 1) {
+                celebrateXDir = -1;
+                celebrateYDir = 0;
+            } else if(celebrateYDir < 0 && celebrateY < 1) {
+                celebrateXDir = 1;
+                celebrateYDir = 0;
+            }
+//trace(celebrateX + ", " + celebrateY);
+            setHighlightTileColor(celebrateY, celebrateX, 0x00FF00);
+            fadeHighlightTile(celebrateY, celebrateX);
+
+            lastCelebrateTime -= interval;
+        }
+
     }
 }
 }

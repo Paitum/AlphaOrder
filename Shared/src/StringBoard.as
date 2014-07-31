@@ -1,5 +1,6 @@
 package {
 import flash.geom.Point;
+import flash.utils.Dictionary;
 
 import starling.display.DisplayObjectContainer;
 import starling.text.TextField;
@@ -18,7 +19,18 @@ public class StringBoard extends Board {
     }
 
 
-    override protected function createPiece(token:String):DisplayObjectContainer {
+    override protected function initializePieces():void {
+        pieces = new Dictionary();
+        var characters:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for(var i:int = 0; i < characters.length; i++) {
+            var token:String = characters.charAt(i);
+            pieces[token] = createPiece(token);
+            pieces[token].color = 0xFFED26;
+            pieces[token].touchable = false;
+        }
+    }
+
+    protected function createPiece(token:String):DisplayObjectContainer {
         if(fontName == null || isNaN(fontSize)) {
             throw new Error("Must specify font characteristics");
         }

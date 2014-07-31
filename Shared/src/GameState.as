@@ -9,6 +9,7 @@ import feathers.data.ListCollection;
 import flash.geom.Point;
 
 import starling.core.Starling;
+import starling.display.BlendMode;
 import starling.display.Image;
 import starling.display.Quad;
 import starling.events.Event;
@@ -19,8 +20,11 @@ public class GameState extends StarlingState {
     private var stopwatch:StopwatchSprite;
     private var modeBar:TabBar;
     private var models:Vector.<BoardModel> = new Vector.<BoardModel>(2);
-    private var boards:Vector.<Board> = new Vector.<Board>(2);
-    private var currentBoard:int = -1;
+    private var board:Board;
+    private var blackhole:Image;
+    private var currentModel:int = -1;
+    private var yDivider:int;
+    private var padding:int;
 
     public function GameState() {
         super();
@@ -50,9 +54,9 @@ public class GameState extends StarlingState {
 
         var columns:int = 3;
         var rows:int = 4;
-        var padding:int = 10;
+        padding = 10;
 
-        var yDivider:int = stage.stageHeight / 10;
+        yDivider = stage.stageHeight / 10;
         var boardCenterX:int = stage.stageWidth / 2;
         var boardCenterY:int = (stage.stageHeight - yDivider) / 2;
         var boardWidth:int = stage.stageWidth - 2 * padding;
@@ -68,27 +72,40 @@ public class GameState extends StarlingState {
         addChild(quad1);
 
 //        var alphabet:String = "ABCXYZ";
-        var alphabet:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
+//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
+        models[2] = BoardModel.createBoardModelForLetters(rows, columns, "0123456789");
         var fontSize:Number = 0.979729;
         var offset:Point = new Point(0.06, -0.10);
-        for(var i:int = 0; i < models.length; i++) {
-            boards[i] = new StringBoard(models[i], "ArtBrushLarge", fontSize, offset, boardCallback);
-            boards[i].pivotX = columns / 2;
-            boards[i].pivotY = rows / 2;
-            boards[i].x = boardCenterX;
-            boards[i].y = yDivider + boardCenterY;
-            boards[i].scaleX = scale;
-            boards[i].scaleY = scale;
-    
-    //        board.x = 50;
-    //        board.y = 50;
-    //        board.scaleX = 10;
-    //        board.scaleY = 10;
-    //        board.pivotX = 0;
-    //        board.pivotY = 0;
-        }
+        board = new StringBoard(models[0], "ArtBrushLarge", fontSize, offset, boardCallback);
+        board.pivotX = columns / 2;
+        board.pivotY = rows / 2;
+        board.x = boardCenterX;
+        board.y = yDivider + boardCenterY;
+        board.scaleX = scale;
+        board.scaleY = scale;
+
+//        board.x = 50;
+//        board.y = 50;
+//        board.scaleX = 10;
+//        board.scaleY = 10;
+//        board.pivotX = 0;
+//        board.pivotY = 0;
+        addChild(board);
+
+        texture = Assets.assets.getTexture("blackhole");
+        blackhole = new Image(texture);
+        blackhole.pivotX = blackhole.width / 2;
+        blackhole.pivotY = blackhole.height / 2;
+        blackhole.x = board.x;
+        blackhole.y = board.y;
+        blackhole.scaleX = 8;
+        blackhole.scaleY = 4;
+        blackhole.blendMode = BlendMode.MULTIPLY;
+        blackhole.alpha = 0;
+        blackhole.touchable = false;
+        addChild(blackhole);
 
         var controlsWidth:int = boardWidth;
         var controlsHeight:int = yDivider - 2 * padding;
@@ -122,8 +139,9 @@ public class GameState extends StarlingState {
         modeBar = new TabBar();
         modeBar.dataProvider = new ListCollection(
         [
-            { label: "A" },
-            { label: "a" },
+            { label: "ABC" },
+            { label: "abc" },
+            { label: "123" },
 //            { label: "Aa" },
         ]);
         modeBar.height = 92;
@@ -135,37 +153,55 @@ public class GameState extends StarlingState {
         modeBar.y = controlsCenterY;
         this.addChild( modeBar );
 
-        showBoard();
-
-        startStopButton.addEventListener(Event.TRIGGERED, handleStartStop);
+        startStopButton.addEventListener(Event.TRIGGERED, handleRestart);
         modeBar.addEventListener( Event.CHANGE, handleModeChange);
+
+        board.resetAndStart();
+        Starling.juggler.add(board);
+    }
+
+    private function stopWatchPosition(makeBig:Boolean):void {
+        var boardCenterX:int = stage.stageWidth / 2;
+        var boardCenterY:int = (stage.stageHeight - yDivider) / 2;
+        var controlsHeight:int = yDivider - 2 * padding;
+        var controlsCenterX:int = boardCenterX;
+        var controlsCenterY:int = padding + controlsHeight / 2;
+
+        if(makeBig) {
+            stopwatch.x = boardCenterX;
+            stopwatch.y = yDivider + boardCenterY;
+            stopwatch.scaleX = 2;
+            stopwatch.scaleY = 2;
+            stopwatch.showMilliseconds(true);
+        } else {
+            stopwatch.x = controlsCenterX;
+            stopwatch.y = controlsCenterY;
+            stopwatch.scaleX = 0.5;
+            stopwatch.scaleY = 0.5;
+            stopwatch.showMilliseconds(false);
+        }
     }
 
     private function handleModeChange(event:Event):void {
-        showBoard();
-    }
-
-    private function showBoard():void {
-        if(currentBoard != -1) {
-            removeChild(boards[currentBoard]);
-        }
-
-        currentBoard = modeBar.selectedIndex;
-        addChild(boards[currentBoard]);
-        boards[currentBoard].resetAndStart();
+        currentModel = modeBar.selectedIndex;
+        board.changeModel(models[currentModel]);
     }
 
     private function boardCallback(op:int):void {
         if(op == Board.START) {
             stopwatch.getStopwatch().reset();
             stopwatch.getStopwatch().start();
+            blackhole.alpha = 0;
+            stopWatchPosition(false);
         } else if(op == Board.FINISH) {
             stopwatch.getStopwatch().stop();
+            blackhole.alpha = 0.9;
+            stopWatchPosition(true);
         }
     }
 
-    private function handleStartStop(event:Event):void {
-        boards[currentBoard].resetAndStart();
+    private function handleRestart(event:Event):void {
+        board.resetAndStart();
     }
 }
 }
