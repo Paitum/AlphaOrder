@@ -75,10 +75,10 @@ public class GameState extends StarlingState {
         addChild(quad1);
 
 //        var alphabet:String = "ABCXYZ";
-        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
-//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
+        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
-        models[2] = BoardModel.createBoardModelForLetters(rows, columns, "0123456789");
+        models[2] = BoardModel.createBoardModelForLetters(rows, columns, "012");
         var fontSize:Number = 0.979729;
         var offset:Point = new Point(0.06, -0.10);
         board = new StringBoard(models[0], "ArtBrushLarge", fontSize, offset, boardCallback);
@@ -204,14 +204,14 @@ public class GameState extends StarlingState {
             particleSystem.alpha = 0;
             particleSystem.stop();
             Starling.juggler.remove(particleSystem);
-            stopWatchPosition(false);
+//            stopWatchPosition(false);
         } else if(op == Board.FINISH) {
             stopwatch.getStopwatch().stop();
             blackhole.alpha = 0.9;
             particleSystem.alpha = 1;
             particleSystem.start();
             Starling.juggler.add(particleSystem);
-            stopWatchPosition(true);
+//            stopWatchPosition(true);
         }
     }
 

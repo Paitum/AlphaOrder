@@ -89,8 +89,8 @@ public class Startup extends StarlingCitrusEngine {
     }
 
     private function initializeButton(button:Button):void {
-        button.defaultSkin = new Image(Assets.assets.getTexture("button-up-skin"));
-        button.downSkin = new Image(Assets.assets.getTexture("button-down-skin"));
+        button.defaultSkin = new Image(Assets.assets.getTexture("buttonUpSkin"));
+        button.downSkin = new Image(Assets.assets.getTexture("buttonDownSkin"));
         button.defaultIcon = new Image(Assets.assets.getTexture("restart"));
     }
 
