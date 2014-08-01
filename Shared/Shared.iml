@@ -11,11 +11,8 @@
             <entry library-name="Feathers" library-level="application">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="Starling-Extension-Particle-System" library-level="application">
-              <dependency linkage="Merged" />
-            </entry>
           </entries>
-          <sdk name="Adobe Air 14.0 SDK" />
+          <sdk name="Adobe Air SDK" />
         </dependencies>
         <compiler-options>
           <option name="additionalOptions" value="-inline" />
