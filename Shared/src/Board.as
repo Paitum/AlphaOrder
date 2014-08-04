@@ -17,7 +17,7 @@ import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 
-import test.ShakeTween;
+import ShakeTween;
 
 public class Board extends Sprite implements IAnimatable {
 

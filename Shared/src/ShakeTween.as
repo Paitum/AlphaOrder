@@ -1,4 +1,4 @@
-package test {
+package {
 import starling.animation.IAnimatable;
 import starling.display.DisplayObjectContainer;
 import starling.events.Event;
