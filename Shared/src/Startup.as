@@ -62,8 +62,8 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/ConstructionPaper.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
-        Assets.assets.enqueue("media/textures/" + scale + "x/button-down-skin.png");
-        Assets.assets.enqueue("media/textures/" + scale + "x/button-up-skin.png");
+        Assets.assets.enqueue("media/textures/" + scale + "x/buttonDownSkin.png");
+        Assets.assets.enqueue("media/textures/" + scale + "x/buttonUpSkin.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/blackhole.png");
         Assets.assets.enqueue("media/particles/particleConfig.pex");
