@@ -4,9 +4,6 @@ import citrus.core.starling.StarlingState;
 
 import feathers.controls.Button;
 import feathers.controls.TabBar;
-import feathers.data.ListCollection;
-
-import flash.geom.Point;
 
 import starling.core.Starling;
 import starling.display.BlendMode;
@@ -16,15 +13,20 @@ import starling.events.Event;
 import starling.extensions.particles.PDParticleSystem;
 import starling.extensions.particles.ParticleSystem;
 import starling.textures.Texture;
+import starling.utils.HAlign;
 
 public class GameState extends StarlingState {
-    private var startStopButton:Button;
+    private var leftButton:Button;
+    private var centerButton:Button;
+    private var rightButton:Button;
     private var stopwatch:StopwatchSprite;
     private var modeBar:TabBar;
     private var models:Vector.<BoardModel> = new Vector.<BoardModel>(2);
+    private var modelLabels:Vector.<String> = new Vector.<String>();
+    private var currentModelLabel:String;
+    private var currentModel:int = -1;
     private var board:Board;
     private var blackhole:Image;
-    private var currentModel:int = -1;
     private var yDivider:int;
     private var padding:int;
     private var particleSystem:ParticleSystem;
@@ -66,22 +68,26 @@ public class GameState extends StarlingState {
         var boardHeight:int = (stage.stageHeight - yDivider) - 2 * padding;
         var scale:int = Math.min(boardWidth / columns, boardHeight / rows);
 
-        var quad1:Quad, quad2:Quad;
+        var dividerQuad:Quad;
 
-        quad1 = new Quad(stage.stageWidth - 2 * padding, 1, 0xFFFF00);
-        quad1.x = padding;
-        quad1.y = yDivider;
-        quad1.alpha = 1;
-        addChild(quad1);
+        dividerQuad = new Quad(stage.stageWidth - 2 * padding, 1, 0xFFFF00);
+        dividerQuad.x = padding;
+        dividerQuad.y = yDivider;
+        dividerQuad.alpha = 1;
+        addChild(dividerQuad);
 
 //        var alphabet:String = "ABCXYZ";
 //        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
         models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        modelLabels[0] = "ABC";
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
+        modelLabels[1] = "abc";
         models[2] = BoardModel.createBoardModelForLetters(rows, columns, "012");
-        var fontSize:Number = 0.979729;
-        var offset:Point = new Point(0.06, -0.10);
-        board = new StringBoard(models[0], "ArtBrushLarge", fontSize, offset, boardCallback);
+        modelLabels[2] = "123";
+        currentModel = 0;
+        currentModelLabel = modelLabels[currentModel];
+
+        board = new StringBoard(models[0], "ArtBrushLarge", boardCallback);
         board.pivotX = columns / 2;
         board.pivotY = rows / 2;
         board.x = boardCenterX;
@@ -123,7 +129,7 @@ public class GameState extends StarlingState {
         var controlsCenterX:int = boardCenterX;
         var controlsCenterY:int = padding + controlsHeight / 2;
 
-        fontSize = stage.stageWidth / 5.12; // 125
+        var fontSize:int = yDivider * 1.2;
         stopwatch = new StopwatchSprite(fontSize);
         stopwatch.pivotX = stopwatch.width/ 2;
         stopwatch.pivotY = stopwatch.height / 2;
@@ -135,65 +141,62 @@ public class GameState extends StarlingState {
         Starling.juggler.add(stopwatch);
         stopwatch.getStopwatch().start();
 
-        startStopButton = new Button();
-        startStopButton.nameList.add("restart");
-        startStopButton.width = 92;
-        startStopButton.height = 92;
-        startStopButton.pivotX = startStopButton.width / 2;
-        startStopButton.pivotY = startStopButton.height / 2;
-        startStopButton.scaleX = 0.75;
-        startStopButton.scaleY  = 0.75;
-        startStopButton.x = stage.stageWidth - padding - startStopButton.width / 2;
-        startStopButton.y = controlsCenterY;
-        addChild(startStopButton);
+        leftButton = createButton(HAlign.LEFT);
+        leftButton.addEventListener(Event.TRIGGERED, handleLeftButtonTrigger);
+        addChild(leftButton);
 
-        modeBar = new TabBar();
-        modeBar.dataProvider = new ListCollection(
-        [
-            { label: "ABC" },
-            { label: "abc" },
-            { label: "123" },
-//            { label: "Aa" },
-        ]);
-        modeBar.height = 92;
-        modeBar.pivotX = modeBar.width / 2;
-        modeBar.pivotY = modeBar.height / 2;
-        modeBar.scaleX = 0.75;
-        modeBar.scaleY  = 0.75;
-        modeBar.x = padding + modeBar.width / 2;
-        modeBar.y = controlsCenterY;
-        this.addChild( modeBar );
+        centerButton = createButton(HAlign.CENTER);
+        centerButton.addEventListener(Event.TRIGGERED, handleCenterButtonTrigger);
+        addChild(centerButton);
 
-        startStopButton.addEventListener(Event.TRIGGERED, handleRestart);
-        modeBar.addEventListener( Event.CHANGE, handleModeChange);
+        rightButton = createButton(HAlign.RIGHT);
+        rightButton.addEventListener(Event.TRIGGERED, handleRightButtonTrigger);
+        addChild(rightButton);
+
+        var tempQuad:Quad;
+        tempQuad = new Quad(1, controlsHeight + padding, 0xFFFF00);
+        tempQuad.alpha = 1;
+        tempQuad.x = centerButton.x;
+        tempQuad.y = padding;
+        tempQuad.touchable = false;
+        addChild(tempQuad);
+
+        tempQuad = new Quad(1, controlsHeight + padding, 0xFFFF00);
+        tempQuad.alpha = 1;
+        tempQuad.x = rightButton.x;
+        tempQuad.y = padding;
+        tempQuad.touchable = false;
+        addChild(tempQuad);
 
         board.resetAndStart();
         Starling.juggler.add(board);
     }
 
-    private function stopWatchPosition(makeBig:Boolean):void {
-        var boardCenterX:int = stage.stageWidth / 2;
-        var boardCenterY:int = (stage.stageHeight - yDivider) / 2;
-        var controlsHeight:int = yDivider - 2 * padding;
-        var controlsCenterX:int = boardCenterX;
-        var controlsCenterY:int = padding + controlsHeight / 2;
+    private function createButton(hAlign:String):Button {
+        var button:Button = new Button();
+        button.nameList.add("none");
+        button.width = stage.stageWidth / 3;
+        button.height = yDivider;
+        button.pivotX = 0;
+        button.pivotY = 0;
+        button.x = (hAlign == HAlign.LEFT ? 0 : hAlign == HAlign.CENTER ? 1 : 2) * button.width;
+        button.y = 0;
 
-        if(makeBig) {
-            stopwatch.x = boardCenterX;
-            stopwatch.y = yDivider + boardCenterY;
-            stopwatch.scaleX = 2;
-            stopwatch.scaleY = 2;
-        } else {
-            stopwatch.x = controlsCenterX;
-            stopwatch.y = controlsCenterY;
-            stopwatch.scaleX = 0.5;
-            stopwatch.scaleY = 0.5;
-        }
+        return button;
     }
 
-    private function handleModeChange(event:Event):void {
-        currentModel = modeBar.selectedIndex;
+    private function handleLeftButtonTrigger(event:Event):void {
+        currentModel = (currentModel + 1) % models.length;
+        currentModelLabel = modelLabels[currentModel];
         board.changeModel(models[currentModel]);
+    }
+
+    private function handleCenterButtonTrigger(event:Event):void {
+        stopwatch.alpha = stopwatch.alpha > 0.5 ? 0.075 : 1.0;
+    }
+
+    private function handleRightButtonTrigger(event:Event):void {
+        board.resetAndStart();
     }
 
     private function boardCallback(op:int):void {
@@ -204,19 +207,13 @@ public class GameState extends StarlingState {
             particleSystem.alpha = 0;
             particleSystem.stop();
             Starling.juggler.remove(particleSystem);
-//            stopWatchPosition(false);
         } else if(op == Board.FINISH) {
             stopwatch.getStopwatch().stop();
             blackhole.alpha = 0.9;
             particleSystem.alpha = 1;
             particleSystem.start();
             Starling.juggler.add(particleSystem);
-//            stopWatchPosition(true);
         }
-    }
-
-    private function handleRestart(event:Event):void {
-        board.resetAndStart();
     }
 }
 }

@@ -24,6 +24,28 @@
         <packaging-android />
         <packaging-ios />
       </configuration>
+      <configuration name="480x720Desktop" target-platform="Desktop" pure-as="true" main-class="DesktopStartup" output-file="480x720Desktop.swf" output-folder="$MODULE_DIR$/../out/production/Desktop">
+        <dependencies>
+          <entries>
+            <entry library-name="Citrus-Engine" library-level="application">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry module-name="Shared" build-configuration-name="Shared">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="Feathers" library-level="application">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="Adobe Air SDK" />
+        </dependencies>
+        <compiler-options>
+          <option name="additionalOptions" value="-inline" />
+        </compiler-options>
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/480x720-app.xml" package-file-name="480x720Desktop" />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
     </configurations>
     <compiler-options />
   </component>

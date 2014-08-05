@@ -17,6 +17,8 @@ import starling.display.Image;
 import starling.textures.Texture;
 import starling.utils.AssetManager;
 
+import test.TestState;
+
 public class Startup extends StarlingCitrusEngine {
     private var viewPort:Rectangle = new Rectangle();
     private var scale:Number;
@@ -84,14 +86,20 @@ public class Startup extends StarlingCitrusEngine {
         // Initialize Feather's theme
         theme = new MetalWorksMobileTheme(DisplayObjectContainer(state), false);
         theme.setInitializerForClass(Button, initializeButton, "restart");
+        theme.setInitializerForClass(Button, initializeButtonNone, "none");
 
         state = new GameState();
+//        state = new TestState();
     }
 
     private function initializeButton(button:Button):void {
         button.defaultSkin = new Image(Assets.assets.getTexture("buttonUpSkin"));
         button.downSkin = new Image(Assets.assets.getTexture("buttonDownSkin"));
         button.defaultIcon = new Image(Assets.assets.getTexture("restart"));
+    }
+
+    private function initializeButtonNone(button:Button):void {
+
     }
 
     private function setupView():void {
