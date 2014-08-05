@@ -26,8 +26,10 @@ public class GameState extends StarlingState {
     private var currentModelLabel:String;
     private var currentModel:int = -1;
     private var board:Board;
+    private var breadcrumbs:StringBreadcrumbs;
     private var blackhole:Image;
     private var yDivider:int;
+    private var breadcrumbDivider:int;
     private var padding:int;
     private var particleSystem:ParticleSystem;
 
@@ -62,10 +64,13 @@ public class GameState extends StarlingState {
         padding = 10;
 
         yDivider = stage.stageHeight / 10;
+        breadcrumbDivider = yDivider + stage.stageHeight / 10;
         var boardCenterX:int = stage.stageWidth / 2;
-        var boardCenterY:int = (stage.stageHeight - yDivider) / 2;
+        var boardCenterY:int = (stage.stageHeight - breadcrumbDivider) / 2;
         var boardWidth:int = stage.stageWidth - 2 * padding;
-        var boardHeight:int = (stage.stageHeight - yDivider) - 2 * padding;
+        var boardHeight:int = (stage.stageHeight - breadcrumbDivider) - 2 * padding;
+        var breadcrumbHeight:int = breadcrumbDivider - yDivider - 2 * padding;
+        var breadcrumbCenterY:int = yDivider + breadcrumbHeight / 2 + padding;
         var scale:int = Math.min(boardWidth / columns, boardHeight / rows);
 
         var dividerQuad:Quad;
@@ -73,6 +78,12 @@ public class GameState extends StarlingState {
         dividerQuad = new Quad(stage.stageWidth - 2 * padding, 1, 0xFFFF00);
         dividerQuad.x = padding;
         dividerQuad.y = yDivider;
+        dividerQuad.alpha = 1;
+        addChild(dividerQuad);
+
+        dividerQuad = new Quad(stage.stageWidth - 2 * padding, 1, 0xFFFF00);
+        dividerQuad.x = padding;
+        dividerQuad.y = breadcrumbDivider;
         dividerQuad.alpha = 1;
         addChild(dividerQuad);
 
@@ -88,10 +99,10 @@ public class GameState extends StarlingState {
         currentModelLabel = modelLabels[currentModel];
 
         board = new StringBoard(models[0], "ArtBrushLarge", boardCallback);
-        board.pivotX = columns / 2;
-        board.pivotY = rows / 2;
+        board.pivotX = board.width / 2;
+        board.pivotY = board.height / 2;
         board.x = boardCenterX;
-        board.y = yDivider + boardCenterY;
+        board.y = breadcrumbDivider + boardCenterY;
         board.scaleX = scale;
         board.scaleY = scale;
 
@@ -102,6 +113,17 @@ public class GameState extends StarlingState {
 //        board.pivotX = 0;
 //        board.pivotY = 0;
         addChild(board);
+
+        var divisions:int = boardWidth / breadcrumbHeight;
+        breadcrumbs = new StringBreadcrumbs(divisions);
+        breadcrumbs.pivotX = breadcrumbs.width / 2;
+        breadcrumbs.pivotY = breadcrumbs.height / 2;
+        breadcrumbs.x = boardCenterX;
+        breadcrumbs.y = breadcrumbCenterY;
+        breadcrumbs.scaleX = breadcrumbHeight;
+        breadcrumbs.scaleY = breadcrumbHeight;
+        addChild(breadcrumbs);
+
 
         texture = Assets.assets.getTexture("blackhole");
         blackhole = new Image(texture);
@@ -154,14 +176,14 @@ public class GameState extends StarlingState {
         addChild(rightButton);
 
         var tempQuad:Quad;
-        tempQuad = new Quad(1, controlsHeight + padding, 0xFFFF00);
+        tempQuad = new Quad(1, controlsHeight, 0x444488);
         tempQuad.alpha = 1;
         tempQuad.x = centerButton.x;
         tempQuad.y = padding;
         tempQuad.touchable = false;
         addChild(tempQuad);
 
-        tempQuad = new Quad(1, controlsHeight + padding, 0xFFFF00);
+        tempQuad = new Quad(1, controlsHeight, 0x444488);
         tempQuad.alpha = 1;
         tempQuad.x = rightButton.x;
         tempQuad.y = padding;
@@ -199,8 +221,11 @@ public class GameState extends StarlingState {
         board.resetAndStart();
     }
 
-    private function boardCallback(op:int):void {
-        if(op == Board.START) {
+    private function boardCallback(op:int, token:String = null):void {
+        if(op == Board.FOUND) {
+            breadcrumbs.addToken(token);
+        } else if(op == Board.START) {
+            breadcrumbs.reset();
             stopwatch.getStopwatch().reset();
             stopwatch.getStopwatch().start();
             blackhole.alpha = 0;

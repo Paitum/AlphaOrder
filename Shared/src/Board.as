@@ -50,9 +50,11 @@ public class Board extends Sprite implements IAnimatable {
 
     public static const START:int = 0;
     public static const FINISH:int = 1;
+    public static const FOUND:int = 2;
     private const DEBUG:Boolean = false;
 
     public function Board(model:BoardModel, callback:Function) {
+        super();
         this.model = model;
         this.callback = callback;
 
@@ -301,6 +303,7 @@ public class Board extends Sprite implements IAnimatable {
         var token:String = model.processSolution(row, column);
 
         if(token != null) {
+            callback(FOUND, token);
             removeChild(pieces[token]);
 
             if(model.hasNextToken()) {
