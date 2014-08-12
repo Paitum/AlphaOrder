@@ -26,6 +26,11 @@ public class Stopwatch implements IAnimatable {
     }
 
     [Inline]
+    final public function setAccumulatedTime(time:Number):void {
+        accumulatedTime = time;
+    }
+
+    [Inline]
     final public function getAccumulatedTime():Number {
         return accumulatedTime;
     }

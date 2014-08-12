@@ -15,8 +15,6 @@ public class SWF_Assets_1x {
 //    public static const buttonUpSkin:Class;
 //    [Embed(source="../../Shared/media/textures/2x/restart.png")]
 //    public static const restart:Class;
-//    [Embed(source="../../Shared/media/textures/2x/blackhole.png")]
-//    public static const blackhole:Class;
 //
 //    [Embed(source="../../Shared/media/particles/particleConfig.pex", mimeType="application/octet-stream")]
 //    public static const particleConfig:Class;

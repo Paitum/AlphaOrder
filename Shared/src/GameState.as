@@ -5,11 +5,16 @@ import citrus.core.starling.StarlingState;
 import feathers.controls.Button;
 import feathers.controls.TabBar;
 
+import starling.animation.Tween;
+
 import starling.core.Starling;
 import starling.display.BlendMode;
 import starling.display.Image;
 import starling.display.Quad;
 import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
 import starling.extensions.particles.PDParticleSystem;
 import starling.extensions.particles.ParticleSystem;
 import starling.textures.Texture;
@@ -19,7 +24,8 @@ public class GameState extends StarlingState {
     private var leftButton:Button;
     private var centerButton:Button;
     private var rightButton:Button;
-    private var stopwatch:StopwatchSprite;
+    private var endStopwatch:StopwatchSprite;
+    private var endStopwatchTween:Tween;
     private var modeBar:TabBar;
     private var models:Vector.<BoardModel> = new Vector.<BoardModel>(2);
     private var modelLabels:Vector.<String> = new Vector.<String>();
@@ -27,7 +33,8 @@ public class GameState extends StarlingState {
     private var currentModel:int = -1;
     private var board:Board;
     private var breadcrumbs:StringBreadcrumbs;
-    private var blackhole:Image;
+    private var fadeWall:Quad;
+    private var fullScreenTouch:Quad;
     private var yDivider:int;
     private var breadcrumbDivider:int;
     private var padding:int;
@@ -40,12 +47,15 @@ public class GameState extends StarlingState {
     override public function initialize():void {
         super.initialize();
 
+        var stageWidth:int = stage.stageWidth;
+        var stageHeight:int = stage.stageHeight;
+
         stage.color = 0x195BB2;
 
         var texture:Texture = Assets.assets.getTexture("Background");
 
         if(texture == null) {
-            var backgroundQuad:Quad = new Quad(stage.stageWidth, stage.stageHeight, 0x195BB2);
+            var backgroundQuad:Quad = new Quad(stageWidth, stageHeight, 0x195BB2);
             backgroundQuad.setVertexColor(0, 0x001240);
             backgroundQuad.setVertexColor(1, 0x00237F);
             backgroundQuad.setVertexColor(2, 0x00237F);
@@ -53,8 +63,8 @@ public class GameState extends StarlingState {
             addChild(backgroundQuad);
         } else {
             var backgroundImage:Image = new Image(texture);
-            backgroundImage.width = stage.stageWidth;
-            backgroundImage.height = stage.stageHeight;
+            backgroundImage.width = stageWidth;
+            backgroundImage.height = stageHeight;
             backgroundImage.color = 0x0046FF;
             addChild(backgroundImage);
         }
@@ -63,38 +73,38 @@ public class GameState extends StarlingState {
         var rows:int = 4;
         padding = 10;
 
-        yDivider = stage.stageHeight / 10;
-        breadcrumbDivider = yDivider + stage.stageHeight / 10;
-        var boardCenterX:int = stage.stageWidth / 2;
-        var boardCenterY:int = (stage.stageHeight - breadcrumbDivider) / 2;
-        var boardWidth:int = stage.stageWidth - 2 * padding;
-        var boardHeight:int = (stage.stageHeight - breadcrumbDivider) - 2 * padding;
+        yDivider = stageHeight / 10;
+        breadcrumbDivider = yDivider + stageHeight / 10;
+        var boardCenterX:int = stageWidth / 2;
+        var boardCenterY:int = (stageHeight - breadcrumbDivider) / 2;
+        var boardWidth:int = stageWidth - 2 * padding;
+        var boardHeight:int = (stageHeight - breadcrumbDivider) - 2 * padding;
         var breadcrumbHeight:int = breadcrumbDivider - yDivider - 2 * padding;
         var breadcrumbCenterY:int = yDivider + breadcrumbHeight / 2 + padding;
         var scale:int = Math.min(boardWidth / columns, boardHeight / rows);
 
         var dividerQuad:Quad;
 
-        dividerQuad = new Quad(stage.stageWidth - 2 * padding, 1, 0xFFFF00);
+        dividerQuad = new Quad(stageWidth - 2 * padding, 1, 0xFFFF00);
         dividerQuad.x = padding;
         dividerQuad.y = yDivider;
         dividerQuad.alpha = 1;
         addChild(dividerQuad);
 
-        dividerQuad = new Quad(stage.stageWidth - 2 * padding, 1, 0xFFFF00);
+        dividerQuad = new Quad(stageWidth - 2 * padding, 1, 0xFFFF00);
         dividerQuad.x = padding;
         dividerQuad.y = breadcrumbDivider;
         dividerQuad.alpha = 1;
         addChild(dividerQuad);
 
 //        var alphabet:String = "ABCXYZ";
-//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
-        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
+//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         modelLabels[0] = "ABC";
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
         modelLabels[1] = "abc";
-        models[2] = BoardModel.createBoardModelForLetters(rows, columns, "012");
-        modelLabels[2] = "123";
+        models[2] = RandomCaseModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
+        modelLabels[2] = "aBc";
         currentModel = 0;
         currentModelLabel = modelLabels[currentModel];
 
@@ -105,13 +115,6 @@ public class GameState extends StarlingState {
         board.y = breadcrumbDivider + boardCenterY;
         board.scaleX = scale;
         board.scaleY = scale;
-
-//        board.x = 50;
-//        board.y = 50;
-//        board.scaleX = 10;
-//        board.scaleY = 10;
-//        board.pivotX = 0;
-//        board.pivotY = 0;
         addChild(board);
 
         var divisions:int = boardWidth / breadcrumbHeight;
@@ -120,29 +123,24 @@ public class GameState extends StarlingState {
         breadcrumbs.pivotY = breadcrumbs.height / 2;
         breadcrumbs.x = boardCenterX;
         breadcrumbs.y = breadcrumbCenterY;
+        //noinspection JSSuspiciousNameCombination
         breadcrumbs.scaleX = breadcrumbHeight;
         breadcrumbs.scaleY = breadcrumbHeight;
         addChild(breadcrumbs);
 
-
-        texture = Assets.assets.getTexture("blackhole");
-        blackhole = new Image(texture);
-        blackhole.pivotX = blackhole.width / 2;
-        blackhole.pivotY = blackhole.height / 2;
-        blackhole.x = board.x;
-        blackhole.y = board.y;
-        blackhole.scaleX = 8;
-        blackhole.scaleY = 4;
-        blackhole.blendMode = BlendMode.MULTIPLY;
-        blackhole.alpha = 0;
-        blackhole.touchable = false;
-        addChild(blackhole);
+        fadeWall = new Quad(stageWidth, stageHeight, 0x888888);
+        fadeWall.x = 0;
+        fadeWall.y = 0;
+        fadeWall.blendMode = BlendMode.MULTIPLY;
+        fadeWall.alpha = 0;
+        fadeWall.touchable = false;
+        addChild(fadeWall);
 
         var xml:XML = XML(Assets.assets.getXml("particleConfig"));
         texture = Assets.assets.getTexture("particleTexture");
         particleSystem = new PDParticleSystem(xml, texture);
         particleSystem.emitterX = board.x;
-        particleSystem.emitterY = board.y;
+        particleSystem.emitterY = stageHeight;
         particleSystem.alpha = 0;
         addChild(particleSystem);
 
@@ -150,18 +148,6 @@ public class GameState extends StarlingState {
         var controlsHeight:int = yDivider - 2 * padding;
         var controlsCenterX:int = boardCenterX;
         var controlsCenterY:int = padding + controlsHeight / 2;
-
-        var fontSize:int = yDivider * 1.2;
-        stopwatch = new StopwatchSprite(fontSize);
-        stopwatch.pivotX = stopwatch.width/ 2;
-        stopwatch.pivotY = stopwatch.height / 2;
-        stopwatch.x = controlsCenterX;
-        stopwatch.y = controlsCenterY;
-        stopwatch.scaleX = 0.5;
-        stopwatch.scaleY = 0.5;
-        addChild(stopwatch);
-        Starling.juggler.add(stopwatch);
-        stopwatch.getStopwatch().start();
 
         leftButton = createButton(HAlign.LEFT);
         leftButton.addEventListener(Event.TRIGGERED, handleLeftButtonTrigger);
@@ -190,8 +176,37 @@ public class GameState extends StarlingState {
         tempQuad.touchable = false;
         addChild(tempQuad);
 
+        scale = Math.min(stageWidth, stageHeight) / 4;
+        endStopwatch = new StopwatchSprite(scale);
+        endStopwatch.x = stageWidth / 2;
+        endStopwatch.y = stageHeight / 2;
+        endStopwatch.scaleX = 1;
+        endStopwatch.scaleY = 1;
+        endStopwatch.touchable = false;
+        endStopwatch.showMilliseconds(true);
+        addChild(endStopwatch);
+        Starling.juggler.add(endStopwatch);
+
+        endStopwatchTween = new Tween(endStopwatch, 1, "easeIn");
+
+        fullScreenTouch = new Quad(stageWidth, stageHeight, 0xFFFFFF);
+        fullScreenTouch.x = 0;
+        fullScreenTouch.y = 0;
+        fullScreenTouch.alpha = 0.0;
+        addChild(fullScreenTouch);
+        fullScreenTouch.addEventListener(TouchEvent.TOUCH, handleFadeWallTouch);
+
         board.resetAndStart();
         Starling.juggler.add(board);
+    }
+
+    private function handleFadeWallTouch(event:TouchEvent):void {
+        var touch:Touch = event.getTouch(this);
+
+        if(touch != null && touch.phase == TouchPhase.BEGAN) {
+            trace(event);
+            board.resetAndStart();
+        }
     }
 
     private function createButton(hAlign:String):Button {
@@ -214,7 +229,7 @@ public class GameState extends StarlingState {
     }
 
     private function handleCenterButtonTrigger(event:Event):void {
-        stopwatch.alpha = stopwatch.alpha > 0.5 ? 0.075 : 1.0;
+
     }
 
     private function handleRightButtonTrigger(event:Event):void {
@@ -226,19 +241,45 @@ public class GameState extends StarlingState {
             breadcrumbs.addToken(token);
         } else if(op == Board.START) {
             breadcrumbs.reset();
-            stopwatch.getStopwatch().reset();
-            stopwatch.getStopwatch().start();
-            blackhole.alpha = 0;
+            hideEndTime();
+            endStopwatch.getStopwatch().reset();
+            endStopwatch.getStopwatch().start();
+            fadeWall.alpha = 0;
+            fullScreenTouch.touchable = false;
             particleSystem.alpha = 0;
             particleSystem.stop();
             Starling.juggler.remove(particleSystem);
         } else if(op == Board.FINISH) {
-            stopwatch.getStopwatch().stop();
-            blackhole.alpha = 0.9;
+            endStopwatch.getStopwatch().stop();
+            showEndTime();
+            fadeWall.alpha = 0.9;
             particleSystem.alpha = 1;
             particleSystem.start();
             Starling.juggler.add(particleSystem);
         }
+    }
+
+    private function hideEndTime():void {
+        Starling.juggler.remove(endStopwatchTween);
+        endStopwatch.alpha = 0.0;
+    }
+
+    private function showEndTime():void {
+        endStopwatch.alpha = 0.2;
+        endStopwatch.scaleX = 0.2;
+        endStopwatch.scaleY = 0.2;
+
+        endStopwatchTween.reset(endStopwatch, 0.5, "easeIn");
+        endStopwatchTween.animate("alpha", 1.0);
+        endStopwatchTween.animate("scaleX", 1.0);
+        endStopwatchTween.animate("scaleY", 1.0);
+        endStopwatchTween.animate("rotation", Math.PI * 2);
+        Starling.juggler.add(endStopwatchTween);
+
+        Starling.juggler.delayCall(function():void {
+            fullScreenTouch.touchable = true;
+            trace("touch");
+        }, 1);
     }
 }
 }

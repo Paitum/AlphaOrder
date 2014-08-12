@@ -6,6 +6,7 @@ import starling.display.Sprite;
 import starling.events.Event;
 import starling.text.TextField;
 import starling.text.TextFieldAutoSize;
+import starling.utils.HAlign;
 
 public class StringBreadcrumbs extends Sprite {
     protected var divisions:int;
@@ -55,7 +56,7 @@ public class StringBreadcrumbs extends Sprite {
 
         var length:int = divisions;
         for(var i:int = 0; i < length; i++) {
-//            var image:Image = new Image(Assets.assets.getTexture("ConstructionPaper"));
+//            var image:Image = new Image(Assets.assets.getTexture("Tile"));
 //            image.width = 1;
 //            image.height = 1;
 //            image.x = i;
@@ -65,6 +66,8 @@ public class StringBreadcrumbs extends Sprite {
 
             var textField:TextField = createTextField(1, 1, "A");
             addChild(textField);
+            textField.hAlign = HAlign.CENTER;
+            textField.color = 0xFFFF00;
             textField.pivotX = textField.width / 2;
             textField.pivotY = textField.height;
             textField.x = i + 0.5;

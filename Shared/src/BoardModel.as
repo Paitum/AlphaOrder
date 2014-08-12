@@ -5,7 +5,7 @@ import flash.utils.Dictionary;
 public class BoardModel {
     private var columns:int;
     private var rows:int;
-    private var tokens:Vector.<String>;
+    protected var tokens:Vector.<String>;
 
     protected var nextSolution:int = 0;
     protected var nextToken:int = 0;
@@ -26,10 +26,10 @@ public class BoardModel {
         return new BoardModel(rows, columns, names);
     }
 
-    public function BoardModel(rows:int, columns:int, names:Vector.<String>) {
+    public function BoardModel(rows:int, columns:int, tokens:Vector.<String>) {
         this.columns = columns;
         this.rows = rows;
-        this.tokens = names;
+        this.tokens = tokens;
 
         var r:int, c:int;
 

@@ -27,6 +27,11 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
     }
 
+    public function setAccumulatedTime(time:Number):void {
+        stopwatch.setAccumulatedTime(time);
+        updateFields();
+    }
+
     public function getStopwatch():Stopwatch {
         return stopwatch;
     }
@@ -46,9 +51,20 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         secondsField = new TextField(500, 500, "0", "ArtBrushLarge", fontsize, 0xFFFFFF);
         secondsField.touchable = false;
 
+        var i:int;
+        var largestLetter:int = -1;
+        var largestLetterWidth:Number = -1;
+        for(i = 0; i < 10; i++) {
+            secondsField.text = i.toString();
+            if(secondsField.textBounds.width > largestLetterWidth) {
+                largestLetterWidth = secondsField.textBounds.width;
+                largestLetter = i;
+            }
+        }
+
         secondsField.text = "";
-        for(var i:int = 0; i < widths.length; i++) {
-            secondsField.text += "0";
+        for(i = 0; i < widths.length; i++) {
+            secondsField.text += largestLetter.toString();
             widths[i] = secondsField.textBounds.width;
         }
 
@@ -60,7 +76,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         secondsField.x = 0;
         secondsField.y = pivotOffset;
 //trace("(" + secondsField.x + ", " + secondsField.y + ")[" + secondsField.width + ", " + secondsField.height + "] pivot[" + secondsField.pivotX + ", " + secondsField.pivotY + "]");
-        secondsField.color = 0x00FF00;
+        secondsField.color = 0xFFFF00;
 
 
         millisecondsField = new TextField(500, 500, "000", "ArtBrushLarge", fontsize * 0.5, 0xFFFFFF);
@@ -70,7 +86,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         millisecondsField.pivotX = -separationOffset;
         millisecondsField.pivotY = secondsField.textBounds.height / 2 - msOffset;
 //        millisecondsField.y = millisecondsField.textBounds.height;
-        millisecondsField.color = 0x00FF00;
+        millisecondsField.color = 0xFFFF00;
 
         if(DEBUG) {
             secondsQuad = new Quad(secondsField.width, secondsField.height, 0xFFFF00);
@@ -119,6 +135,8 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
             return;
         }
 
+        updateFields();
+
         if(show && !msAdded) {
             if(DEBUG) addChild(millisecondsQuad);
             addChild(millisecondsField);
@@ -132,8 +150,12 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
 
     public function advanceTime(passedTime:Number):void {
         stopwatch.advanceTime(passedTime);
+        updateFields();
+    }
+
+    private function updateFields():void {
         var time:Number = stopwatch.getAccumulatedTime();
-        var seconds:uint      = uint(time);
+        var seconds:uint      = Math.floor(time);
         var milliseconds:uint = int((time - seconds) * 100);
         var secondsStr:String = seconds.toString();
         var msStr:String = milliseconds.toString();
@@ -142,7 +164,6 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         secondsField.width = -widths[secondsStr.length];
         secondsField.pivotX = secondsField.width - fontsize / 5;
 
-//        millisecondsField.text = msStr;
         millisecondsField.text = msStr.length == 1 ? "0" + msStr : msStr;
         pivotX = -widths[secondsStr.length] / 2;
 

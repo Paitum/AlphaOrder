@@ -72,8 +72,8 @@ public class Board extends Sprite implements IAnimatable {
     }
 
     public function resetAndStart():void {
-        model.reset();
         reset();
+        model.reset();
         populateBoard();
         callback(START);
     }
@@ -102,19 +102,19 @@ public class Board extends Sprite implements IAnimatable {
             highlightTweens[r] = new Vector.<Tween>();
 
             for(c = 0; c < model.getColumns(); c++) {
-                tiles[r][c] = new Image(Assets.assets.getTexture("ConstructionPaper"));
+                tiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
                 tiles[r][c].width = 1;
                 tiles[r][c].height = 1;
                 tiles[r][c].color = getTileColor(r,c);
-//                tiles[r][c] = new Quad(1, 1, getTileColor(r, c));
                 tiles[r][c].x = c;
                 tiles[r][c].y = r;
                 tiles[r][c].alpha = 1.0;
-                highlightTiles[r][c] = new Quad(1, 1, 0xFF0000);
+                highlightTiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
+                highlightTiles[r][c].width = 1;
+                highlightTiles[r][c].height = 1;
                 highlightTiles[r][c].x = c;
                 highlightTiles[r][c].y = r;
                 highlightTiles[r][c].alpha = 0.0;
-//                highlightTiles[r][c].blendMode = BlendMode.SCREEN;
                 highlightTiles[r][c].touchable = false;
                 highlightTweens[r][c] = new Tween(highlightTiles[r][c], 0.25, "easeOut");   // this declaration does nothing
                 highlightTweens[r][c].animate("alpha", 0.0);
