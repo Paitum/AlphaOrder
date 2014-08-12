@@ -61,6 +61,10 @@ public class Board extends Sprite implements IAnimatable {
         addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
     }
 
+    public function getModel():BoardModel {
+        return model;
+    }
+
     public function changeModel(model:BoardModel):void {
         if(this.model.getColumns() != model.getColumns() || this.model.getRows() != model.getRows()) {
             throw new Error("New Model mustn't change board dimensions")

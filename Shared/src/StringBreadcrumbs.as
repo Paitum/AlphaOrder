@@ -1,6 +1,5 @@
 package {
 
-import starling.display.Image;
 import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
@@ -30,15 +29,33 @@ public class StringBreadcrumbs extends Sprite {
         fields[length-1].alpha = 1.0;
     }
 
-    public function addToken(string:String):void {
+    public function addToken(string:String, nextToken:String = null):void {
         var length:int = fields.length;
-        for(var i:int = 0; i < length - 2; i++) {
-            fields[i].text = fields[i+1].text;
-            fields[i].alpha = fields[i+1].alpha;
-        }
 
-        fields[length-2].text = string;
-        fields[length-2].alpha = 1.0;
+        if(nextToken == null) {
+            fields[length-1].text = string;
+            fields[length-1].alpha = 1.0;
+            fields[length-1].color = 0xFFFF00;
+        } else {
+            for(var i:int = 0; i < length - 2; i++) {
+                fields[i].text = fields[i+1].text;
+                fields[i].alpha = fields[i+1].alpha;
+                fields[i].color = 0xFFFF00;
+            }
+
+            fields[length-2].text = string;
+            fields[length-2].alpha = 1.0;
+            fields[length-2].color = 0xFFFF00;
+
+            setNextToken(nextToken);
+        }
+    }
+
+    public function setNextToken(string:String):void {
+        var lastToken:int = fields.length - 1;
+        fields[lastToken].text = string;
+        fields[lastToken].alpha = 0.75;
+        fields[lastToken].color = 0x888888;
     }
 
     override public function get width():Number {
@@ -50,10 +67,6 @@ public class StringBreadcrumbs extends Sprite {
     }
 
     private function handleAddedToStage(event:Event):void {
-        var quad:Quad = new Quad(width,height,0xFF0000);
-        quad.alpha = 0.1;
-        addChild(quad);
-
         var length:int = divisions;
         for(var i:int = 0; i < length; i++) {
 //            var image:Image = new Image(Assets.assets.getTexture("Tile"));

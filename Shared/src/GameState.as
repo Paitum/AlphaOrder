@@ -17,6 +17,8 @@ import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 import starling.extensions.particles.PDParticleSystem;
 import starling.extensions.particles.ParticleSystem;
+import starling.text.TextField;
+import starling.text.TextFieldAutoSize;
 import starling.textures.Texture;
 import starling.utils.HAlign;
 
@@ -38,6 +40,7 @@ public class GameState extends StarlingState {
     private var yDivider:int;
     private var breadcrumbDivider:int;
     private var padding:int;
+    private var modeTextField:TextField;
     private var particleSystem:ParticleSystem;
 
     public function GameState() {
@@ -49,6 +52,7 @@ public class GameState extends StarlingState {
 
         var stageWidth:int = stage.stageWidth;
         var stageHeight:int = stage.stageHeight;
+        var deviceInfo:Object = Constants.getDeviceInfo();
 
         stage.color = 0x195BB2;
 
@@ -69,8 +73,6 @@ public class GameState extends StarlingState {
             addChild(backgroundImage);
         }
 
-        var columns:int = 3;
-        var rows:int = 4;
         padding = 10;
 
         yDivider = stageHeight / 10;
@@ -81,24 +83,47 @@ public class GameState extends StarlingState {
         var boardHeight:int = (stageHeight - breadcrumbDivider) - 2 * padding;
         var breadcrumbHeight:int = breadcrumbDivider - yDivider - 2 * padding;
         var breadcrumbCenterY:int = yDivider + breadcrumbHeight / 2 + padding;
-        var scale:int = Math.min(boardWidth / columns, boardHeight / rows);
+
+        var smallEdge:int = Math.min(boardWidth, boardHeight);
+        var tileSize:int = smallEdge / 3;
+        var columns:int = boardWidth / tileSize;
+        var rows:int = boardHeight / tileSize;
+        columns = columns < 3 ? 3 : columns > 4 ? 4 : columns;
+        rows = rows < 3 ? 3 : rows > 4 ? 4 : rows;
+
+        var tempQuad:Quad;
+        tempQuad = new Quad(stageWidth, yDivider, 0x000000);
+        tempQuad.alpha = 0.4;
+        tempQuad.x = 0;
+        tempQuad.y = 0;
+        tempQuad.touchable = false;
+        addChild(tempQuad);
+
+        tempQuad = new Quad(stageWidth, breadcrumbDivider - yDivider, 0x000000);
+        tempQuad.alpha = 0.2;
+        tempQuad.x = 0;
+        tempQuad.y = yDivider;
+        tempQuad.touchable = false;
+        addChild(tempQuad);
 
         var dividerQuad:Quad;
-
-        dividerQuad = new Quad(stageWidth - 2 * padding, 1, 0xFFFF00);
-        dividerQuad.x = padding;
+        dividerQuad = new Quad(stageWidth, 1, 0xFFFF00);
+        dividerQuad.alpha = 0.1;
+        dividerQuad.x = 0;
         dividerQuad.y = yDivider;
-        dividerQuad.alpha = 1;
+        dividerQuad.touchable = false;
         addChild(dividerQuad);
 
-        dividerQuad = new Quad(stageWidth - 2 * padding, 1, 0xFFFF00);
-        dividerQuad.x = padding;
+        dividerQuad = new Quad(stageWidth, 1, 0xFFFF00);
+        dividerQuad.alpha = 0.1;
+        dividerQuad.x = 0;
         dividerQuad.y = breadcrumbDivider;
-        dividerQuad.alpha = 1;
+        dividerQuad.touchable = false;
         addChild(dividerQuad);
 
 //        var alphabet:String = "ABCXYZ";
-        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
+//        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
+        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABC");
 //        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         modelLabels[0] = "ABC";
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
@@ -108,6 +133,7 @@ public class GameState extends StarlingState {
         currentModel = 0;
         currentModelLabel = modelLabels[currentModel];
 
+        var scale:int = Math.min(boardWidth / columns, boardHeight / rows);
         board = new StringBoard(models[0], "ArtBrushLarge", boardCallback);
         board.pivotX = board.width / 2;
         board.pivotY = board.height / 2;
@@ -161,21 +187,6 @@ public class GameState extends StarlingState {
         rightButton.addEventListener(Event.TRIGGERED, handleRightButtonTrigger);
         addChild(rightButton);
 
-        var tempQuad:Quad;
-        tempQuad = new Quad(1, controlsHeight, 0x444488);
-        tempQuad.alpha = 1;
-        tempQuad.x = centerButton.x;
-        tempQuad.y = padding;
-        tempQuad.touchable = false;
-        addChild(tempQuad);
-
-        tempQuad = new Quad(1, controlsHeight, 0x444488);
-        tempQuad.alpha = 1;
-        tempQuad.x = rightButton.x;
-        tempQuad.y = padding;
-        tempQuad.touchable = false;
-        addChild(tempQuad);
-
         scale = Math.min(stageWidth, stageHeight) / 4;
         endStopwatch = new StopwatchSprite(scale);
         endStopwatch.x = stageWidth / 2;
@@ -188,6 +199,31 @@ public class GameState extends StarlingState {
         Starling.juggler.add(endStopwatch);
 
         endStopwatchTween = new Tween(endStopwatch, 1, "easeIn");
+
+        var textField:TextField;
+        textField = createTextField(controlsWidth / 3, controlsHeight * 0.6, "AlphaOrder");
+        textField.color = 0xFFFF00;
+        textField.pivotX = textField.width / 2;
+        textField.pivotY = textField.height / 2;
+        textField.x = controlsCenterX;
+        textField.y = controlsCenterY;
+        addChild(textField);
+
+        modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.4, "ABC");
+        modeTextField.color = 0xFFFF00;
+        modeTextField.pivotX = 0;
+        modeTextField.pivotY = modeTextField.height / 2;
+        modeTextField.x = padding;
+        modeTextField.y = controlsCenterY;
+        addChild(modeTextField);
+
+        textField = createTextField(controlsWidth / 3, controlsHeight * 0.4, "restart");
+        textField.color = 0xFFFF00;
+        textField.pivotX = textField.width;
+        textField.pivotY = textField.height / 2;
+        textField.x = padding + controlsWidth;
+        textField.y = controlsCenterY;
+        addChild(textField);
 
         fullScreenTouch = new Quad(stageWidth, stageHeight, 0xFFFFFF);
         fullScreenTouch.x = 0;
@@ -204,7 +240,6 @@ public class GameState extends StarlingState {
         var touch:Touch = event.getTouch(this);
 
         if(touch != null && touch.phase == TouchPhase.BEGAN) {
-            trace(event);
             board.resetAndStart();
         }
     }
@@ -226,6 +261,7 @@ public class GameState extends StarlingState {
         currentModel = (currentModel + 1) % models.length;
         currentModelLabel = modelLabels[currentModel];
         board.changeModel(models[currentModel]);
+        modeTextField.text = modelLabels[currentModel];
     }
 
     private function handleCenterButtonTrigger(event:Event):void {
@@ -237,10 +273,13 @@ public class GameState extends StarlingState {
     }
 
     private function boardCallback(op:int, token:String = null):void {
+        var nextToken:String = board.getModel().getCurrentSolutionToken();
+
         if(op == Board.FOUND) {
-            breadcrumbs.addToken(token);
+            breadcrumbs.addToken(token, nextToken);
         } else if(op == Board.START) {
             breadcrumbs.reset();
+            if(nextToken != null) breadcrumbs.setNextToken(nextToken);
             hideEndTime();
             endStopwatch.getStopwatch().reset();
             endStopwatch.getStopwatch().start();
@@ -278,8 +317,15 @@ public class GameState extends StarlingState {
 
         Starling.juggler.delayCall(function():void {
             fullScreenTouch.touchable = true;
-            trace("touch");
         }, 1);
+    }
+
+    public function createTextField(width:int, height:int, msg:String):TextField {
+        var fontSize:int = Math.min(width, height) * 1.1;
+        var textField:TextField = new TextField(width, height, msg, "ArtBrushLarge", fontSize, 0xFFFFFF);
+        textField.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
+        textField.touchable = false;
+        return textField;
     }
 }
 }

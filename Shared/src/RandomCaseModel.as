@@ -34,8 +34,9 @@ public class RandomCaseModel extends BoardModel {
     }
 
     override public function reset():void {
-        randomizeCase(tokens);
         super.reset();
+        // Allow superclass to reset first before changing the tokens
+        randomizeCase(tokens);
     }
 }
 }
