@@ -5,6 +5,8 @@ import citrus.core.starling.StarlingState;
 import feathers.controls.Button;
 import feathers.controls.TabBar;
 
+import flash.utils.getTimer;
+
 import starling.animation.Tween;
 
 import starling.core.Starling;
@@ -42,6 +44,7 @@ public class GameState extends StarlingState {
     private var padding:int;
     private var modeTextField:TextField;
     private var particleSystem:ParticleSystem;
+    private var fadeWallResetTime:int;
 
     public function GameState() {
         super();
@@ -239,8 +242,11 @@ public class GameState extends StarlingState {
     private function handleFadeWallTouch(event:TouchEvent):void {
         var touch:Touch = event.getTouch(this);
 
-        if(touch != null && touch.phase == TouchPhase.BEGAN) {
+        var now:int = getTimer();
+
+        if(touch != null && touch.phase == TouchPhase.BEGAN && now > fadeWallResetTime) {
             board.resetAndStart();
+            _ce.sound.playSound("beep");
         }
     }
 
@@ -262,6 +268,8 @@ public class GameState extends StarlingState {
         currentModelLabel = modelLabels[currentModel];
         board.changeModel(models[currentModel]);
         modeTextField.text = modelLabels[currentModel];
+
+        _ce.sound.playSound("beep");
     }
 
     private function handleCenterButtonTrigger(event:Event):void {
@@ -270,13 +278,17 @@ public class GameState extends StarlingState {
 
     private function handleRightButtonTrigger(event:Event):void {
         board.resetAndStart();
+        _ce.sound.playSound("beep");
     }
 
     private function boardCallback(op:int, token:String = null):void {
         var nextToken:String = board.getModel().getCurrentSolutionToken();
 
-        if(op == Board.FOUND) {
+        if(op == Board.CORRECT) {
             breadcrumbs.addToken(token, nextToken);
+            playCorrectSound(token);
+        } else if(op == Board.INCORRECT) {
+            _ce.sound.playSound("wrong");
         } else if(op == Board.START) {
             breadcrumbs.reset();
             if(nextToken != null) breadcrumbs.setNextToken(nextToken);
@@ -298,9 +310,15 @@ public class GameState extends StarlingState {
         }
     }
 
+    private function playCorrectSound(token:String):void {
+        _ce.sound.playSound(token.toLowerCase());
+    }
+
     private function hideEndTime():void {
         Starling.juggler.remove(endStopwatchTween);
         endStopwatch.alpha = 0.0;
+
+        fullScreenTouch.touchable = false;
     }
 
     private function showEndTime():void {
@@ -308,6 +326,7 @@ public class GameState extends StarlingState {
         endStopwatch.scaleX = 0.2;
         endStopwatch.scaleY = 0.2;
 
+        var delay:Number = 0.5;
         endStopwatchTween.reset(endStopwatch, 0.5, "easeIn");
         endStopwatchTween.animate("alpha", 1.0);
         endStopwatchTween.animate("scaleX", 1.0);
@@ -315,9 +334,8 @@ public class GameState extends StarlingState {
         endStopwatchTween.animate("rotation", Math.PI * 2);
         Starling.juggler.add(endStopwatchTween);
 
-        Starling.juggler.delayCall(function():void {
-            fullScreenTouch.touchable = true;
-        }, 1);
+        fadeWallResetTime = getTimer() + delay * 1000;
+        fullScreenTouch.touchable = true;
     }
 
     public function createTextField(width:int, height:int, msg:String):TextField {

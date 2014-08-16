@@ -69,6 +69,14 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
         Assets.assets.enqueue("media/particles/particleConfig.pex");
         Assets.assets.enqueue("media/particles/particleTexture.png");
+        Assets.assets.enqueue("media/sounds/186669__fordps3__computer-boop.mp3");
+        Assets.assets.enqueue("media/sounds/wrong.mp3");
+
+        var charCode:int = "a".charCodeAt(0);
+        for(var i:int = 0; i < 26; i++) {
+            var letter:String = String.fromCharCode(charCode + i);
+            Assets.assets.enqueue("media/sounds/" + letter + ".mp3");
+        }
     }
 
     protected function loadAssets():void {
@@ -82,6 +90,17 @@ public class Startup extends StarlingCitrusEngine {
         var diff:Number = (getTimer() - startTime) / 1000;
         diff = int(diff * 1000) / 1000;
         trace("Assets Loaded in " + diff + " seconds");
+
+        // Initialize sounds
+        sound.addSound("beep", {sound:Assets.assets.getSound("186669__fordps3__computer-boop")});
+        sound.addSound("wrong", {sound:Assets.assets.getSound("wrong")});
+
+        var charCode:int = "a".charCodeAt(0);
+        for(var i:int = 0; i < 26; i++) {
+            var letter:String = String.fromCharCode(charCode + i);
+            sound.addSound(letter, {sound:Assets.assets.getSound(letter)});
+        }
+
         // Initialize Feather's theme
         theme = new MetalWorksMobileTheme(DisplayObjectContainer(state), false);
         theme.setInitializerForClass(Button, initializeButton, "restart");
