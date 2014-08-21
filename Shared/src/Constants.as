@@ -6,6 +6,8 @@ import starling.errors.AbstractClassError;
 public class Constants {
     public function Constants() { throw new AbstractClassError(); }
 
+    public static const DEFAULT_FONT:String = "Souses";
+
     private static const DEVICE_TYPE_IPHONE:String = "iphone";
     private static const DEVICE_TYPE_IPAD:String = "ipad";
     private static const DEVICE_TYPE_IPOD:String = "ipod";

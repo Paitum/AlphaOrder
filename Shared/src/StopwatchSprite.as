@@ -48,7 +48,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         var msOffset:int = fontsize / 4;
 
         // TODO Don't instantiate again just because added back to stage
-        secondsField = new TextField(500, 500, "0", "ArtBrushLarge", fontsize, 0xFFFFFF);
+        secondsField = new TextField(500, 500, "0", Constants.DEFAULT_FONT, fontsize, 0xFFFFFF);
         secondsField.touchable = false;
 
         var i:int;
@@ -65,7 +65,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         secondsField.text = "";
         for(i = 0; i < widths.length; i++) {
             secondsField.text += largestLetter.toString();
-            widths[i] = secondsField.textBounds.width;
+            widths[i] = Math.abs(secondsField.textBounds.width);
         }
 
         secondsField.text = "0";
@@ -79,7 +79,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         secondsField.color = 0xFFFF00;
 
 
-        millisecondsField = new TextField(500, 500, "000", "ArtBrushLarge", fontsize * 0.5, 0xFFFFFF);
+        millisecondsField = new TextField(500, 500, "000", Constants.DEFAULT_FONT, fontsize * 0.5, 0xFFFFFF);
         millisecondsField.touchable = false;
         millisecondsField.hAlign = "left";
         millisecondsField.vAlign = "top";
@@ -161,7 +161,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         var msStr:String = milliseconds.toString();
 
         secondsField.text = secondsStr;
-        secondsField.width = -widths[secondsStr.length];
+        secondsField.width = widths[secondsStr.length];
         secondsField.pivotX = secondsField.width - fontsize / 5;
 
         millisecondsField.text = msStr.length == 1 ? "0" + msStr : msStr;

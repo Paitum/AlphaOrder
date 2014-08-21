@@ -32,7 +32,7 @@ public class StringBoard extends Board {
             throw new Error("Must specify font characteristics");
         }
 
-        const fontSize:int = 1.0;
+        const fontSize:Number = 0.9;
         var piece:TextField = new TextField(2, 2, token, fontName, fontSize, 0xFFFFFF);
         piece.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
         piece.pivotX = piece.width / 2;

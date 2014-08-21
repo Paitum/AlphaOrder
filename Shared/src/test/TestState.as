@@ -57,7 +57,7 @@ public class TestState extends StarlingState {
 
     public function createTextField(width:int, height:int, msg:String):TextField {
         var fontSize:int = Math.min(width, height) * 1.1;
-        var textField:TextField = new TextField(width, height, msg, "ArtBrushLarge", fontSize, 0xFFFFFF);
+        var textField:TextField = new TextField(width, height, msg, Constants.DEFAULT_FONT, fontSize, 0xFFFFFF);
         textField.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
 
         return textField;

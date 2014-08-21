@@ -1,15 +1,18 @@
 package {
 
+import starling.display.Image;
 import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.text.TextField;
 import starling.text.TextFieldAutoSize;
 import starling.utils.HAlign;
+import starling.utils.VAlign;
 
 public class StringBreadcrumbs extends Sprite {
     protected var divisions:int;
     protected var fields:Vector.<TextField> = new Vector.<TextField>();
+    protected var fontSize:Number;
 
     public function StringBreadcrumbs(divisions:int) {
         super();
@@ -36,16 +39,19 @@ public class StringBreadcrumbs extends Sprite {
             fields[length-1].text = string;
             fields[length-1].alpha = 1.0;
             fields[length-1].color = 0xFFFF00;
+            fixTextFieldSize(fields[length-1]);
         } else {
             for(var i:int = 0; i < length - 2; i++) {
                 fields[i].text = fields[i+1].text;
                 fields[i].alpha = fields[i+1].alpha;
                 fields[i].color = 0xFFFF00;
+                fixTextFieldSize(fields[i]);
             }
 
             fields[length-2].text = string;
             fields[length-2].alpha = 1.0;
             fields[length-2].color = 0xFFFF00;
+            fixTextFieldSize(fields[length-2]);
 
             setNextToken(nextToken);
         }
@@ -56,6 +62,8 @@ public class StringBreadcrumbs extends Sprite {
         fields[lastToken].text = string;
         fields[lastToken].alpha = 0.75;
         fields[lastToken].color = 0x888888;
+        fixTextFieldSize(fields[lastToken]);
+
     }
 
     override public function get width():Number {
@@ -77,26 +85,42 @@ public class StringBreadcrumbs extends Sprite {
 //            image.color = 0x4897FC;
 //            addChild(image);
 
-            var textField:TextField = createTextField(1, 1, "A");
+            var testField:TextField = createTextField(1,"A");
+            var i2:int;
+            var largestLetter:String = null;
+            var largestLetterWidth:Number = -1;
+            for(i2 = 0; i2 < 26; i2++) {
+                var letter:String = String.fromCharCode(i2 + "A".charCodeAt());
+                testField.text = letter;
+                if(testField.textBounds.width > largestLetterWidth) {
+                    largestLetterWidth = testField.textBounds.width;
+                    largestLetter = testField.text;
+                }
+            }
+            fontSize = largestLetterWidth;
+
+            const size:Number = 1;
+            var textField:TextField = createTextField(fontSize, largestLetter);
             addChild(textField);
             textField.hAlign = HAlign.CENTER;
             textField.color = 0xFFFF00;
             textField.pivotX = textField.width / 2;
-            textField.pivotY = textField.height;
+            textField.pivotY = textField.height / 2;
             textField.x = i + 0.5;
-            textField.y = 1;
-            textField.scaleX = 1.2;
-            //noinspection JSSuspiciousNameCombination
-            textField.scaleY = textField.scaleX;
+            textField.y = 0.5;
             fields.push(textField);
         }
     }
 
-    private function createTextField(width:int, height:int, msg:String):TextField {
-        var fontSize:int = Math.min(width, height) * 1.1;
-        var textField:TextField = new TextField(width, height, msg, "ArtBrushLarge", fontSize, 0xFFFFFF);
+    private function createTextField(fontSize:Number, msg:String):TextField {
+        var textField:TextField = new TextField(width, height, msg, Constants.DEFAULT_FONT, fontSize, 0xFFFFFF);
         textField.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
         return textField;
+    }
+
+    private function fixTextFieldSize(textField:TextField):void {
+        textField.pivotX = textField.width / 2;
+        textField.pivotY = textField.height / 2;
     }
 }
 }

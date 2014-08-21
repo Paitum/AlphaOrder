@@ -126,8 +126,8 @@ public class GameState extends StarlingState {
 
 //        var alphabet:String = "ABCXYZ";
 //        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
-        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABC");
-//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "WLMNOPQRS");
+        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         modelLabels[0] = "ABC";
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
         modelLabels[1] = "abc";
@@ -137,7 +137,7 @@ public class GameState extends StarlingState {
         currentModelLabel = modelLabels[currentModel];
 
         var scale:int = Math.min(boardWidth / columns, boardHeight / rows);
-        board = new StringBoard(models[0], "ArtBrushLarge", boardCallback);
+        board = new StringBoard(models[0], Constants.DEFAULT_FONT, boardCallback);
         board.pivotX = board.width / 2;
         board.pivotY = board.height / 2;
         board.x = boardCenterX;
@@ -204,7 +204,7 @@ public class GameState extends StarlingState {
         endStopwatchTween = new Tween(endStopwatch, 1, "easeIn");
 
         var textField:TextField;
-        textField = createTextField(controlsWidth / 3, controlsHeight * 0.6, "AlphaOrder");
+        textField = createTextField((controlsWidth / 3) * 1.2, controlsHeight * 1.2, "AlphaOrder", "ArtBrushLarge");
         textField.color = 0xFFFF00;
         textField.pivotX = textField.width / 2;
         textField.pivotY = textField.height / 2;
@@ -227,6 +227,14 @@ public class GameState extends StarlingState {
         textField.x = padding + controlsWidth;
         textField.y = controlsCenterY;
         addChild(textField);
+
+//        var quad:Quad = new Quad(controlsWidth / 3, controlsHeight * 0.8, 0xFF0000);
+//        quad.pivotX = quad.width;
+//        quad.pivotY = quad.height / 2;
+//        quad.x = padding + controlsWidth;
+//        quad.y = controlsCenterY;
+//        quad.alpha = 0.2;
+//        addChild(quad);
 
         fullScreenTouch = new Quad(stageWidth, stageHeight, 0xFFFFFF);
         fullScreenTouch.x = 0;
@@ -338,11 +346,16 @@ public class GameState extends StarlingState {
         fullScreenTouch.touchable = true;
     }
 
-    public function createTextField(width:int, height:int, msg:String):TextField {
-        var fontSize:int = Math.min(width, height) * 1.1;
-        var textField:TextField = new TextField(width, height, msg, "ArtBrushLarge", fontSize, 0xFFFFFF);
+    public function createTextField(width:Number, height:Number, msg:String, font:String = Constants.DEFAULT_FONT):TextField {
+        var fontSize:Number = Math.min(width, height);
+        var textField:TextField = new TextField(width, height, msg, font, fontSize, 0xFFFFFF);
         textField.autoSize = TextFieldAutoSize.BOTH_DIRECTIONS;
         textField.touchable = false;
+
+        var scaleX:Number = width / textField.width;
+        var scaleY:Number = height / textField.height;
+        textField.fontSize = fontSize * Math.min(scaleX, scaleY);
+
         return textField;
     }
 }

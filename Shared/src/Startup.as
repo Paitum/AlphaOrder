@@ -15,6 +15,7 @@ import flash.utils.getTimer;
 import starling.display.DisplayObjectContainer;
 import starling.display.Image;
 import starling.textures.Texture;
+import starling.textures.TextureOptions;
 import starling.utils.AssetManager;
 
 import test.TestState;
@@ -30,7 +31,7 @@ public class Startup extends StarlingCitrusEngine {
         startTime = getTimer();
         super();
 
-        debug = true;
+        debug = false;
         scale = 2;
         _viewportMode = ViewportMode.MANUAL;
 
@@ -60,6 +61,8 @@ public class Startup extends StarlingCitrusEngine {
 
     protected function initializeAssets(scale:Number):void {
         Assets.assets = new AssetManager(scale);
+        Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".fnt");
+        Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".png");
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.fnt");
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/Tile.png");
