@@ -309,6 +309,8 @@ public class GameState extends StarlingState {
             particleSystem.stop();
             Starling.juggler.remove(particleSystem);
         } else if(op == Board.FINISH) {
+
+            _ce.sound.playSound("celebrate");
             endStopwatch.getStopwatch().stop();
             showEndTime();
             fadeWall.alpha = 0.9;

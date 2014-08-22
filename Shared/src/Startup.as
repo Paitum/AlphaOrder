@@ -67,12 +67,13 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/Tile.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
-        Assets.assets.enqueue("media/textures/" + scale + "x/buttonDownSkin.png");
-        Assets.assets.enqueue("media/textures/" + scale + "x/buttonUpSkin.png");
-        Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
+//        Assets.assets.enqueue("media/textures/" + scale + "x/buttonDownSkin.png");
+//        Assets.assets.enqueue("media/textures/" + scale + "x/buttonUpSkin.png");
+//        Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
         Assets.assets.enqueue("media/particles/particleConfig.pex");
         Assets.assets.enqueue("media/particles/particleTexture.png");
-        Assets.assets.enqueue("media/sounds/186669__fordps3__computer-boop.mp3");
+        Assets.assets.enqueue("media/sounds/beep.mp3");
+        Assets.assets.enqueue("media/sounds/celebrate.mp3");
         Assets.assets.enqueue("media/sounds/wrong.mp3");
 
         var charCode:int = "a".charCodeAt(0);
@@ -95,8 +96,9 @@ public class Startup extends StarlingCitrusEngine {
         trace("Assets Loaded in " + diff + " seconds");
 
         // Initialize sounds
-        sound.addSound("beep", {sound:Assets.assets.getSound("186669__fordps3__computer-boop")});
+        sound.addSound("beep", {sound:Assets.assets.getSound("beep")});
         sound.addSound("wrong", {sound:Assets.assets.getSound("wrong")});
+        sound.addSound("celebrate", {sound:Assets.assets.getSound("celebrate")});
 
         var charCode:int = "a".charCodeAt(0);
         for(var i:int = 0; i < 26; i++) {
