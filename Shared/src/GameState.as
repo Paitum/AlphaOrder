@@ -60,7 +60,7 @@ public class GameState extends StarlingState {
         stage.color = Constants.BACKGROUND_COLOR;
 
         var texture:Texture;
-//        texture = Assets.assets.getTexture("Background");
+        texture = Assets.assets.getTexture("Background");
 
         if(texture == null) {
 //            var backgroundQuad:Quad = new Quad(stageWidth, stageHeight, Constants.BACKGROUND_COLOR);
@@ -112,14 +112,14 @@ public class GameState extends StarlingState {
 
         var dividerQuad:Quad;
         dividerQuad = new Quad(stageWidth, 1,  Constants.DETAIL_COLOR);
-        dividerQuad.alpha = 0.1;
+        dividerQuad.alpha = 0.2;
         dividerQuad.x = 0;
         dividerQuad.y = yDivider;
         dividerQuad.touchable = false;
         addChild(dividerQuad);
 
         dividerQuad = new Quad(stageWidth, 1, Constants.DETAIL_COLOR);
-        dividerQuad.alpha = 0.1;
+        dividerQuad.alpha = 0.2;
         dividerQuad.x = 0;
         dividerQuad.y = breadcrumbDivider;
         dividerQuad.touchable = false;
