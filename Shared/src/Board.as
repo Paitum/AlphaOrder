@@ -130,13 +130,13 @@ public class Board extends Sprite implements IAnimatable {
         }
 
         // Add a gradient to make less repetitive
-        var background:Quad = new Quad(model.getColumns(), model.getRows(), 0xFF0000);
-        background.setVertexColor(0, 0xBBBBBB);
-        background.setVertexColor(1, 0xEEEEEE);
-        background.setVertexColor(2, 0xFFFFFF);
-        background.setVertexColor(3, 0xFFFFFF);
-        background.blendMode = BlendMode.MULTIPLY;
-        addChild(background);
+//        var background:Quad = new Quad(model.getColumns(), model.getRows(), 0xFF0000);
+//        background.setVertexColor(0, 0xBBBBBB);
+//        background.setVertexColor(1, 0xEEEEEE);
+//        background.setVertexColor(2, 0xFFFFFF);
+//        background.setVertexColor(3, 0xFFFFFF);
+//        background.blendMode = BlendMode.MULTIPLY;
+//        addChild(background);
 
         initializePieces();
 
@@ -184,7 +184,7 @@ public class Board extends Sprite implements IAnimatable {
     }
 
     private static function getTileColor(row:int, columns:int):uint {
-        return ((row % 2 + columns) % 2) == 0 ? 0x9BC6FF : 0x64A7FF;
+        return ((row % 2 + columns) % 2) == 0 ? Constants.TILE_COLOR1 : Constants.TILE_COLOR2;
 //        var shade:uint = ((row % 2 + columns) % 2) * 128 + 128;
 //        return (255 << 16) | (shade << 8) | shade;
 //        return uint(Math.random() * 255) << 16 | uint(Math.random() * 255) << 8 | uint(Math.random() * 255);
@@ -234,14 +234,14 @@ public class Board extends Sprite implements IAnimatable {
 
         if(touch.phase == TouchPhase.BEGAN) {
             success = positionTouched(row, column);
-            setHighlightTileColor(row, column, success ? 0x00FF00 : 0xFF0000);
+            setHighlightTileColor(row, column, success ? Constants.TILE_HIGHLIGHT_CORRECT : Constants.TILE_HIGHLIGHT_INCORRECT);
         }
         else if(touch.phase == TouchPhase.MOVED) {
             success = model.isSolution(row, column);
 //            success = positionTouched(row, column);
 
             if(newTileTouched) {
-                setHighlightTileColor(row, column, success ? 0x00FF00 : 0xFF0000);
+                setHighlightTileColor(row, column, success ? Constants.TILE_HIGHLIGHT_CORRECT : Constants.TILE_HIGHLIGHT_INCORRECT);
             }
         } else if(touch.phase == TouchPhase.ENDED) {
             fadeHighlightTile(row, column);
@@ -358,7 +358,7 @@ public class Board extends Sprite implements IAnimatable {
                 celebrateYDir = 0;
             }
 
-            setHighlightTileColor(celebrateY, celebrateX, 0x00FF00);
+            setHighlightTileColor(celebrateY, celebrateX, Constants.TILE_HIGHLIGHT_CORRECT);
             fadeHighlightTile(celebrateY, celebrateX);
 
             lastCelebrateTime -= interval;

@@ -22,7 +22,7 @@ public class StringBoard extends Board {
         for(var i:int = 0; i < characters.length; i++) {
             var token:String = characters.charAt(i);
             pieces[token] = createPiece(token);
-            pieces[token].color = 0xFFED26;
+            pieces[token].color = Constants.TEXT_COLOR;
             pieces[token].touchable = false;
         }
     }

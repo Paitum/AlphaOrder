@@ -57,22 +57,23 @@ public class GameState extends StarlingState {
         var stageHeight:int = stage.stageHeight;
         var deviceInfo:Object = Constants.getDeviceInfo();
 
-        stage.color = 0x195BB2;
+        stage.color = Constants.BACKGROUND_COLOR;
 
-        var texture:Texture = Assets.assets.getTexture("Background");
+        var texture:Texture;
+//        texture = Assets.assets.getTexture("Background");
 
         if(texture == null) {
-            var backgroundQuad:Quad = new Quad(stageWidth, stageHeight, 0x195BB2);
-            backgroundQuad.setVertexColor(0, 0x001240);
-            backgroundQuad.setVertexColor(1, 0x00237F);
-            backgroundQuad.setVertexColor(2, 0x00237F);
-            backgroundQuad.setVertexColor(3, 0x0046FF);
-            addChild(backgroundQuad);
+//            var backgroundQuad:Quad = new Quad(stageWidth, stageHeight, Constants.BACKGROUND_COLOR);
+//            backgroundQuad.setVertexColor(0, 0x0F366A);
+//            backgroundQuad.setVertexColor(1, 0x0F366A);
+//            backgroundQuad.setVertexColor(2, 0x113f7c);
+//            backgroundQuad.setVertexColor(3, 0x113f7c);
+//            addChild(backgroundQuad);
         } else {
             var backgroundImage:Image = new Image(texture);
             backgroundImage.width = stageWidth;
             backgroundImage.height = stageHeight;
-            backgroundImage.color = 0x0046FF;
+            backgroundImage.color = Constants.BACKGROUND_COLOR;
             addChild(backgroundImage);
         }
 
@@ -110,14 +111,14 @@ public class GameState extends StarlingState {
         addChild(tempQuad);
 
         var dividerQuad:Quad;
-        dividerQuad = new Quad(stageWidth, 1, 0xFFFF00);
+        dividerQuad = new Quad(stageWidth, 1,  Constants.DETAIL_COLOR);
         dividerQuad.alpha = 0.1;
         dividerQuad.x = 0;
         dividerQuad.y = yDivider;
         dividerQuad.touchable = false;
         addChild(dividerQuad);
 
-        dividerQuad = new Quad(stageWidth, 1, 0xFFFF00);
+        dividerQuad = new Quad(stageWidth, 1, Constants.DETAIL_COLOR);
         dividerQuad.alpha = 0.1;
         dividerQuad.x = 0;
         dividerQuad.y = breadcrumbDivider;
@@ -205,7 +206,7 @@ public class GameState extends StarlingState {
 
         var textField:TextField;
         textField = createTextField((controlsWidth / 3) * 1.2, controlsHeight * 1.2, "AlphaOrder", "ArtBrushLarge");
-        textField.color = 0xFFFF00;
+        textField.color = Constants.TEXT_COLOR;
         textField.pivotX = textField.width / 2;
         textField.pivotY = textField.height / 2;
         textField.x = controlsCenterX;
@@ -213,7 +214,7 @@ public class GameState extends StarlingState {
         addChild(textField);
 
         modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.4, "ABC");
-        modeTextField.color = 0xFFFF00;
+        modeTextField.color = Constants.TEXT_COLOR;
         modeTextField.pivotX = 0;
         modeTextField.pivotY = modeTextField.height / 2;
         modeTextField.x = padding;
@@ -221,7 +222,7 @@ public class GameState extends StarlingState {
         addChild(modeTextField);
 
         textField = createTextField(controlsWidth / 3, controlsHeight * 0.4, "restart");
-        textField.color = 0xFFFF00;
+        textField.color = Constants.TEXT_COLOR;
         textField.pivotX = textField.width;
         textField.pivotY = textField.height / 2;
         textField.x = padding + controlsWidth;

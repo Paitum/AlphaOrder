@@ -76,7 +76,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         secondsField.x = 0;
         secondsField.y = pivotOffset;
 //trace("(" + secondsField.x + ", " + secondsField.y + ")[" + secondsField.width + ", " + secondsField.height + "] pivot[" + secondsField.pivotX + ", " + secondsField.pivotY + "]");
-        secondsField.color = 0xFFFF00;
+        secondsField.color = Constants.TEXT_COLOR;
 
 
         millisecondsField = new TextField(500, 500, "000", Constants.DEFAULT_FONT, fontsize * 0.5, 0xFFFFFF);
@@ -86,7 +86,7 @@ public class StopwatchSprite extends Sprite implements IAnimatable {
         millisecondsField.pivotX = -separationOffset;
         millisecondsField.pivotY = secondsField.textBounds.height / 2 - msOffset;
 //        millisecondsField.y = millisecondsField.textBounds.height;
-        millisecondsField.color = 0xFFFF00;
+        millisecondsField.color = Constants.TEXT_COLOR;
 
         if(DEBUG) {
             secondsQuad = new Quad(secondsField.width, secondsField.height, 0xFFFF00);

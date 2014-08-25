@@ -38,19 +38,19 @@ public class StringBreadcrumbs extends Sprite {
         if(nextToken == null) {
             fields[length-1].text = string;
             fields[length-1].alpha = 1.0;
-            fields[length-1].color = 0xFFFF00;
+            fields[length-1].color = Constants.TEXT_COLOR;
             fixTextFieldSize(fields[length-1]);
         } else {
             for(var i:int = 0; i < length - 2; i++) {
                 fields[i].text = fields[i+1].text;
                 fields[i].alpha = fields[i+1].alpha;
-                fields[i].color = 0xFFFF00;
+                fields[i].color = Constants.TEXT_COLOR;
                 fixTextFieldSize(fields[i]);
             }
 
             fields[length-2].text = string;
             fields[length-2].alpha = 1.0;
-            fields[length-2].color = 0xFFFF00;
+            fields[length-2].color = Constants.TEXT_COLOR;
             fixTextFieldSize(fields[length-2]);
 
             setNextToken(nextToken);
@@ -61,9 +61,8 @@ public class StringBreadcrumbs extends Sprite {
         var lastToken:int = fields.length - 1;
         fields[lastToken].text = string;
         fields[lastToken].alpha = 0.75;
-        fields[lastToken].color = 0x888888;
+        fields[lastToken].color = Constants.BREADCRUMB_TEXT_COLOR;
         fixTextFieldSize(fields[lastToken]);
-
     }
 
     override public function get width():Number {
@@ -103,7 +102,7 @@ public class StringBreadcrumbs extends Sprite {
             var textField:TextField = createTextField(fontSize, largestLetter);
             addChild(textField);
             textField.hAlign = HAlign.CENTER;
-            textField.color = 0xFFFF00;
+            textField.color = Constants.TEXT_COLOR;
             textField.pivotX = textField.width / 2;
             textField.pivotY = textField.height / 2;
             textField.x = i + 0.5;
