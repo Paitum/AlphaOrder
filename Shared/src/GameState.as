@@ -22,7 +22,8 @@ import starling.textures.Texture;
 import starling.utils.HAlign;
 
 public class GameState extends StarlingState {
-    private var endStopwatch:StopwatchSprite;
+    private var stopwatch:Stopwatch;
+    private var stopwatchText:TextField;
     private var endStopwatchTween:Tween;
     private var models:Vector.<BoardModel> = new Vector.<BoardModel>(2);
     private var modelLabels:Vector.<String> = new Vector.<String>();
@@ -120,8 +121,8 @@ public class GameState extends StarlingState {
 
 //        var alphabet:String = "ABCXYZ";
 //        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
-//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "WLMNOPQRS");
-        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
+//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         modelLabels[0] = "ABC";
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
         modelLabels[1] = "abc";
@@ -184,18 +185,19 @@ public class GameState extends StarlingState {
         rightButton.addEventListener(TouchEvent.TOUCH, handleRightButtonTrigger);
         addChild(rightButton);
 
-        scale = Math.min(stageWidth, stageHeight) / 4;
-        endStopwatch = new StopwatchSprite(scale);
-        endStopwatch.x = stageWidth / 2;
-        endStopwatch.y = stageHeight / 2;
-        endStopwatch.scaleX = 1;
-        endStopwatch.scaleY = 1;
-        endStopwatch.touchable = false;
-        endStopwatch.showMilliseconds(true);
-        addChild(endStopwatch);
-        Starling.juggler.add(endStopwatch);
+        stopwatch = new Stopwatch();
+        Starling.juggler.add(stopwatch);
 
-        endStopwatchTween = new Tween(endStopwatch, 1, "easeIn");
+        stopwatchText = createTextField(boardWidth, boardHeight, "XXXX.XX");
+        stopwatchText.color = Constants.TEXT_COLOR;
+        stopwatchText.x = stageWidth / 2;
+        stopwatchText.y = stageHeight / 2;
+        stopwatchText.scaleX = 1;
+        stopwatchText.scaleY = 1;
+        stopwatchText.touchable = false;
+        addChild(stopwatchText);
+
+        endStopwatchTween = new Tween(stopwatchText, 1, "easeIn");
 
         var textField:TextField;
         textField = createTextField((controlsWidth / 3) * 1.2, controlsHeight * 1.2, "AlphaOrder", "ArtBrushLarge");
@@ -308,8 +310,8 @@ public class GameState extends StarlingState {
             breadcrumbs.reset();
             if(nextToken != null) breadcrumbs.setNextToken(nextToken);
             hideEndTime();
-            endStopwatch.getStopwatch().reset();
-            endStopwatch.getStopwatch().start();
+            stopwatch.reset();
+            stopwatch.start();
             fadeWall.alpha = 0;
             fullScreenTouch.touchable = false;
             particleSystem.alpha = 0;
@@ -318,7 +320,7 @@ public class GameState extends StarlingState {
         } else if(op == Board.FINISH) {
 
             _ce.sound.playSound("celebrate");
-            endStopwatch.getStopwatch().stop();
+            stopwatch.stop();
             showEndTime();
             fadeWall.alpha = 0.9;
             particleSystem.alpha = 1;
@@ -333,18 +335,27 @@ public class GameState extends StarlingState {
 
     private function hideEndTime():void {
         Starling.juggler.remove(endStopwatchTween);
-        endStopwatch.alpha = 0.0;
+        stopwatchText.alpha = 0.0;
 
         fullScreenTouch.touchable = false;
     }
 
     private function showEndTime():void {
-        endStopwatch.alpha = 0.2;
-        endStopwatch.scaleX = 0.2;
-        endStopwatch.scaleY = 0.2;
+        var time:Number = stopwatch.getAccumulatedTime();
+        var seconds:uint      = Math.floor(time);
+        var milliseconds:uint = int((time - seconds) * 100);
+        var secondsStr:String = seconds.toString();
+        var msStr:String = milliseconds.toString();
+        msStr = msStr.length == 1 ? "0" + msStr : msStr;
+        stopwatchText.text = secondsStr + "." + msStr;
+        stopwatchText.pivotX = stopwatchText.width / 2;
+        stopwatchText.pivotY = stopwatchText.height / 2;
+        stopwatchText.alpha = 0.2;
+        stopwatchText.scaleX = 0.2;
+        stopwatchText.scaleY = 0.2;
 
         var delay:Number = 0.5;
-        endStopwatchTween.reset(endStopwatch, 0.5, "easeIn");
+        endStopwatchTween.reset(stopwatchText, 0.5, "easeIn");
         endStopwatchTween.animate("alpha", 1.0);
         endStopwatchTween.animate("scaleX", 1.0);
         endStopwatchTween.animate("scaleY", 1.0);
