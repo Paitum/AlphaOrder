@@ -5,13 +5,7 @@
       <configuration name="Shared" target-platform="Desktop" pure-as="true" output-type="Library" output-file="Shared.swc" output-folder="$MODULE_DIR$/../out/production/Shared">
         <dependencies>
           <entries>
-            <entry library-name="Citrus-Engine" library-level="application">
-              <dependency linkage="Merged" />
-            </entry>
-            <entry library-name="Feathers" library-level="application">
-              <dependency linkage="Merged" />
-            </entry>
-            <entry library-name="Starling" library-level="application">
+            <entry library-name="Citrus-Engine-Vanilla" library-level="application">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -37,10 +31,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="DistanceFieldFont" level="application" />
     <orderEntry type="library" exported="" name="flash" level="application" />
-    <orderEntry type="library" exported="" name="Feathers" level="application" />
-    <orderEntry type="library" exported="" name="Citrus-Engine" level="application" />
     <orderEntry type="library" exported="" name="Starling-Extension-Particle-System" level="application" />
-    <orderEntry type="library" exported="" name="Starling" level="application" />
+    <orderEntry type="library" exported="" name="Citrus-Engine-Vanilla" level="application" />
   </component>
 </module>
 

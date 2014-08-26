@@ -5,13 +5,10 @@
       <configuration name="720Desktop" target-platform="Desktop" pure-as="true" main-class="DesktopStartup" output-file="720Desktop.swf" output-folder="$MODULE_DIR$/../out/production/Desktop">
         <dependencies>
           <entries>
-            <entry library-name="Citrus-Engine" library-level="application">
-              <dependency linkage="Merged" />
-            </entry>
             <entry module-name="Shared" build-configuration-name="Shared">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="Feathers" library-level="application">
+            <entry library-name="Citrus-Engine-Vanilla" library-level="application">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -27,13 +24,10 @@
       <configuration name="480x720Desktop" target-platform="Desktop" pure-as="true" main-class="DesktopStartup" output-file="480x720Desktop.swf" output-folder="$MODULE_DIR$/../out/production/Desktop">
         <dependencies>
           <entries>
-            <entry library-name="Citrus-Engine" library-level="application">
-              <dependency linkage="Merged" />
-            </entry>
             <entry module-name="Shared" build-configuration-name="Shared">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="Feathers" library-level="application">
+            <entry library-name="Citrus-Engine-Vanilla" library-level="application">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -57,8 +51,7 @@
     <orderEntry type="jdk" jdkName="Adobe Air SDK" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Shared" exported="" />
-    <orderEntry type="library" exported="" name="Feathers" level="application" />
-    <orderEntry type="library" exported="" name="Citrus-Engine" level="application" />
+    <orderEntry type="library" exported="" name="Citrus-Engine-Vanilla" level="application" />
   </component>
 </module>
 

@@ -3,29 +3,17 @@ package {
 import citrus.core.starling.StarlingCitrusEngine;
 import citrus.core.starling.ViewportMode;
 
-import feathers.controls.Button;
-
-import feathers.themes.MetalWorksMobileTheme;
-import feathers.themes.MinimalMobileTheme;
-
 import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.utils.getTimer;
 
-import starling.display.DisplayObjectContainer;
-import starling.display.Image;
-import starling.textures.Texture;
-import starling.textures.TextureOptions;
 import starling.utils.AssetManager;
-
-import test.TestState;
 
 public class Startup extends StarlingCitrusEngine {
     private var viewPort:Rectangle = new Rectangle();
     private var scale:Number;
     private var startTime:Number;
     private var debug:Boolean;
-    private var theme:MetalWorksMobileTheme;
 
     public function Startup() {
         startTime = getTimer();
@@ -69,7 +57,7 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
 //        Assets.assets.enqueue("media/textures/" + scale + "x/buttonDownSkin.png");
 //        Assets.assets.enqueue("media/textures/" + scale + "x/buttonUpSkin.png");
-//        Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
+        Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
         Assets.assets.enqueue("media/particles/particleConfig.pex");
         Assets.assets.enqueue("media/particles/particleTexture.png");
         Assets.assets.enqueue("media/sounds/beep.mp3");
@@ -106,23 +94,7 @@ public class Startup extends StarlingCitrusEngine {
             sound.addSound(letter, {sound:Assets.assets.getSound(letter)});
         }
 
-        // Initialize Feather's theme
-        theme = new MetalWorksMobileTheme(DisplayObjectContainer(state), false);
-        theme.setInitializerForClass(Button, initializeButton, "restart");
-        theme.setInitializerForClass(Button, initializeButtonNone, "none");
-
         state = new GameState();
-//        state = new TestState();
-    }
-
-    private function initializeButton(button:Button):void {
-        button.defaultSkin = new Image(Assets.assets.getTexture("buttonUpSkin"));
-        button.downSkin = new Image(Assets.assets.getTexture("buttonDownSkin"));
-        button.defaultIcon = new Image(Assets.assets.getTexture("restart"));
-    }
-
-    private function initializeButtonNone(button:Button):void {
-
     }
 
     private function setupView():void {

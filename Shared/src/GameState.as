@@ -2,18 +2,15 @@ package {
 
 import citrus.core.starling.StarlingState;
 
-import feathers.controls.Button;
-import feathers.controls.TabBar;
-
 import flash.utils.getTimer;
 
 import starling.animation.Tween;
 
 import starling.core.Starling;
 import starling.display.BlendMode;
+import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.display.Quad;
-import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
@@ -25,12 +22,8 @@ import starling.textures.Texture;
 import starling.utils.HAlign;
 
 public class GameState extends StarlingState {
-    private var leftButton:Button;
-    private var centerButton:Button;
-    private var rightButton:Button;
     private var endStopwatch:StopwatchSprite;
     private var endStopwatchTween:Tween;
-    private var modeBar:TabBar;
     private var models:Vector.<BoardModel> = new Vector.<BoardModel>(2);
     private var modelLabels:Vector.<String> = new Vector.<String>();
     private var currentModelLabel:String;
@@ -179,16 +172,16 @@ public class GameState extends StarlingState {
         var controlsCenterX:int = boardCenterX;
         var controlsCenterY:int = padding + controlsHeight / 2;
 
-        leftButton = createButton(HAlign.LEFT);
-        leftButton.addEventListener(Event.TRIGGERED, handleLeftButtonTrigger);
+        var leftButton:DisplayObject = createButton(HAlign.LEFT);
+        leftButton.addEventListener(TouchEvent.TOUCH, handleLeftButtonTrigger);
         addChild(leftButton);
 
-        centerButton = createButton(HAlign.CENTER);
-        centerButton.addEventListener(Event.TRIGGERED, handleCenterButtonTrigger);
-        addChild(centerButton);
+//        var centerButton:DisplayObject = createButton(HAlign.CENTER);
+//        centerButton.addEventListener(Event.TRIGGERED, handleCenterButtonTrigger);
+//        addChild(centerButton);
 
-        rightButton = createButton(HAlign.RIGHT);
-        rightButton.addEventListener(Event.TRIGGERED, handleRightButtonTrigger);
+        var rightButton:DisplayObject = createButton(HAlign.RIGHT);
+        rightButton.addEventListener(TouchEvent.TOUCH, handleRightButtonTrigger);
         addChild(rightButton);
 
         scale = Math.min(stageWidth, stageHeight) / 4;
@@ -221,21 +214,18 @@ public class GameState extends StarlingState {
         modeTextField.y = controlsCenterY;
         addChild(modeTextField);
 
-        textField = createTextField(controlsWidth / 3, controlsHeight * 0.4, "restart");
-        textField.color = Constants.TEXT_COLOR;
-        textField.pivotX = textField.width;
-        textField.pivotY = textField.height / 2;
-        textField.x = padding + controlsWidth;
-        textField.y = controlsCenterY;
-        addChild(textField);
-
-//        var quad:Quad = new Quad(controlsWidth / 3, controlsHeight * 0.8, 0xFF0000);
-//        quad.pivotX = quad.width;
-//        quad.pivotY = quad.height / 2;
-//        quad.x = padding + controlsWidth;
-//        quad.y = controlsCenterY;
-//        quad.alpha = 0.2;
-//        addChild(quad);
+        var restartIcon:Image;
+        restartIcon = new Image(Assets.assets.getTexture("restart"));
+        restartIcon.color = Constants.TEXT_COLOR;
+        restartIcon.pivotX = restartIcon.width;
+        restartIcon.pivotY = restartIcon.height / 2;
+        restartIcon.height = controlsHeight / 2;
+        //noinspection JSSuspiciousNameCombination
+        restartIcon.width = restartIcon.height;
+        restartIcon.x = padding + controlsWidth;
+        restartIcon.y = controlsCenterY;
+        restartIcon.touchable = false;
+        addChild(restartIcon);
 
         fullScreenTouch = new Quad(stageWidth, stageHeight, 0xFFFFFF);
         fullScreenTouch.x = 0;
@@ -259,11 +249,9 @@ public class GameState extends StarlingState {
         }
     }
 
-    private function createButton(hAlign:String):Button {
-        var button:Button = new Button();
-        button.nameList.add("none");
-        button.width = stage.stageWidth / 3;
-        button.height = yDivider;
+    private function createButton(hAlign:String):Quad {
+        var button:Quad = new Quad(stage.stageWidth / 3, yDivider, 0x000000);
+        button.alpha = 0.0;
         button.pivotX = 0;
         button.pivotY = 0;
         button.x = (hAlign == HAlign.LEFT ? 0 : hAlign == HAlign.CENTER ? 1 : 2) * button.width;
@@ -272,7 +260,13 @@ public class GameState extends StarlingState {
         return button;
     }
 
-    private function handleLeftButtonTrigger(event:Event):void {
+    private function handleLeftButtonTrigger(event:TouchEvent):void {
+        var touch:Touch = event.getTouch(this);
+
+        if(touch == null || touch.phase != TouchPhase.BEGAN) {
+            return;
+        }
+
         currentModel = (currentModel + 1) % models.length;
         currentModelLabel = modelLabels[currentModel];
         board.changeModel(models[currentModel]);
@@ -281,11 +275,23 @@ public class GameState extends StarlingState {
         _ce.sound.playSound("beep");
     }
 
-    private function handleCenterButtonTrigger(event:Event):void {
+    private function handleCenterButtonTrigger(event:TouchEvent):void {
+        var touch:Touch = event.getTouch(this);
 
+        if(touch == null || touch.phase != TouchPhase.BEGAN) {
+            return;
+        }
+
+        // Do something
     }
 
-    private function handleRightButtonTrigger(event:Event):void {
+    private function handleRightButtonTrigger(event:TouchEvent):void {
+        var touch:Touch = event.getTouch(this);
+
+        if(touch == null || touch.phase != TouchPhase.BEGAN) {
+            return;
+        }
+
         board.resetAndStart();
         _ce.sound.playSound("beep");
     }

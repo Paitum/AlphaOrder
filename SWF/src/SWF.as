@@ -11,14 +11,15 @@ public class SWF extends Startup {
     override protected function initializeAssets(scale:Number):void {
         Assets.assets = new AssetManager(scale);
 
-        if(scale == 1) {
-            Assets.assets.enqueue(SWF_Assets_1x);
-        } else if(scale == 2) {
-            Assets.assets.enqueue(SWF_Assets_2x);
-        } else {
-            throw new Error("Unsupported scale");
-        }
+//        if(scale == 1) {
+//            Assets.assets.enqueue(SWF_Assets_1x);
+//        } else if(scale == 2) {
+//            Assets.assets.enqueue(SWF_Assets_2x);
+//        } else {
+//            throw new Error("Unsupported scale");
+//        }
 
+        Assets.assets.enqueue(SWF_Assets_2x);
         Assets.assets.enqueue(SWF_Assets_Sounds);
     }
 }

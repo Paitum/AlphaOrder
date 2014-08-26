@@ -8,10 +8,7 @@
             <entry module-name="Shared" build-configuration-name="Shared">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="Citrus-Engine" library-level="application">
-              <dependency linkage="Merged" />
-            </entry>
-            <entry library-name="Feathers" library-level="application">
+            <entry library-name="Citrus-Engine-Vanilla" library-level="application">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -36,10 +33,7 @@
             <entry module-name="Shared" build-configuration-name="Shared">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="Citrus-Engine" library-level="application">
-              <dependency linkage="Merged" />
-            </entry>
-            <entry library-name="Feathers" library-level="application">
+            <entry library-name="Citrus-Engine-Vanilla" library-level="application">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -63,8 +57,7 @@
     <orderEntry type="jdk" jdkName="Adobe Air SDK" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Shared" exported="" />
-    <orderEntry type="library" exported="" name="Citrus-Engine" level="application" />
-    <orderEntry type="library" exported="" name="Feathers" level="application" />
+    <orderEntry type="library" exported="" name="Citrus-Engine-Vanilla" level="application" />
   </component>
 </module>
 

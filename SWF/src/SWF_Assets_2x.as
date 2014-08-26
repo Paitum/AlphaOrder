@@ -14,12 +14,8 @@ public class SWF_Assets_2x {
     public static const Tile:Class;
     [Embed(source="../../Shared/media/textures/2x/Background.png")]
     public static const Background:Class;
-//    [Embed(source="../../Shared/media/textures/2x/buttonDownSkin.png")]
-//    public static const buttonDownSkin:Class;
-//    [Embed(source="../../Shared/media/textures/2x/buttonUpSkin.png")]
-//    public static const buttonUpSkin:Class;
-//    [Embed(source="../../Shared/media/textures/2x/restart.png")]
-//    public static const restart:Class;
+    [Embed(source="../../Shared/media/textures/2x/restart.png")]
+    public static const restart:Class;
 
     [Embed(source="../../Shared/media/particles/particleConfig.pex", mimeType="application/octet-stream")]
     public static const particleConfig:Class;
