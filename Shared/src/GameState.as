@@ -166,6 +166,7 @@ public class GameState extends StarlingState {
         particleSystem.emitterX = board.x;
         particleSystem.emitterY = stageHeight;
         particleSystem.alpha = 0;
+        PDParticleSystem(particleSystem).emitterXVariance = boardWidth;
         addChild(particleSystem);
 
         var controlsWidth:int = boardWidth;
