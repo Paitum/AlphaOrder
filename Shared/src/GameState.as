@@ -121,8 +121,8 @@ public class GameState extends StarlingState {
 
 //        var alphabet:String = "ABCXYZ";
 //        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
-        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
-//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+//        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
+        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         modelLabels[0] = "ABC";
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
         modelLabels[1] = "abc";
