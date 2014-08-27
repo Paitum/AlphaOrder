@@ -6,7 +6,6 @@ import flash.utils.Dictionary;
 import starling.animation.IAnimatable;
 import starling.animation.Tween;
 import starling.core.Starling;
-import starling.display.BlendMode;
 
 import starling.display.DisplayObjectContainer;
 import starling.display.Image;
@@ -16,8 +15,6 @@ import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
-
-import ShakeTween;
 
 public class Board extends Sprite implements IAnimatable {
 

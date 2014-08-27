@@ -1,6 +1,9 @@
 package {
 
+import aze.motion.eaze;
+
 import citrus.core.starling.StarlingCitrusEngine;
+import citrus.core.starling.StarlingState;
 import citrus.core.starling.ViewportMode;
 
 import flash.events.Event;
@@ -20,7 +23,7 @@ public class Startup extends StarlingCitrusEngine {
         super();
 
         debug = false;
-        scale = 2;
+        scale = 1;
         _viewportMode = ViewportMode.MANUAL;
 
         stage.color = 0xEEEEFF;
@@ -40,6 +43,8 @@ public class Startup extends StarlingCitrusEngine {
     override public function handleStarlingReady():void {
         super.handleStarlingReady();
 
+        state = new LoadState();
+
         setupView();
         initializeAssets(scale);
         loadAssets();
@@ -53,10 +58,10 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".png");
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.fnt");
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.png");
+
         Assets.assets.enqueue("media/textures/" + scale + "x/Tile.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
-//        Assets.assets.enqueue("media/textures/" + scale + "x/buttonDownSkin.png");
-//        Assets.assets.enqueue("media/textures/" + scale + "x/buttonUpSkin.png");
+        Assets.assets.enqueue("media/textures/" + scale + "x/levelHalf.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
         Assets.assets.enqueue("media/particles/particleConfig.pex");
         Assets.assets.enqueue("media/particles/particleTexture.png");
@@ -74,7 +79,11 @@ public class Startup extends StarlingCitrusEngine {
     protected function loadAssets():void {
         Assets.assets.verbose = debug;
         Assets.assets.loadQueue(function(ratio:Number):void {
-            if(ratio == 1) loadingComplete();
+            if(ratio == 1)  {
+                loadingComplete();
+            } else if(state is LoadState) {
+                (state as LoadState).updateProgress(ratio);
+            }
         });
     }
 
@@ -94,7 +103,15 @@ public class Startup extends StarlingCitrusEngine {
             sound.addSound(letter, {sound:Assets.assets.getSound(letter)});
         }
 
-        state = new GameState();
+        var gameState:StarlingState = new GameState();
+        gameState.x = +stage.stageWidth;
+        futureState = gameState;
+
+        // Transition from loading state to game state
+        eaze(state).to(0.5,{x:-stage.stageWidth});
+        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
+            state = futureState;
+        });
     }
 
     private function setupView():void {

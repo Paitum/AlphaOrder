@@ -49,21 +49,13 @@ public class GameState extends StarlingState {
 
         var stageWidth:int = stage.stageWidth;
         var stageHeight:int = stage.stageHeight;
-        var deviceInfo:Object = Constants.getDeviceInfo();
 
         stage.color = Constants.BACKGROUND_COLOR;
 
         var texture:Texture;
         texture = Assets.assets.getTexture("Background");
 
-        if(texture == null) {
-//            var backgroundQuad:Quad = new Quad(stageWidth, stageHeight, Constants.BACKGROUND_COLOR);
-//            backgroundQuad.setVertexColor(0, 0x0F366A);
-//            backgroundQuad.setVertexColor(1, 0x0F366A);
-//            backgroundQuad.setVertexColor(2, 0x113f7c);
-//            backgroundQuad.setVertexColor(3, 0x113f7c);
-//            addChild(backgroundQuad);
-        } else {
+        if(texture != null) {
             var backgroundImage:Image = new Image(texture);
             backgroundImage.width = stageWidth;
             backgroundImage.height = stageHeight;
@@ -106,18 +98,30 @@ public class GameState extends StarlingState {
 
         var dividerQuad:Quad;
         dividerQuad = new Quad(stageWidth, 1,  Constants.DETAIL_COLOR);
-        dividerQuad.alpha = 0.2;
+        dividerQuad.alpha = 0.1;
         dividerQuad.x = 0;
         dividerQuad.y = yDivider;
         dividerQuad.touchable = false;
         addChild(dividerQuad);
 
         dividerQuad = new Quad(stageWidth, 1, Constants.DETAIL_COLOR);
-        dividerQuad.alpha = 0.2;
+        dividerQuad.alpha = 0.05;
         dividerQuad.x = 0;
         dividerQuad.y = breadcrumbDivider;
         dividerQuad.touchable = false;
         addChild(dividerQuad);
+
+        var logoOffset:int = 7;
+        var logo:Image = new Image(Assets.assets.getTexture("levelHalf"));
+        logo.pivotX = Math.floor(logo.width / 2);
+        logo.pivotY = Math.floor(logo.height / 2);
+        logo.rotation = -Math.PI / 4;
+        logo.x = Math.floor(stageWidth - logo.width / 2 + logoOffset);
+        logo.y = Math.floor(stageHeight - logo.height / 2 + logoOffset);
+        logo.color = Constants.BACKGROUND_COLOR;
+        logo.alpha = 0.33;
+        logo.touchable = false;
+        addChild(logo);
 
 //        var alphabet:String = "ABCXYZ";
 //        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
@@ -209,11 +213,11 @@ public class GameState extends StarlingState {
         textField.y = controlsCenterY;
         addChild(textField);
 
-        modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.4, "ABC");
+        modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.45, "ABC");
         modeTextField.color = Constants.TEXT_COLOR;
         modeTextField.pivotX = 0;
         modeTextField.pivotY = modeTextField.height / 2;
-        modeTextField.x = padding;
+        modeTextField.x = padding * 2;
         modeTextField.y = controlsCenterY;
         addChild(modeTextField);
 
@@ -225,7 +229,7 @@ public class GameState extends StarlingState {
         restartIcon.height = controlsHeight / 2;
         //noinspection JSSuspiciousNameCombination
         restartIcon.width = restartIcon.height;
-        restartIcon.x = padding + controlsWidth;
+        restartIcon.x = controlsWidth;
         restartIcon.y = controlsCenterY;
         restartIcon.touchable = false;
         addChild(restartIcon);
