@@ -19,7 +19,7 @@ public class SWF extends Startup {
 //            throw new Error("Unsupported scale");
 //        }
 
-        Assets.assets.enqueue(SWF_Assets_2x);
+        Assets.assets.enqueue(SWF_Assets_1x);
         Assets.assets.enqueue(SWF_Assets_Sounds);
     }
 }
