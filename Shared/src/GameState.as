@@ -119,7 +119,7 @@ public class GameState extends StarlingState {
         logo.x = Math.floor(stageWidth - logo.width / 2 + logoOffset);
         logo.y = Math.floor(stageHeight - logo.height / 2 + logoOffset);
         logo.color = Constants.BACKGROUND_COLOR;
-        logo.alpha = 0.33;
+        logo.alpha = 0.5;
         logo.touchable = false;
         addChild(logo);
 
