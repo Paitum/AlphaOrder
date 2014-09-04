@@ -10,6 +10,8 @@ public class SWF_Assets_1x {
     [Embed(source="../../Shared/media/fonts/1x/ArtBrushLarge.png")]
     public static const ArtBrushLarge:Class;
 
+    [Embed(source="../../Shared/media/textures/1x/AlphaOrder.png")]
+    public static const AlphaOrder:Class;
     [Embed(source="../../Shared/media/textures/1x/Tile.png")]
     public static const Tile:Class;
     [Embed(source="../../Shared/media/textures/1x/Background.png")]

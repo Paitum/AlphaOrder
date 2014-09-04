@@ -54,8 +54,20 @@ public class SWF_Assets_Sounds {
     public static const y:Class;
     [Embed(source="../../Shared/media/sounds/z.mp3")]
     public static const z:Class;
-    [Embed(source="../../Shared/media/sounds/wrong.mp3")]
-    public static const wrong:Class;
+    [Embed(source="../../Shared/media/sounds/No.mp3")]
+    public static const No:Class;
+    [Embed(source="../../Shared/media/sounds/Noo.mp3")]
+    public static const Noo:Class;
+    [Embed(source="../../Shared/media/sounds/Nooo.mp3")]
+    public static const Nooo:Class;
+    [Embed(source="../../Shared/media/sounds/Noooo.mp3")]
+    public static const Noooo:Class;
+    [Embed(source="../../Shared/media/sounds/Nope.mp3")]
+    public static const Nope:Class;
+    [Embed(source="../../Shared/media/sounds/AlphaOrder.mp3")]
+    public static const AlphaOrder:Class;
+    [Embed(source="../../Shared/media/sounds/TouchTheLetters.mp3")]
+    public static const TouchTheLetters:Class;
     [Embed(source="../../Shared/media/sounds/celebrate.mp3")]
     public static const celebrate:Class;
 

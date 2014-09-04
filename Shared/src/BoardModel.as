@@ -203,5 +203,9 @@ public class BoardModel {
     public function getPosition(token:String):Point {
         return letterToPosition[token];
     }
+
+    public function isAtStart():Boolean {
+        return nextSolution == 0;
+    }
 }
 }

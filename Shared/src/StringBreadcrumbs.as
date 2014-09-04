@@ -1,22 +1,26 @@
 package {
 
-import starling.display.Image;
-import starling.display.Quad;
+import citrus.core.CitrusEngine;
+
 import starling.display.Sprite;
 import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
 import starling.text.TextField;
 import starling.text.TextFieldAutoSize;
 import starling.utils.HAlign;
-import starling.utils.VAlign;
 
 public class StringBreadcrumbs extends Sprite {
     protected var divisions:int;
     protected var fields:Vector.<TextField> = new Vector.<TextField>();
     protected var fontSize:Number;
+    protected var _ce:CitrusEngine;
 
-    public function StringBreadcrumbs(divisions:int) {
+    public function StringBreadcrumbs(divisions:int, citrusEngine:CitrusEngine) {
         super();
         this.divisions = divisions;
+        this._ce = citrusEngine;
 
         addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
     }
@@ -107,7 +111,26 @@ public class StringBreadcrumbs extends Sprite {
             textField.pivotY = textField.height / 2;
             textField.x = i + 0.5;
             textField.y = 0.5;
+            textField.addEventListener(TouchEvent.TOUCH, handleTouch);
             fields.push(textField);
+        }
+    }
+
+    private function handleTouch(event:TouchEvent):void {
+        var touch:Touch = event.getTouch(this);
+
+        if(touch == null || touch.phase != TouchPhase.BEGAN) {
+            return;
+        }
+
+        if(event.currentTarget is TextField) {
+            var textField:TextField = event.currentTarget as TextField;
+
+            if(textField != null && textField.alpha > 0.2) {
+                if(textField.text != null) {
+                    _ce.sound.playSound(textField.text.toLowerCase());
+                }
+            }
         }
     }
 

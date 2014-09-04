@@ -26,7 +26,7 @@ public class Startup extends StarlingCitrusEngine {
         scale = 1;
         _viewportMode = ViewportMode.MANUAL;
 
-        stage.color = 0xEEEEFF;
+        stage.color = Constants.BACKGROUND_COLOR;
         stage.frameRate = 60;
 
         trace("**************************************************");
@@ -59,6 +59,7 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.fnt");
         Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.png");
 
+        Assets.assets.enqueue("media/textures/" + scale + "x/AlphaOrder.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/Tile.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/levelHalf.png");
@@ -67,7 +68,14 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/particles/particleTexture.png");
         Assets.assets.enqueue("media/sounds/beep.mp3");
         Assets.assets.enqueue("media/sounds/celebrate.mp3");
-        Assets.assets.enqueue("media/sounds/wrong.mp3");
+
+        var length:int = Constants.WRONG_SOUNDS.length;
+        for(i = 0; i < length; i++) {
+            Assets.assets.enqueue("media/sounds/" + Constants.WRONG_SOUNDS[i] + ".mp3");
+        }
+
+        Assets.assets.enqueue("media/sounds/TouchTheLetters.mp3");
+        Assets.assets.enqueue("media/sounds/AlphaOrder.mp3");
 
         var charCode:int = "a".charCodeAt(0);
         for(var i:int = 0; i < 26; i++) {
@@ -94,11 +102,18 @@ public class Startup extends StarlingCitrusEngine {
 
         // Initialize sounds
         sound.addSound("beep", {sound:Assets.assets.getSound("beep")});
-        sound.addSound("wrong", {sound:Assets.assets.getSound("wrong")});
         sound.addSound("celebrate", {sound:Assets.assets.getSound("celebrate")});
 
+        var i:int;
+        var length:int = Constants.WRONG_SOUNDS.length;
+        for(i = 0; i < length; i++) {
+            sound.addSound(Constants.WRONG_SOUNDS[i], {sound:Assets.assets.getSound(Constants.WRONG_SOUNDS[i])});
+        }
+        sound.addSound("TouchTheLetters", {sound:Assets.assets.getSound("TouchTheLetters")});
+        sound.addSound("AlphaOrder", {sound:Assets.assets.getSound("AlphaOrder")});
+
         var charCode:int = "a".charCodeAt(0);
-        for(var i:int = 0; i < 26; i++) {
+        for(i = 0; i < 26; i++) {
             var letter:String = String.fromCharCode(charCode + i);
             sound.addSound(letter, {sound:Assets.assets.getSound(letter)});
         }

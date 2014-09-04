@@ -17,6 +17,8 @@ public class Constants {
     public static const TILE_HIGHLIGHT_CORRECT:uint = 0x00FF00;
     public static const TILE_HIGHLIGHT_INCORRECT:uint = 0xFF0000;
 
+    public static const WRONG_SOUNDS:Vector.<String> = new <String>["No", "Noo", "Nooo", "Noooo", "Nope"];
+
     private static const DEVICE_TYPE_IPHONE:String = "iphone";
     private static const DEVICE_TYPE_IPAD:String = "ipad";
     private static const DEVICE_TYPE_IPOD:String = "ipod";

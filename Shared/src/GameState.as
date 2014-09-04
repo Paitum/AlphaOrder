@@ -146,7 +146,7 @@ public class GameState extends StarlingState {
         addChild(board);
 
         var divisions:int = boardWidth / breadcrumbHeight;
-        breadcrumbs = new StringBreadcrumbs(divisions);
+        breadcrumbs = new StringBreadcrumbs(divisions, _ce);
         breadcrumbs.pivotX = breadcrumbs.width / 2;
         breadcrumbs.pivotY = breadcrumbs.height / 2;
         breadcrumbs.x = boardCenterX;
@@ -182,9 +182,9 @@ public class GameState extends StarlingState {
         leftButton.addEventListener(TouchEvent.TOUCH, handleLeftButtonTrigger);
         addChild(leftButton);
 
-//        var centerButton:DisplayObject = createButton(HAlign.CENTER);
-//        centerButton.addEventListener(Event.TRIGGERED, handleCenterButtonTrigger);
-//        addChild(centerButton);
+        var centerButton:DisplayObject = createButton(HAlign.CENTER);
+        centerButton.addEventListener(TouchEvent.TOUCH, handleCenterButtonTrigger);
+        addChild(centerButton);
 
         var rightButton:DisplayObject = createButton(HAlign.RIGHT);
         rightButton.addEventListener(TouchEvent.TOUCH, handleRightButtonTrigger);
@@ -204,14 +204,14 @@ public class GameState extends StarlingState {
 
         endStopwatchTween = new Tween(stopwatchText, 1, "easeIn");
 
-        var textField:TextField;
-        textField = createTextField((controlsWidth / 3) * 1.2, controlsHeight * 1.2, "AlphaOrder", "ArtBrushLarge");
-        textField.color = Constants.TEXT_COLOR;
-        textField.pivotX = textField.width / 2;
-        textField.pivotY = textField.height / 2;
-        textField.x = controlsCenterX;
-        textField.y = controlsCenterY;
-        addChild(textField);
+//        var textField:TextField;
+//        textField = createTextField((controlsWidth / 3) * 1.2, controlsHeight * 1.2, "AlphaOrder", "ArtBrushLarge");
+//        textField.color = Constants.TEXT_COLOR;
+//        textField.pivotX = textField.width / 2;
+//        textField.pivotY = textField.height / 2;
+//        textField.x = controlsCenterX;
+//        textField.y = controlsCenterY;
+//        addChild(textField);
 
         modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.45, "ABC");
         modeTextField.color = Constants.TEXT_COLOR;
@@ -220,6 +220,17 @@ public class GameState extends StarlingState {
         modeTextField.x = padding * 2;
         modeTextField.y = controlsCenterY;
         addChild(modeTextField);
+
+        var title:Image;
+        title = new Image(Assets.assets.getTexture("AlphaOrder"));
+        title.color = 0xFFFFFF;
+        title.pivotX = title.width / 2;
+        title.pivotY = 0;
+        title.x = controlsCenterX;
+        title.y = controlsHeight * 0.2;
+        title.scaleX = title.scaleY = controlsHeight * 1.25 / title.height;
+        title.touchable = false;
+        addChild(title);
 
         var restartIcon:Image;
         restartIcon = new Image(Assets.assets.getTexture("restart"));
@@ -289,7 +300,8 @@ public class GameState extends StarlingState {
             return;
         }
 
-        // Do something
+        _ce.sound.stopAllPlayingSounds();
+        _ce.sound.playSound("AlphaOrder");
     }
 
     private function handleRightButtonTrigger(event:TouchEvent):void {
@@ -310,7 +322,7 @@ public class GameState extends StarlingState {
             breadcrumbs.addToken(token, nextToken);
             playCorrectSound(token);
         } else if(op == Board.INCORRECT) {
-            _ce.sound.playSound("wrong");
+            playWrongSound();
         } else if(op == Board.START) {
             breadcrumbs.reset();
             if(nextToken != null) breadcrumbs.setNextToken(nextToken);
@@ -331,6 +343,16 @@ public class GameState extends StarlingState {
             particleSystem.alpha = 1;
             particleSystem.start();
             Starling.juggler.add(particleSystem);
+        }
+    }
+
+    private function playWrongSound():void {
+        if(models[currentModel].isAtStart()) {
+            _ce.sound.stopAllPlayingSounds();
+            _ce.sound.playSound("TouchTheLetters");
+        } else {
+            var random:int = Constants.WRONG_SOUNDS.length * Math.random();
+            _ce.sound.playSound(Constants.WRONG_SOUNDS[random]);
         }
     }
 
