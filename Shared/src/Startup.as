@@ -56,10 +56,8 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets = new AssetManager(scale);
         Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".fnt");
         Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".png");
-        Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.fnt");
-        Assets.assets.enqueue("media/fonts/" + scale + "x/ArtBrushLarge.png");
 
-        Assets.assets.enqueue("media/textures/" + scale + "x/AlphaOrder.png");
+        Assets.assets.enqueue("media/textures/AlphaOrder.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/Tile.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
         Assets.assets.enqueue("media/textures/" + scale + "x/levelHalf.png");

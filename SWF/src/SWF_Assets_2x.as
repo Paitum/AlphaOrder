@@ -5,11 +5,6 @@ public class SWF_Assets_2x {
 //    [Embed(source="../../Shared/media/fonts/2x/Souses.png")]
 //    public static const Souses:Class;
 //
-//    [Embed(source="../../Shared/media/fonts/2x/ArtBrushLarge.fnt", mimeType="application/octet-stream")]
-//    public static const ArtBrushLargeFNT:Class;
-//    [Embed(source="../../Shared/media/fonts/2x/ArtBrushLarge.png")]
-//    public static const ArtBrushLarge:Class;
-//
 //    [Embed(source="../../Shared/media/textures/2x/Tile.png")]
 //    public static const Tile:Class;
 //    [Embed(source="../../Shared/media/textures/2x/Background.png")]

@@ -5,11 +5,6 @@ public class SWF_Assets_1x {
     [Embed(source="../../Shared/media/fonts/1x/Souses.png")]
     public static const Souses:Class;
 
-    [Embed(source="../../Shared/media/fonts/1x/ArtBrushLarge.fnt", mimeType="application/octet-stream")]
-    public static const ArtBrushLargeFNT:Class;
-    [Embed(source="../../Shared/media/fonts/1x/ArtBrushLarge.png")]
-    public static const ArtBrushLarge:Class;
-
     [Embed(source="../../Shared/media/textures/1x/AlphaOrder.png")]
     public static const AlphaOrder:Class;
     [Embed(source="../../Shared/media/textures/1x/Tile.png")]

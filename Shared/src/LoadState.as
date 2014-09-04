@@ -16,6 +16,9 @@ public class LoadState extends StarlingState {
     [Embed(source="../../Shared/media/textures/Loading.png")]
     public static const loadingPNG:Class;
 
+    [Embed(source="../../Shared/media/textures/AlphaOrder.png")]
+    public static const AlphaOrderPNG:Class;
+
     [Embed(source="../../Shared/media/textures/logo_white_size1.png")]
     public static const levelPNG:Class;
 
@@ -43,15 +46,26 @@ public class LoadState extends StarlingState {
         loadingImage = new Image(texture);
         loadingImage.pivotX = Math.floor(loadingImage.width / 2);
         loadingImage.pivotY = Math.floor(loadingImage.height / 2);
-        loadingImage.x = Math.floor(stage.stageWidth / 2);
-        loadingImage.y = Math.floor(stage.stageHeight / 2);
+        loadingImage.x = Math.floor(stage.stageWidth * 0.5);
+        loadingImage.y = Math.floor(stage.stageHeight * 0.66);
         loadingImage.color = Constants.TEXT_COLOR;
         var scale:Number = Math.max(loadingImage.width / stage.stageWidth,
                 loadingImage.height / stage.stageHeight);
-        scale *= 0.50;
+        scale *= 0.25;
         loadingImage.scaleX = scale;
         loadingImage.scaleY = scale;
         addChild(loadingImage);
+
+        texture = Texture.fromBitmap(new AlphaOrderPNG());
+        var title:Image = new Image(texture);
+        title.pivotX = Math.floor(title.width / 2);
+        title.pivotY = Math.floor(title.height / 2);
+        title.x = Math.floor(stage.stageWidth * 0.5);
+        title.y = Math.floor(stage.stageHeight * 0.33);
+trace((stage.stageHeight * 0.2 / title.height) + " , " + (stage.stageWidth * 0.75 / title.width));
+        scale = Math.min(stage.stageHeight * 0.2 / title.height, stage.stageWidth * 0.75 / title.width);
+        title.scaleX = title.scaleY = scale;
+        addChild(title);
 
         texture = Texture.fromBitmap(new levelPNG());
         logoImage = new Image(texture);

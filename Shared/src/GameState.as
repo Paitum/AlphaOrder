@@ -204,15 +204,6 @@ public class GameState extends StarlingState {
 
         endStopwatchTween = new Tween(stopwatchText, 1, "easeIn");
 
-//        var textField:TextField;
-//        textField = createTextField((controlsWidth / 3) * 1.2, controlsHeight * 1.2, "AlphaOrder", "ArtBrushLarge");
-//        textField.color = Constants.TEXT_COLOR;
-//        textField.pivotX = textField.width / 2;
-//        textField.pivotY = textField.height / 2;
-//        textField.x = controlsCenterX;
-//        textField.y = controlsCenterY;
-//        addChild(textField);
-
         modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.45, "ABC");
         modeTextField.color = Constants.TEXT_COLOR;
         modeTextField.pivotX = 0;
@@ -228,7 +219,7 @@ public class GameState extends StarlingState {
         title.pivotY = 0;
         title.x = controlsCenterX;
         title.y = controlsHeight * 0.2;
-        title.scaleX = title.scaleY = controlsHeight * 1.25 / title.height;
+        title.scaleX = title.scaleY = yDivider / title.height;
         title.touchable = false;
         addChild(title);
 
