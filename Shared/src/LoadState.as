@@ -62,7 +62,6 @@ public class LoadState extends StarlingState {
         title.pivotY = Math.floor(title.height / 2);
         title.x = Math.floor(stage.stageWidth * 0.5);
         title.y = Math.floor(stage.stageHeight * 0.33);
-trace((stage.stageHeight * 0.2 / title.height) + " , " + (stage.stageWidth * 0.75 / title.width));
         scale = Math.min(stage.stageHeight * 0.2 / title.height, stage.stageWidth * 0.75 / title.width);
         title.scaleX = title.scaleY = scale;
         addChild(title);
