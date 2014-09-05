@@ -66,20 +66,6 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/particles/particleTexture.png");
         Assets.assets.enqueue("media/sounds/beep.mp3");
         Assets.assets.enqueue("media/sounds/celebrate.mp3");
-
-        var length:int = Constants.WRONG_SOUNDS.length;
-        for(i = 0; i < length; i++) {
-            Assets.assets.enqueue("media/sounds/" + Constants.WRONG_SOUNDS[i] + ".mp3");
-        }
-
-        Assets.assets.enqueue("media/sounds/TouchTheLetters.mp3");
-        Assets.assets.enqueue("media/sounds/AlphaOrder.mp3");
-
-        var charCode:int = "a".charCodeAt(0);
-        for(var i:int = 0; i < 26; i++) {
-            var letter:String = String.fromCharCode(charCode + i);
-            Assets.assets.enqueue("media/sounds/" + letter + ".mp3");
-        }
     }
 
     protected function loadAssets():void {
@@ -98,6 +84,45 @@ public class Startup extends StarlingCitrusEngine {
         diff = int(diff * 1000) / 1000;
         trace("Assets Loaded in " + diff + " seconds");
 
+        var gameState:StarlingState = new GameState();
+        gameState.x = +stage.stageWidth;
+        futureState = gameState;
+
+        // Transition from loading state to game state
+        eaze(state).to(0.5,{x:-stage.stageWidth});
+        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
+            state = futureState;
+        });
+
+        initializeSounds();
+    }
+
+    private function initializeSounds():void {
+        startTime = getTimer();
+
+        var length:int = Constants.WRONG_SOUNDS.length;
+        for(i = 0; i < length; i++) {
+            Assets.assets.enqueue("media/sounds/" + Constants.WRONG_SOUNDS[i] + ".mp3");
+        }
+
+        Assets.assets.enqueue("media/sounds/TouchTheLetters.mp3");
+        Assets.assets.enqueue("media/sounds/AlphaOrder.mp3");
+
+        var charCode:int = "a".charCodeAt(0);
+        for(var i:int = 0; i < 26; i++) {
+            var letter:String = String.fromCharCode(charCode + i);
+            Assets.assets.enqueue("media/sounds/" + letter + ".mp3");
+        }
+
+        Assets.assets.verbose = debug;
+        Assets.assets.loadQueue(function(ratio:Number):void {
+            if(ratio == 1)  {
+                loadSounds();
+            }
+        });
+    }
+
+    private function loadSounds():void {
         // Initialize sounds
         sound.addSound("beep", {sound:Assets.assets.getSound("beep")});
         sound.addSound("celebrate", {sound:Assets.assets.getSound("celebrate")});
@@ -116,15 +141,9 @@ public class Startup extends StarlingCitrusEngine {
             sound.addSound(letter, {sound:Assets.assets.getSound(letter)});
         }
 
-        var gameState:StarlingState = new GameState();
-        gameState.x = +stage.stageWidth;
-        futureState = gameState;
-
-        // Transition from loading state to game state
-        eaze(state).to(0.5,{x:-stage.stageWidth});
-        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
-            state = futureState;
-        });
+        var diff:Number = (getTimer() - startTime) / 1000;
+        diff = int(diff * 1000) / 1000;
+        trace("Sounds loaded in " + diff + " seconds");
     }
 
     private function setupView():void {
