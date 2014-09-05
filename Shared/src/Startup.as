@@ -3,6 +3,7 @@ package {
 import aze.motion.eaze;
 
 import citrus.core.starling.StarlingCitrusEngine;
+import citrus.core.starling.StarlingState;
 import citrus.core.starling.ViewportMode;
 
 import flash.display.Bitmap;
@@ -44,7 +45,8 @@ public class Startup extends StarlingCitrusEngine {
         BackgroundHD = null;
 
         var viewPort:Rectangle = new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight);
-        var backgroundScale:Number = Math.min(1.0, viewPort.width / background.width, viewPort.height / background.height);
+        var backgroundScale:Number = Math.min(viewPort.width / background.width, viewPort.height / background.height);
+        if(backgroundScale > 0.66) backgroundScale = 1.0;
         background.scaleX = background.scaleY = backgroundScale;
         background.x = Math.floor(viewPort.x + viewPort.width / 2 - background.width / 2);
         background.y = Math.floor(viewPort.y + viewPort.height/ 2 - background.height / 2);
@@ -75,54 +77,13 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".png");
         Assets.assets.enqueue("media/textures/ABCSheet.xml");
         Assets.assets.enqueue("media/textures/ABCSheet.png");
-
-//        Assets.assets.enqueue("media/textures/AlphaOrder.png");
-//        Assets.assets.enqueue("media/textures/" + scale + "x/Tile.png");
-//        Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
-//        Assets.assets.enqueue("media/textures/" + scale + "x/levelHalf.png");
-//        Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
         Assets.assets.enqueue("media/particles/particleConfig.pex");
         Assets.assets.enqueue("media/particles/particleTexture.png");
+
+        enqueueSounds();
     }
 
-    protected function loadAssets():void {
-        Assets.assets.verbose = debug;
-        Assets.assets.loadQueue(function(ratio:Number):void {
-            if(ratio == 1)  {
-                loadingComplete();
-            }
-//            else if(state is LoadState) {
-//                (state as LoadState).updateProgress(ratio);
-//            }
-        });
-    }
-
-    protected function loadingComplete():void {
-        var diff:Number = (getTimer() - startTime) / 1000;
-        diff = int(diff * 1000) / 1000;
-        trace("Assets Loaded in " + diff + " seconds");
-
-        state = new GameState();
-        removeChild(background);
-        background = null;
-
-//        var gameState:StarlingState = new GameState();
-//        gameState.x = +stage.stageWidth;
-//        futureState = gameState;
-//
-//        // Transition from loading state to game state
-//        eaze(state).to(0.5,{x:-stage.stageWidth});
-//        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
-//            state = futureState;
-//        });
-
-
-        initializeSounds();
-    }
-
-    private function initializeSounds():void {
-        startTime = getTimer();
-
+    private function enqueueSounds():void {
         var length:int = Constants.WRONG_SOUNDS.length;
         for(i = 0; i < length; i++) {
             Assets.assets.enqueue("media/sounds/" + Constants.WRONG_SOUNDS[i] + ".mp3");
@@ -138,18 +99,47 @@ public class Startup extends StarlingCitrusEngine {
             var letter:String = String.fromCharCode(charCode + i);
             Assets.assets.enqueue("media/sounds/" + letter + ".mp3");
         }
+    }
 
+    protected function loadAssets():void {
         Assets.assets.verbose = debug;
         Assets.assets.loadQueue(function(ratio:Number):void {
             if(ratio == 1)  {
-                loadSounds();
+                loadingComplete();
             }
+//            else if(state is LoadState) {
+//                (state as LoadState).updateProgress(ratio);
+//            }
         });
+    }
+
+    protected function loadingComplete():void {
+        loadSounds();
+
+        var diff:Number = (getTimer() - startTime) / 1000;
+        diff = int(diff * 1000) / 1000;
+        trace("Assets Loaded in " + diff + " seconds");
+
+        state = new GameState();
+        removeChild(background);
+        background = null;
+
+//        var gameState:StarlingState = new GameState();
+//        gameState.x = +stage.stageWidth;
+//        futureState = gameState;
+//
+//        // Transition from loading state to game state
+//        eaze(state).to(5,{x:-stage.stageWidth});
+//        eaze(futureState).to(5,{x:0}).onComplete(function():void {
+//            state = futureState;
+//        });
     }
 
     private function loadSounds():void {
         // Initialize sounds
+        sound.addSound("AlphaOrder", {sound:Assets.assets.getSound("AlphaOrder")});
         sound.addSound("beep", {sound:Assets.assets.getSound("beep")});
+        sound.addSound("TouchTheLetters", {sound:Assets.assets.getSound("TouchTheLetters")});
         sound.addSound("celebrate", {sound:Assets.assets.getSound("celebrate")});
 
         var i:int;
@@ -157,18 +147,12 @@ public class Startup extends StarlingCitrusEngine {
         for(i = 0; i < length; i++) {
             sound.addSound(Constants.WRONG_SOUNDS[i], {sound:Assets.assets.getSound(Constants.WRONG_SOUNDS[i])});
         }
-        sound.addSound("TouchTheLetters", {sound:Assets.assets.getSound("TouchTheLetters")});
-        sound.addSound("AlphaOrder", {sound:Assets.assets.getSound("AlphaOrder")});
 
         var charCode:int = "a".charCodeAt(0);
         for(i = 0; i < 26; i++) {
             var letter:String = String.fromCharCode(charCode + i);
             sound.addSound(letter, {sound:Assets.assets.getSound(letter)});
         }
-
-        var diff:Number = (getTimer() - startTime) / 1000;
-        diff = int(diff * 1000) / 1000;
-        trace("Sounds loaded in " + diff + " seconds");
     }
 
     private function setupView():void {
