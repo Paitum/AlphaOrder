@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="Flex" version="4">
-  <component name="FlexBuildConfigurationManager" active="720Desktop">
+  <component name="FlexBuildConfigurationManager" active="480x720Desktop">
     <configurations>
-      <configuration name="720Desktop" target-platform="Desktop" pure-as="true" main-class="DesktopStartup" output-file="720Desktop.swf" output-folder="$MODULE_DIR$/../out/production/Desktop">
-        <dependencies>
-          <entries>
-            <entry module-name="Shared" build-configuration-name="Shared">
-              <dependency linkage="Merged" />
-            </entry>
-            <entry library-name="Citrus-Engine-Vanilla" library-level="application">
-              <dependency linkage="Merged" />
-            </entry>
-          </entries>
-          <sdk name="Adobe Air SDK" />
-        </dependencies>
-        <compiler-options>
-          <option name="additionalOptions" value="-inline" />
-        </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/720-app.xml" package-file-name="720Desktop" />
-        <packaging-android />
-        <packaging-ios />
-      </configuration>
       <configuration name="480x720Desktop" target-platform="Desktop" pure-as="true" main-class="DesktopStartup" output-file="480x720Desktop.swf" output-folder="$MODULE_DIR$/../out/production/Desktop">
         <dependencies>
           <entries>
@@ -37,6 +18,25 @@
           <option name="additionalOptions" value="-inline" />
         </compiler-options>
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/480x720-app.xml" package-file-name="480x720Desktop" />
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+      <configuration name="720x480Desktop" target-platform="Desktop" pure-as="true" main-class="DesktopStartup" output-file="720x480Desktop.swf" output-folder="$MODULE_DIR$/../out/production/Desktop">
+        <dependencies>
+          <entries>
+            <entry module-name="Shared" build-configuration-name="Shared">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry library-name="Citrus-Engine-Vanilla" library-level="application">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="Adobe Air SDK" />
+        </dependencies>
+        <compiler-options>
+          <option name="additionalOptions" value="-inline" />
+        </compiler-options>
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/720x480-app.xml" package-file-name="480x720Desktop" />
         <packaging-android />
         <packaging-ios />
       </configuration>

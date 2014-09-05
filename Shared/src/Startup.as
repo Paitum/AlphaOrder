@@ -3,8 +3,9 @@ package {
 import aze.motion.eaze;
 
 import citrus.core.starling.StarlingCitrusEngine;
-import citrus.core.starling.StarlingState;
 import citrus.core.starling.ViewportMode;
+
+import flash.display.Bitmap;
 
 import flash.events.Event;
 import flash.geom.Rectangle;
@@ -17,6 +18,11 @@ public class Startup extends StarlingCitrusEngine {
     private var scale:Number;
     private var startTime:Number;
     private var debug:Boolean;
+    private var background:Bitmap;
+
+    // Startup image for HD screens
+    [Embed(source="../../Shared/media/textures/SplashHD.png")]
+    private static var BackgroundHD:Class;
 
     public function Startup() {
         startTime = getTimer();
@@ -33,6 +39,17 @@ public class Startup extends StarlingCitrusEngine {
         Constants.getDeviceInfo();
         trace("(" + stage.stageWidth + ", " + stage.stageHeight + ") full(" + stage.fullScreenWidth + ", " + stage.fullScreenHeight + ")");
         trace("**************************************************");
+
+        background = new BackgroundHD();
+        BackgroundHD = null;
+
+        var viewPort:Rectangle = new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight);
+        var backgroundScale:Number = Math.min(1.0, viewPort.width / background.width, viewPort.height / background.height);
+        background.scaleX = background.scaleY = backgroundScale;
+        background.x = Math.floor(viewPort.x + viewPort.width / 2 - background.width / 2);
+        background.y = Math.floor(viewPort.y + viewPort.height/ 2 - background.height / 2);
+        background.smoothing = true;
+        addChild(background);
     }
 
     override public function initialize():void {
@@ -86,6 +103,8 @@ public class Startup extends StarlingCitrusEngine {
         trace("Assets Loaded in " + diff + " seconds");
 
         state = new GameState();
+        removeChild(background);
+        background = null;
 
 //        var gameState:StarlingState = new GameState();
 //        gameState.x = +stage.stageWidth;
@@ -96,6 +115,7 @@ public class Startup extends StarlingCitrusEngine {
 //        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
 //            state = futureState;
 //        });
+
 
         initializeSounds();
     }

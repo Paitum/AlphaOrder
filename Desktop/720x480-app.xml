@@ -72,10 +72,10 @@
         <!--<resizable></resizable>-->
 
         <!-- The window's initial width in pixels. Optional. -->
-        <width>480</width>
+        <width>720</width>
 
         <!-- The window's initial height in pixels. Optional. -->
-        <height>720</height>
+        <height>480</height>
 
         <!-- The window's initial x position. Optional. -->
         <!--<x></x>-->
