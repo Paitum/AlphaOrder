@@ -22,7 +22,7 @@ public class Startup extends StarlingCitrusEngine {
         startTime = getTimer();
         super();
 
-        debug = false;
+        debug = true;
         scale = 1;
         _viewportMode = ViewportMode.MANUAL;
 
@@ -43,7 +43,7 @@ public class Startup extends StarlingCitrusEngine {
     override public function handleStarlingReady():void {
         super.handleStarlingReady();
 
-        state = new LoadState();
+//        state = new LoadState();
 
         setupView();
         initializeAssets(scale);
@@ -56,16 +56,16 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets = new AssetManager(scale);
         Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".fnt");
         Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".png");
+        Assets.assets.enqueue("media/textures/ABCSheet.xml");
+        Assets.assets.enqueue("media/textures/ABCSheet.png");
 
-        Assets.assets.enqueue("media/textures/AlphaOrder.png");
-        Assets.assets.enqueue("media/textures/" + scale + "x/Tile.png");
-        Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
-        Assets.assets.enqueue("media/textures/" + scale + "x/levelHalf.png");
-        Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
+//        Assets.assets.enqueue("media/textures/AlphaOrder.png");
+//        Assets.assets.enqueue("media/textures/" + scale + "x/Tile.png");
+//        Assets.assets.enqueue("media/textures/" + scale + "x/Background.png");
+//        Assets.assets.enqueue("media/textures/" + scale + "x/levelHalf.png");
+//        Assets.assets.enqueue("media/textures/" + scale + "x/restart.png");
         Assets.assets.enqueue("media/particles/particleConfig.pex");
         Assets.assets.enqueue("media/particles/particleTexture.png");
-        Assets.assets.enqueue("media/sounds/beep.mp3");
-        Assets.assets.enqueue("media/sounds/celebrate.mp3");
     }
 
     protected function loadAssets():void {
@@ -73,9 +73,10 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.loadQueue(function(ratio:Number):void {
             if(ratio == 1)  {
                 loadingComplete();
-            } else if(state is LoadState) {
-                (state as LoadState).updateProgress(ratio);
             }
+//            else if(state is LoadState) {
+//                (state as LoadState).updateProgress(ratio);
+//            }
         });
     }
 
@@ -84,15 +85,17 @@ public class Startup extends StarlingCitrusEngine {
         diff = int(diff * 1000) / 1000;
         trace("Assets Loaded in " + diff + " seconds");
 
-        var gameState:StarlingState = new GameState();
-        gameState.x = +stage.stageWidth;
-        futureState = gameState;
+        state = new GameState();
 
-        // Transition from loading state to game state
-        eaze(state).to(0.5,{x:-stage.stageWidth});
-        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
-            state = futureState;
-        });
+//        var gameState:StarlingState = new GameState();
+//        gameState.x = +stage.stageWidth;
+//        futureState = gameState;
+//
+//        // Transition from loading state to game state
+//        eaze(state).to(0.5,{x:-stage.stageWidth});
+//        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
+//            state = futureState;
+//        });
 
         initializeSounds();
     }
@@ -105,6 +108,8 @@ public class Startup extends StarlingCitrusEngine {
             Assets.assets.enqueue("media/sounds/" + Constants.WRONG_SOUNDS[i] + ".mp3");
         }
 
+        Assets.assets.enqueue("media/sounds/beep.mp3");
+        Assets.assets.enqueue("media/sounds/celebrate.mp3");
         Assets.assets.enqueue("media/sounds/TouchTheLetters.mp3");
         Assets.assets.enqueue("media/sounds/AlphaOrder.mp3");
 
