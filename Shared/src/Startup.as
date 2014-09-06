@@ -49,8 +49,8 @@ public class Startup extends StarlingCitrusEngine {
     }
 
     private function showNativeSplashScreen():void {
-        var width:int = stage.fullScreenWidth;
-        var height:int = stage.fullScreenHeight;
+        var width:int = getScreenWidth();
+        var height:int = getScreenHeight();
         var scale:Number = 1.0;
         var backgroundClass:Class = null;
 
@@ -82,6 +82,9 @@ public class Startup extends StarlingCitrusEngine {
             background.scaleX = background.scaleY = scale;
             background.x = Math.floor(width / 2 - background.width / 2);
             background.y = Math.floor(height/ 2 - background.height / 2);
+trace(width + ", " + height);
+trace(background.x + ", " + background.y + " " + background.width + ", " + background.height + "  scale[" + scale + "]");
+
             background.smoothing = true;
             addChild(background);
         }
@@ -230,6 +233,14 @@ public class Startup extends StarlingCitrusEngine {
     private function handleResize1(event:Event):void {
         trace("RESIZE (" + stage.stageWidth + ", " + stage.stageHeight + ") target[" + event.target + "] currTar[" + event.currentTarget + "] " + event);
         setupView();
+    }
+
+    protected function getScreenWidth():int {
+        return stage.fullScreenWidth;
+    }
+
+    protected function getScreenHeight():int {
+        return stage.fullScreenHeight;
     }
 }
 }
