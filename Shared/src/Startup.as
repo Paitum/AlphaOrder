@@ -22,14 +22,18 @@ public class Startup extends StarlingCitrusEngine {
     private var background:Bitmap;
 
     // Startup image for HD screens
-    [Embed(source="../../Shared/media/textures/SplashHD.png")]
-    private static var BackgroundHD:Class;
+    [Embed(source="../../Shared/media/textures/Default@2x.png")]
+    private static var Default1:Class;
+    [Embed(source="../../Shared/media/textures/Default-568h@2x.png")]
+    private static var Default2:Class;
+    [Embed(source="../../Shared/media/textures/Default-Portrait@2x.png")]
+    private static var Default3:Class;
 
     public function Startup() {
         startTime = getTimer();
         super();
 
-        debug = true;
+        debug = false;
         scale = 1;
         _viewportMode = ViewportMode.MANUAL;
 
@@ -41,17 +45,55 @@ public class Startup extends StarlingCitrusEngine {
         trace("(" + stage.stageWidth + ", " + stage.stageHeight + ") full(" + stage.fullScreenWidth + ", " + stage.fullScreenHeight + ")");
         trace("**************************************************");
 
-        background = new BackgroundHD();
-        BackgroundHD = null;
+        showNativeSplashScreen();
+    }
 
-        var viewPort:Rectangle = new Rectangle(0, 0, stage.fullScreenWidth, stage.fullScreenHeight);
-        var backgroundScale:Number = Math.min(viewPort.width / background.width, viewPort.height / background.height);
-        if(backgroundScale > 0.66) backgroundScale = 1.0;
-        background.scaleX = background.scaleY = backgroundScale;
-        background.x = Math.floor(viewPort.x + viewPort.width / 2 - background.width / 2);
-        background.y = Math.floor(viewPort.y + viewPort.height/ 2 - background.height / 2);
-        background.smoothing = true;
-        addChild(background);
+    private function showNativeSplashScreen():void {
+        var width:int = stage.fullScreenWidth;
+        var height:int = stage.fullScreenHeight;
+        var scale:Number = 1.0;
+        var backgroundClass:Class = null;
+
+        if(width == 1536 && height == 2048) {
+            backgroundClass = Default3;
+        } else if(width == 768 && height == 1024) {
+            backgroundClass = Default3;
+            scale = 0.5;
+        } else if(width == 640 && height == 1136) {
+            backgroundClass = Default2;
+        } else if(width == 640 && height == 960) {
+            backgroundClass = Default1;
+        } else if(width == 320 && height == 480) {
+            backgroundClass = Default1;
+            scale = 0.5;
+        }
+
+        if(backgroundClass != null) {
+            background = new backgroundClass();
+            background.x = 0;
+            background.y = 0;
+            background.scaleX = background.scaleY = scale;
+            background.smoothing = true;
+            addChild(background);
+        } else {
+            background = new Default1();
+            scale = Math.min(width / background.width, height / background.height);
+            if(scale > 1.0) scale = 1.0;
+            background.scaleX = background.scaleY = scale;
+            background.x = Math.floor(width / 2 - background.width / 2);
+            background.y = Math.floor(height/ 2 - background.height / 2);
+            background.smoothing = true;
+            addChild(background);
+        }
+
+        Default1 = null;
+        Default2 = null;
+        Default3 = null;
+    }
+
+    private function hideNativeSplashScreen():void {
+        removeChild(background);
+        background = null;
     }
 
     override public function initialize():void {
@@ -121,8 +163,7 @@ public class Startup extends StarlingCitrusEngine {
         trace("Assets Loaded in " + diff + " seconds");
 
         state = new GameState();
-        removeChild(background);
-        background = null;
+        hideNativeSplashScreen();
 
 //        var gameState:StarlingState = new GameState();
 //        gameState.x = +stage.stageWidth;
