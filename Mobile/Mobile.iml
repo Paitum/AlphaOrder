@@ -2,7 +2,7 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="iOS">
     <configurations>
-      <configuration name="iOS" target-platform="Mobile" pure-as="true" main-class="MobileStartup" output-file="iOS.swf" output-folder="$MODULE_DIR$/../out/production/Mobile">
+      <configuration name="iOS" target-platform="Mobile" pure-as="true" main-class="MobileStartup" output-file="AlphaOrder.swf" output-folder="$MODULE_DIR$/../out/production/Mobile">
         <dependencies target-player="11.9">
           <entries>
             <entry module-name="Shared" build-configuration-name="Shared">
@@ -15,11 +15,14 @@
           <sdk name="Adobe Air SDK" />
         </dependencies>
         <compiler-options>
+          <map>
+            <entry key="compiler.debug.swf" value="false" />
+          </map>
           <option name="additionalOptions" value="-inline" />
         </compiler-options>
         <packaging-air-desktop />
         <packaging-android use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Mobile-app.xml" package-file-name="Mobile" />
-        <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/iOS-app.xml" package-file-name="Mobile">
+        <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/iOS-app.xml" package-file-name="AlphaOrder">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media/system" path-in-package="." />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media" path-in-package="media" />

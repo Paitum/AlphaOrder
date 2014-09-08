@@ -187,6 +187,8 @@
                 <!-- iPad devices -->
                 <string>2</string>
             </array>
+            <!--<key>UIPrerenderedIcon</key>-->
+            <!--<string>YES</string>-->
             <!--<key>UIStatusBarStyle</key>-->
             <!--<string>UIStatusBarStyleBlackOpaque</string>-->
             <!--<key>UIRequiresPersistentWiFi</key>-->
