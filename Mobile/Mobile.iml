@@ -27,7 +27,7 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media/system" path-in-package="." />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media" path-in-package="media" />
           </files-to-package>
-          <AirSigningOptions adt-options="-useLegacyAOT no" keystore-path="$MODULE_DIR$/../../../../iOS Developer: David Payt.p12" provisioning-profile-path="$MODULE_DIR$/../../../../iOS_Team_Provisioning_Profile_-2.mobileprovision" />
+          <AirSigningOptions adt-options="-useLegacyAOT no" keystore-path="$MODULE_DIR$/../../../../Profiles/Level_Distribution.p12" provisioning-profile-path="$MODULE_DIR$/../../../../Profiles/Level_Adhoc_Distribution.mobileprovision" />
         </packaging-ios>
       </configuration>
       <configuration name="Android" target-platform="Mobile" pure-as="true" main-class="MobileStartup" output-file="Android.swf" output-folder="$MODULE_DIR$/../out/production/Mobile">

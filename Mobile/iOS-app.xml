@@ -187,6 +187,8 @@
                 <!-- iPad devices -->
                 <string>2</string>
             </array>
+            <key>MinimumOSVersion</key>
+            <string>7.0</string>
             <!--<key>UIPrerenderedIcon</key>-->
             <!--<string>YES</string>-->
             <!--<key>UIStatusBarStyle</key>-->
