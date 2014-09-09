@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:bad51cf8767829778492706b89ab7512:b6703a8b7c983f62bc8fbab0a0b27a1a:30c5b0e1589b08acccdba0586600f3e3$ -->
+<TextureAtlas imagePath="ABCSheet.png">
+    <SubTexture name="AlphaOrder" x="10" y="10" width="1000" height="365"/>
+    <SubTexture name="Background" x="10" y="385" width="640" height="1136"/>
+    <SubTexture name="Loading" x="10" y="1531" width="406" height="106" frameX="0" frameY="0" frameWidth="412" frameHeight="112"/>
+    <SubTexture name="Tile" x="660" y="725" width="250" height="250" frameX="-3" frameY="-3" frameWidth="256" frameHeight="256"/>
+    <SubTexture name="levelHalf" x="426" y="1596" width="42" height="28"/>
+    <SubTexture name="logo_white_size1" x="426" y="1531" width="83" height="55"/>
+    <SubTexture name="restart" x="660" y="385" width="330" height="330" frameX="-10" frameY="-10" frameWidth="350" frameHeight="350"/>
+</TextureAtlas>
