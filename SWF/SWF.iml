@@ -3,7 +3,7 @@
   <component name="FlexBuildConfigurationManager" active="SWF">
     <configurations>
       <configuration name="SWF" pure-as="true" main-class="SWF" output-file="SWF.swf" output-folder="$MODULE_DIR$/../out/production/SWF" use-html-wrapper="true" wrapper-template-path="$MODULE_DIR$/html-template">
-        <dependencies target-player="14.0">
+        <dependencies target-player="15.0">
           <entries>
             <entry module-name="Shared" build-configuration-name="Shared">
               <dependency linkage="Merged" />
