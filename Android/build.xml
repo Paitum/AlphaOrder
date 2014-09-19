@@ -1,11 +1,11 @@
-<project name="MobileAnt" default="copyAssets" basedir=".">
+<project name="AndroidAnt" default="copyAssets" basedir=".">
     <description>
         simple example build file
     </description>
 
     <target name="copyAssets">
-        <echo message="Copying ../Shared/media/**/* to ../out/production/Mobile/media"/>
-        <copy todir="../out/production/Mobile/media" overwrite="true">
+        <echo message="Copying ../Shared/media/**/* to ../out/production/Android/media"/>
+        <copy todir="../out/production/Android/media" overwrite="true">
             <fileset dir="../Shared/media">
                 <include name="**/*" />
             </fileset>

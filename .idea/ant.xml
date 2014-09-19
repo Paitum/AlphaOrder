@@ -4,7 +4,10 @@
     <buildFile url="file://$PROJECT_DIR$/Desktop/build.xml">
       <customJdkName value="Java JDK" />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/Mobile/build.xml">
+    <buildFile url="file://$PROJECT_DIR$/iOS/build.xml">
+      <customJdkName value="Java JDK" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/Android/build.xml">
       <customJdkName value="Java JDK" />
     </buildFile>
   </component>

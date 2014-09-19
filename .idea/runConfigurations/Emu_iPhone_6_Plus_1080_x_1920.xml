@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="iPhone" type="FlashRunConfigurationType" factoryName="Flash App">
+  <configuration default="false" name="Emu iPhone 6 Plus 1080 x 1920" type="FlashRunConfigurationType" factoryName="Flash App">
     <option name="BCName" value="iOS" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />
@@ -7,11 +7,11 @@
     <option name="appDescriptorForEmulator" value="IOS" />
     <option name="debugTransport" value="USB" />
     <option name="debuggerSdkRaw" value="BC SDK" />
-    <option name="emulator" value="iPhone" />
+    <option name="emulator" value="OtherIOSDevice" />
     <option name="emulatorAdlOptions" value="" />
     <option name="fastPackaging" value="true" />
-    <option name="fullScreenHeight" value="0" />
-    <option name="fullScreenWidth" value="0" />
+    <option name="fullScreenHeight" value="1920" />
+    <option name="fullScreenWidth" value="1080" />
     <option name="launchUrl" value="false" />
     <option name="launcherParameters">
       <LauncherParameters>
@@ -22,20 +22,16 @@
       </LauncherParameters>
     </option>
     <option name="mobileRunTarget" value="Emulator" />
-    <option name="moduleName" value="Mobile" />
+    <option name="moduleName" value="iOS" />
     <option name="overriddenMainClass" value="" />
     <option name="overriddenOutputFileName" value="" />
     <option name="overrideMainClass" value="false" />
     <option name="runTrusted" value="true" />
-    <option name="screenDpi" value="0" />
-    <option name="screenHeight" value="0" />
-    <option name="screenWidth" value="0" />
+    <option name="screenDpi" value="401" />
+    <option name="screenHeight" value="1920" />
+    <option name="screenWidth" value="1080" />
     <option name="url" value="http://" />
     <option name="usbDebugPort" value="7936" />
-    <RunnerSettings RunnerId="FlexDebugRunner" />
-    <RunnerSettings RunnerId="FlexRunner" />
-    <ConfigurationWrapper RunnerId="FlexDebugRunner" />
-    <ConfigurationWrapper RunnerId="FlexRunner" />
     <method />
   </configuration>
 </component>

@@ -1,17 +1,17 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="480x720" type="FlashRunConfigurationType" factoryName="Flash App">
-    <option name="BCName" value="480x720Desktop" />
+  <configuration default="false" name="Emu iPhone 5 640 x 1136" type="FlashRunConfigurationType" factoryName="Flash App">
+    <option name="BCName" value="iOS" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />
     <option name="airProgramParameters" value="" />
-    <option name="appDescriptorForEmulator" value="Android" />
+    <option name="appDescriptorForEmulator" value="IOS" />
     <option name="debugTransport" value="USB" />
     <option name="debuggerSdkRaw" value="BC SDK" />
-    <option name="emulator" value="NexusOne" />
+    <option name="emulator" value="OtherIOSDevice" />
     <option name="emulatorAdlOptions" value="" />
     <option name="fastPackaging" value="true" />
-    <option name="fullScreenHeight" value="0" />
-    <option name="fullScreenWidth" value="0" />
+    <option name="fullScreenHeight" value="1136" />
+    <option name="fullScreenWidth" value="640" />
     <option name="launchUrl" value="false" />
     <option name="launcherParameters">
       <LauncherParameters>
@@ -22,22 +22,20 @@
       </LauncherParameters>
     </option>
     <option name="mobileRunTarget" value="Emulator" />
-    <option name="moduleName" value="Desktop" />
+    <option name="moduleName" value="iOS" />
     <option name="overriddenMainClass" value="" />
     <option name="overriddenOutputFileName" value="" />
     <option name="overrideMainClass" value="false" />
     <option name="runTrusted" value="true" />
-    <option name="screenDpi" value="0" />
-    <option name="screenHeight" value="0" />
-    <option name="screenWidth" value="0" />
+    <option name="screenDpi" value="326" />
+    <option name="screenHeight" value="1136" />
+    <option name="screenWidth" value="640" />
     <option name="url" value="http://" />
     <option name="usbDebugPort" value="7936" />
     <RunnerSettings RunnerId="FlexDebugRunner" />
     <RunnerSettings RunnerId="FlexRunner" />
     <ConfigurationWrapper RunnerId="FlexDebugRunner" />
     <ConfigurationWrapper RunnerId="FlexRunner" />
-    <method>
-      <option name="AntTarget" enabled="true" antfile="file://$PROJECT_DIR$/Desktop/build.xml" target="copyAssets" />
-    </method>
+    <method />
   </configuration>
 </component>

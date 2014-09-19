@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="720x480" type="FlashRunConfigurationType" factoryName="Flash App">
+  <configuration default="false" name="Desktop 720 x 480" type="FlashRunConfigurationType" factoryName="Flash App">
     <option name="BCName" value="720x480Desktop" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />

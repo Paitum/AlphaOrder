@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="iPhone 4 Retina" type="FlashRunConfigurationType" factoryName="Flash App">
+  <configuration default="false" name="Emu iPad 3rd Gen 1536 x 2048" type="FlashRunConfigurationType" factoryName="Flash App">
     <option name="BCName" value="iOS" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />
@@ -7,7 +7,7 @@
     <option name="appDescriptorForEmulator" value="IOS" />
     <option name="debugTransport" value="USB" />
     <option name="debuggerSdkRaw" value="BC SDK" />
-    <option name="emulator" value="iPhoneRetina" />
+    <option name="emulator" value="iPadRetina" />
     <option name="emulatorAdlOptions" value="" />
     <option name="fastPackaging" value="true" />
     <option name="fullScreenHeight" value="1136" />
@@ -22,7 +22,7 @@
       </LauncherParameters>
     </option>
     <option name="mobileRunTarget" value="Emulator" />
-    <option name="moduleName" value="Mobile" />
+    <option name="moduleName" value="iOS" />
     <option name="overriddenMainClass" value="" />
     <option name="overriddenOutputFileName" value="" />
     <option name="overrideMainClass" value="false" />

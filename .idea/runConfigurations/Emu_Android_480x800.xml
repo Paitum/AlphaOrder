@@ -1,13 +1,13 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="DEVICE iPhone (Fast Packing)" type="FlashRunConfigurationType" factoryName="Flash App">
-    <option name="BCName" value="iOS" />
+  <configuration default="false" name="Emu Android 480x800" type="FlashRunConfigurationType" factoryName="Flash App">
+    <option name="BCName" value="Android" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />
     <option name="airProgramParameters" value="" />
-    <option name="appDescriptorForEmulator" value="IOS" />
-    <option name="debugTransport" value="Network" />
+    <option name="appDescriptorForEmulator" value="Android" />
+    <option name="debugTransport" value="USB" />
     <option name="debuggerSdkRaw" value="BC SDK" />
-    <option name="emulator" value="iPhoneRetina" />
+    <option name="emulator" value="NexusOne" />
     <option name="emulatorAdlOptions" value="" />
     <option name="fastPackaging" value="true" />
     <option name="fullScreenHeight" value="0" />
@@ -21,8 +21,8 @@
         <option name="playerPath" value="FlashPlayerDebugger.exe" />
       </LauncherParameters>
     </option>
-    <option name="mobileRunTarget" value="iOSDevice" />
-    <option name="moduleName" value="Mobile" />
+    <option name="mobileRunTarget" value="Emulator" />
+    <option name="moduleName" value="Android" />
     <option name="overriddenMainClass" value="" />
     <option name="overriddenOutputFileName" value="" />
     <option name="overrideMainClass" value="false" />
@@ -32,8 +32,8 @@
     <option name="screenWidth" value="0" />
     <option name="url" value="http://" />
     <option name="usbDebugPort" value="7936" />
-    <RunnerSettings RunnerId="FlexRunner" />
-    <ConfigurationWrapper RunnerId="FlexRunner" />
+    <RunnerSettings RunnerId="FlexDebugRunner" />
+    <ConfigurationWrapper RunnerId="FlexDebugRunner" />
     <method />
   </configuration>
 </component>

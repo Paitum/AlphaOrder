@@ -1,0 +1,15 @@
+<project name="iOSAnt" default="copyAssets" basedir=".">
+    <description>
+        simple example build file
+    </description>
+
+    <target name="copyAssets">
+        <echo message="Copying ../Shared/media/**/* to ../out/production/iOS/media"/>
+        <copy todir="../out/production/iOS/media" overwrite="true">
+            <fileset dir="../Shared/media">
+                <include name="**/*" />
+            </fileset>
+        </copy>
+    </target>
+
+</project>
