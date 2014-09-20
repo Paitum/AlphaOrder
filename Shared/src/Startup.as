@@ -19,15 +19,7 @@ public class Startup extends StarlingCitrusEngine {
     private var scale:Number;
     private var startTime:Number;
     private var debug:Boolean;
-    private var background:Bitmap;
-
-    // Startup image for HD screens
-    [Embed(source="../../Shared/media/textures/Default@2x.png")]
-    private static var Default1:Class;
-    [Embed(source="../../Shared/media/textures/Default-568h@2x.png")]
-    private static var Default2:Class;
-    [Embed(source="../../Shared/media/textures/Default-Portrait@2x.png")]
-    private static var Default3:Class;
+    protected var background:Bitmap;
 
     public function Startup() {
         startTime = getTimer();
@@ -48,55 +40,15 @@ public class Startup extends StarlingCitrusEngine {
         showNativeSplashScreen();
     }
 
-    private function showNativeSplashScreen():void {
-        var width:int = getScreenWidth();
-        var height:int = getScreenHeight();
-        var scale:Number = 1.0;
-        var backgroundClass:Class = null;
-
-        if(width == 1536 && height == 2048) {
-            backgroundClass = Default3;
-        } else if(width == 768 && height == 1024) {
-            backgroundClass = Default3;
-            scale = 0.5;
-        } else if(width == 640 && height == 1136) {
-            backgroundClass = Default2;
-        } else if(width == 640 && height == 960) {
-            backgroundClass = Default1;
-        } else if(width == 320 && height == 480) {
-            backgroundClass = Default1;
-            scale = 0.5;
-        }
-
-        if(backgroundClass != null) {
-            background = new backgroundClass();
-            background.x = 0;
-            background.y = 0;
-            background.scaleX = background.scaleY = scale;
-            background.smoothing = true;
-            addChild(background);
-        } else {
-            background = new Default1();
-            scale = Math.min(width / background.width, height / background.height);
-            if(scale > 1.0) scale = 1.0;
-            background.scaleX = background.scaleY = scale;
-            background.x = Math.floor(width / 2 - background.width / 2);
-            background.y = Math.floor(height/ 2 - background.height / 2);
-trace(width + ", " + height);
-trace(background.x + ", " + background.y + " " + background.width + ", " + background.height + "  scale[" + scale + "]");
-
-            background.smoothing = true;
-            addChild(background);
-        }
-
-        Default1 = null;
-        Default2 = null;
-        Default3 = null;
+    protected function showNativeSplashScreen():void {
+        // Optional. Subclasses should override to show a splash screen.
     }
 
     private function hideNativeSplashScreen():void {
-        removeChild(background);
-        background = null;
+        if(background != null) {
+            removeChild(background);
+            background = null;
+        }
     }
 
     override public function initialize():void {

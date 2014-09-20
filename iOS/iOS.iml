@@ -24,7 +24,8 @@
         <packaging-android use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/../Mobile/Mobile-app.xml" package-file-name="Mobile" />
         <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/iOS-app.xml" package-file-name="AlphaOrder">
           <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media/system" path-in-package="." />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/system" path-in-package="." />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/media" path-in-package="media" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media" path-in-package="media" />
           </files-to-package>
           <AirSigningOptions adt-options="-useLegacyAOT no" keystore-path="$MODULE_DIR$/../../../../Profiles/Level_Distribution.p12" provisioning-profile-path="$MODULE_DIR$/../../../../Profiles/Level_Adhoc_Distribution.mobileprovision" />
