@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Emu iPhone 6 750 x 1334" type="FlashRunConfigurationType" factoryName="Flash App">
+  <configuration default="false" name="Emu iPhone X 640 x 640" type="FlashRunConfigurationType" factoryName="Flash App">
     <option name="BCName" value="iOS" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />
@@ -10,8 +10,8 @@
     <option name="emulator" value="OtherIOSDevice" />
     <option name="emulatorAdlOptions" value="" />
     <option name="fastPackaging" value="true" />
-    <option name="fullScreenHeight" value="1334" />
-    <option name="fullScreenWidth" value="750" />
+    <option name="fullScreenHeight" value="640" />
+    <option name="fullScreenWidth" value="640" />
     <option name="launchUrl" value="false" />
     <option name="launcherParameters">
       <LauncherParameters>
@@ -28,8 +28,8 @@
     <option name="overrideMainClass" value="false" />
     <option name="runTrusted" value="true" />
     <option name="screenDpi" value="326" />
-    <option name="screenHeight" value="1334" />
-    <option name="screenWidth" value="750" />
+    <option name="screenHeight" value="640" />
+    <option name="screenWidth" value="640" />
     <option name="url" value="http://" />
     <option name="usbDebugPort" value="7936" />
     <RunnerSettings RunnerId="FlexDebugRunner" />
