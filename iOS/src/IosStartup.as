@@ -34,28 +34,28 @@ public class IosStartup extends Startup {
         var scale:Number = 1.0;
         var backgroundClass:Class = null;
 
-        if(width == 1536 && height == 2048) { // iPad 3 =>
-            backgroundClass = Default3;
-        } else if(width == 768 && height == 1024) { // iPad 2
+        if(width == 768 && height == 1024) { // iPad 2
             backgroundClass = Default3;
             scale = 0.5;
-        } else if(aspect == (2208 / 1242)) { // iPhone 6 plus
-            backgroundClass = Default5;
-            scale = height / 2208;
-//        } else if(width == 1242 && height == 2208) { // iPhone 6 plus
-//            backgroundClass = Default5;
-//        } else if(width == 1080 && height == 1920) { // iPhone 6 plus
-//            backgroundClass = Default5;
-//            scale = 1920 / 2208;
-        } else if(width == 750 && height == 1334) { // iPhone 6
-            backgroundClass = Default4;
-        } else if(width == 640 && height == 1136) { // iPhone 5
-            backgroundClass = Default2;
+        } else if(width == 1536 && height == 2048) { // iPad 3 =>
+            backgroundClass = Default3;
         } else if(width == 640 && height == 960) { // iPhone 4 =>
             backgroundClass = Default1;
-        } else if(width == 320 && height == 480) { // iPhone 4 <
+        } else if(width == 320 && height == 480) { // iPhone 4 < (should never apply)
             backgroundClass = Default1;
             scale = 0.5;
+        } else if(width == 640 && height == 1136) { // iPhone 5
+            backgroundClass = Default2;
+        } else if(width == 750 && height == 1334) { // iPhone 6
+            backgroundClass = Default4;
+        } else if(width == 1242 && height == 2208) { // iPhone 6 plus
+            backgroundClass = Default5;
+        } else if(width == 1080 && height == 1920) { // iPhone 6 plus
+            backgroundClass = Default5;
+            scale = 1920 / 2208;
+        } else if(aspect > 1.75 && aspect < 1.80) { // iPhone 6-like Aspect Ratio
+            backgroundClass = Default5;
+            scale = height / 2208;
         }
 
         if(backgroundClass != null) {
