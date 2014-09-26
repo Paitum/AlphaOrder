@@ -15,12 +15,16 @@
           <sdk name="Adobe Air SDK" />
         </dependencies>
         <compiler-options>
+          <map>
+            <entry key="compiler.debug.swf" value="true" />
+          </map>
           <option name="additionalOptions" value="-inline" />
         </compiler-options>
         <packaging-air-desktop />
         <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Android-app.xml" package-file-name="Android">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media" path-in-package="media" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/system" path-in-package="." />
           </files-to-package>
         </packaging-android>
         <packaging-ios package-file-name="Android" />
@@ -35,8 +39,8 @@
     </content>
     <orderEntry type="jdk" jdkName="Adobe Air SDK" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Citrus-Engine-Vanilla" level="application" />
     <orderEntry type="module" module-name="Shared" exported="" />
+    <orderEntry type="library" exported="" name="Citrus-Engine-Vanilla" level="application" />
   </component>
 </module>
 

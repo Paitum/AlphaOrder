@@ -10,13 +10,6 @@
                 <include name="**/*" />
             </fileset>
         </copy>
-
-        <echo message="Copying ../iOS/media/**/* to ../out/production/iOS/media"/>
-        <copy todir="../out/production/iOS/media" overwrite="true">
-            <fileset dir="../iOS/media">
-                <include name="**/*" />
-            </fileset>
-        </copy>
     </target>
 
 </project>

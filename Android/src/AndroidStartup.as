@@ -14,6 +14,5 @@ public class AndroidStartup extends Startup {
 
         super.initialize();
     }
-
 }
 }

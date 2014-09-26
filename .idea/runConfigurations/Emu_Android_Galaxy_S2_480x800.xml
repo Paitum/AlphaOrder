@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Emu Android 480x800" type="FlashRunConfigurationType" factoryName="Flash App">
+  <configuration default="false" name="Emu Android Galaxy S2 480x800" type="FlashRunConfigurationType" factoryName="Flash App">
     <option name="BCName" value="Android" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />
@@ -7,11 +7,11 @@
     <option name="appDescriptorForEmulator" value="Android" />
     <option name="debugTransport" value="USB" />
     <option name="debuggerSdkRaw" value="BC SDK" />
-    <option name="emulator" value="NexusOne" />
+    <option name="emulator" value="OtherAndroidDevice" />
     <option name="emulatorAdlOptions" value="" />
     <option name="fastPackaging" value="true" />
-    <option name="fullScreenHeight" value="0" />
-    <option name="fullScreenWidth" value="0" />
+    <option name="fullScreenHeight" value="800" />
+    <option name="fullScreenWidth" value="480" />
     <option name="launchUrl" value="false" />
     <option name="launcherParameters">
       <LauncherParameters>
@@ -27,13 +27,15 @@
     <option name="overriddenOutputFileName" value="" />
     <option name="overrideMainClass" value="false" />
     <option name="runTrusted" value="true" />
-    <option name="screenDpi" value="0" />
-    <option name="screenHeight" value="0" />
-    <option name="screenWidth" value="0" />
+    <option name="screenDpi" value="218" />
+    <option name="screenHeight" value="800" />
+    <option name="screenWidth" value="480" />
     <option name="url" value="http://" />
     <option name="usbDebugPort" value="7936" />
     <RunnerSettings RunnerId="FlexDebugRunner" />
+    <RunnerSettings RunnerId="FlexRunner" />
     <ConfigurationWrapper RunnerId="FlexDebugRunner" />
+    <ConfigurationWrapper RunnerId="FlexRunner" />
     <method />
   </configuration>
 </component>

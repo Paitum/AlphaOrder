@@ -1,9 +1,6 @@
 package {
 
-import aze.motion.eaze;
-
 import citrus.core.starling.StarlingCitrusEngine;
-import citrus.core.starling.StarlingState;
 import citrus.core.starling.ViewportMode;
 
 import flash.display.Bitmap;
@@ -11,7 +8,7 @@ import flash.display.Bitmap;
 import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.utils.getTimer;
-
+import starling.core.Starling;
 import starling.utils.AssetManager;
 
 public class Startup extends StarlingCitrusEngine {
@@ -20,6 +17,13 @@ public class Startup extends StarlingCitrusEngine {
     private var startTime:Number;
     private var debug:Boolean;
     protected var background:Bitmap;
+    protected var logo:Bitmap;
+
+    // Splash Screen
+    [Embed(source="../embedded/textures/UniversalSplash.png")]
+    private static var SplashBitmap:Class;
+    [Embed(source="../embedded/textures/Level_Standard_2x.png")]
+    private static var LogoBitmap:Class;
 
     public function Startup() {
         startTime = getTimer();
@@ -32,22 +36,54 @@ public class Startup extends StarlingCitrusEngine {
         stage.color = Constants.BACKGROUND_COLOR;
         stage.frameRate = 60;
 
-        trace("**************************************************");
-        Constants.getDeviceInfo();
-        trace("(" + stage.stageWidth + ", " + stage.stageHeight + ") full(" + stage.fullScreenWidth + ", " + stage.fullScreenHeight + ")");
-        trace("**************************************************");
+//        trace("**************************************************");
+//        Constants.getDeviceInfo();
+//        trace("(" + stage.stageWidth + ", " + stage.stageHeight + ") full(" + stage.fullScreenWidth + ", " + stage.fullScreenHeight + ")");
+//        trace("**************************************************");
 
         showNativeSplashScreen();
     }
 
     protected function showNativeSplashScreen():void {
-        // Optional. Subclasses should override to show a splash screen.
+        var width:int = getScreenWidth();
+        var height:int = getScreenHeight();
+        var aspect:Number = height / width;
+        var scale:Number = 1.0;
+
+        background = new SplashBitmap();
+        scale = Math.max(width / background.width, height / background.height);
+        background.scaleX = background.scaleY = scale;
+        background.x = Math.floor(width / 2 - background.width / 2);
+        background.y = Math.floor(height/ 2 - background.height / 2);
+        background.smoothing = true;
+        addChild(background);
+
+        logo = new LogoBitmap();
+        scale = height / logo.height * 0.05;
+        if(scale <= 0.33) scale = 0.33;
+        if(scale > 0.33 && scale < 0.75) scale = 0.5;
+        if(scale >= 0.75 && scale < 1.75) scale = 1;
+        if(scale >= 1.75 && scale < 2.75) scale = 2;
+
+        logo.scaleX = logo.scaleY = scale;
+        logo.x = Math.floor(width * 0.5 - logo.width / 2);
+        logo.y = height - logo.height * 2;
+        logo.smoothing = true;
+        addChild(logo);
+
+        SplashBitmap = null;
+        LogoBitmap = null;
     }
 
     private function hideNativeSplashScreen():void {
         if(background != null) {
             removeChild(background);
             background = null;
+        }
+
+        if(logo != null) {
+            removeChild(logo);
+            logo = null;
         }
     }
 
@@ -58,8 +94,6 @@ public class Startup extends StarlingCitrusEngine {
 
     override public function handleStarlingReady():void {
         super.handleStarlingReady();
-
-//        state = new LoadState();
 
         setupView();
         initializeAssets(scale);
@@ -104,14 +138,11 @@ public class Startup extends StarlingCitrusEngine {
             if(ratio == 1)  {
                 loadingComplete();
             }
-//            else if(state is LoadState) {
-//                (state as LoadState).updateProgress(ratio);
-//            }
         });
     }
 
     protected function loadingComplete():void {
-        loadSounds();
+        registerSounds();
 
         var diff:Number = (getTimer() - startTime) / 1000;
         diff = int(diff * 1000) / 1000;
@@ -119,20 +150,9 @@ public class Startup extends StarlingCitrusEngine {
 
         state = new GameState();
         hideNativeSplashScreen();
-
-//        var gameState:StarlingState = new GameState();
-//        gameState.x = +stage.stageWidth;
-//        futureState = gameState;
-//
-//        // Transition from loading state to game state
-//        eaze(state).to(5,{x:-stage.stageWidth});
-//        eaze(futureState).to(5,{x:0}).onComplete(function():void {
-//            state = futureState;
-//        });
     }
 
-    private function loadSounds():void {
-        // Initialize sounds
+    private function registerSounds():void {
         sound.addSound("AlphaOrder", {sound:Assets.assets.getSound("AlphaOrder")});
         sound.addSound("beep", {sound:Assets.assets.getSound("beep")});
         sound.addSound("TouchTheLetters", {sound:Assets.assets.getSound("TouchTheLetters")});
@@ -152,38 +172,28 @@ public class Startup extends StarlingCitrusEngine {
     }
 
     private function setupView():void {
-        _starling.viewPort = getViewPort();
-        trace("VIEWPORT(" + viewPort.width + "x" + viewPort.height + ")");
+        // viewPort is the virtual space
+        Starling.current.viewPort = getViewPort();
 
-        var isPortrait:Boolean = stage.fullScreenHeight > stage.fullScreenWidth;
-        var deviceInfo:Object = Constants.getDeviceInfo();
+        // stage is the pixel space
+        _starling.stage.stageWidth = viewPort.width;
+        _starling.stage.stageHeight = viewPort.height;
 
-        if(deviceInfo.isDesktop) {
-            _starling.stage.stageWidth = viewPort.width;
-            _starling.stage.stageHeight = viewPort.height;
-        } else {
-            _starling.stage.stageWidth = isPortrait ? deviceInfo.shortEdge : deviceInfo.longEdge;
-            _starling.stage.stageHeight = isPortrait ? deviceInfo.longEdge : deviceInfo.shortEdge;
-        }
+        trace("'");
+        trace("Setup Display: viewPort(" + viewPort.width + ", " + viewPort.height + ") stage(" + _starling.stage.stageWidth + ", " + _starling.stage.stageHeight + ")");
+        trace("'");
     }
 
     private function getViewPort():Rectangle {
-        var deviceInfo:Object = Constants.getDeviceInfo();
+        viewPort.setTo(0, 0, stage.stageWidth, stage.stageHeight);
 
-        if(deviceInfo.isDesktop) {
-            viewPort.setTo(0, 0, stage.stageWidth, stage.stageHeight);
-        } else {
-            var isPortrait:Boolean = stage.fullScreenHeight > stage.fullScreenWidth;
-            var width:int = isPortrait ? deviceInfo.shortEdge : deviceInfo.longEdge;
-            var height:int = isPortrait ? deviceInfo.longEdge : deviceInfo.shortEdge;
-            viewPort.setTo(0, 0, width, height);
-        }
+//        trace("       Stage[" + stage.stageWidth + ", " + stage.stageHeight + "]");
+//        trace("Capabilities[" + Capabilities.screenResolutionX + ", " + Capabilities.screenResolutionY + "]");
 
         return viewPort;
     }
 
     private function handleResize1(event:Event):void {
-        trace("RESIZE (" + stage.stageWidth + ", " + stage.stageHeight + ") target[" + event.target + "] currTar[" + event.currentTarget + "] " + event);
         setupView();
     }
 
