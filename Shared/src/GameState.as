@@ -25,6 +25,7 @@ public class GameState extends StarlingState {
     private var stopwatch:Stopwatch;
     private var stopwatchText:TextField;
     private var endStopwatchTween:Tween;
+    private var secondsText:TextField;
     private var models:Vector.<BoardModel> = new Vector.<BoardModel>(2);
     private var modelLabels:Vector.<String> = new Vector.<String>();
     private var currentModelLabel:String;
@@ -202,6 +203,18 @@ public class GameState extends StarlingState {
         stopwatchText.touchable = false;
         addChild(stopwatchText);
 
+        secondsText = createTextField(boardWidth, boardHeight, "seconds");
+        secondsText.fontSize = stopwatchText.fontSize * 0.5;
+        secondsText.color = Constants.TEXT_COLOR;
+        secondsText.x = stageWidth / 2;
+        secondsText.y = stageHeight / 2 + stopwatchText.height;
+        secondsText.pivotX = secondsText.width / 2;
+        secondsText.pivotY = secondsText.height / 2;
+        secondsText.scaleX = 1;
+        secondsText.scaleY = 1;
+        secondsText.touchable = false;
+        addChild(secondsText);
+
         endStopwatchTween = new Tween(stopwatchText, 1, "easeIn");
 
         modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.45, "ABC");
@@ -247,6 +260,18 @@ public class GameState extends StarlingState {
         Starling.juggler.add(board);
     }
 
+    public function getBoard():Board {
+        return board;
+    }
+
+    public function getStopwatch():Stopwatch {
+        return stopwatch;
+    }
+
+    public function mute():void {
+        _ce.sound.masterMute = true;
+    }
+
     private function handleFadeWallTouch(event:TouchEvent):void {
         var touch:Touch = event.getTouch(this);
 
@@ -276,12 +301,16 @@ public class GameState extends StarlingState {
             return;
         }
 
+        nextGameMode();
+
+        _ce.sound.playSound("beep");
+    }
+
+    public function nextGameMode():void {
         currentModel = (currentModel + 1) % models.length;
         currentModelLabel = modelLabels[currentModel];
         board.changeModel(models[currentModel]);
         modeTextField.text = modelLabels[currentModel];
-
-        _ce.sound.playSound("beep");
     }
 
     private function handleCenterButtonTrigger(event:TouchEvent):void {
@@ -333,6 +362,7 @@ public class GameState extends StarlingState {
             fadeWall.alpha = 0.9;
             particleSystem.alpha = 1;
             particleSystem.start();
+            particleSystem.populate(100);
             Starling.juggler.add(particleSystem);
         }
     }
@@ -354,6 +384,7 @@ public class GameState extends StarlingState {
     private function hideEndTime():void {
         Starling.juggler.remove(endStopwatchTween);
         stopwatchText.alpha = 0.0;
+        secondsText.alpha = 0.0;
 
         fullScreenTouch.touchable = false;
     }
@@ -372,13 +403,17 @@ public class GameState extends StarlingState {
         stopwatchText.scaleX = 0.2;
         stopwatchText.scaleY = 0.2;
 
-        var delay:Number = 0.5;
-        endStopwatchTween.reset(stopwatchText, 0.5, "easeIn");
+        var delay:Number = 1;
+        endStopwatchTween.reset(stopwatchText, delay, "easeIn");
         endStopwatchTween.animate("alpha", 1.0);
         endStopwatchTween.animate("scaleX", 1.0);
         endStopwatchTween.animate("scaleY", 1.0);
         endStopwatchTween.animate("rotation", Math.PI * 2);
         Starling.juggler.add(endStopwatchTween);
+
+        Starling.juggler.delayCall(function():void {
+            secondsText.alpha = 1.0;
+        }, delay);
 
         fadeWallResetTime = getTimer() + delay * 1000;
         fullScreenTouch.touchable = true;

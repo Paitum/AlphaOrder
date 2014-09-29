@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Android/Android.iml" filepath="$PROJECT_DIR$/Android/Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/Desktop/Desktop.iml" filepath="$PROJECT_DIR$/Desktop/Desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/SWF/SWF.iml" filepath="$PROJECT_DIR$/SWF/SWF.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Screenshots/Screenshots.iml" filepath="$PROJECT_DIR$/Screenshots/Screenshots.iml" />
       <module fileurl="file://$PROJECT_DIR$/Shared/Shared.iml" filepath="$PROJECT_DIR$/Shared/Shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/iOS/iOS.iml" filepath="$PROJECT_DIR$/iOS/iOS.iml" />
     </modules>

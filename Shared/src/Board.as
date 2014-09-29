@@ -301,6 +301,14 @@ public class Board extends Sprite implements IAnimatable {
         }
     }
 
+    public function solve(count:int):void {
+        for(var i:int = 0; i < count; i++) {
+            var token:String = model.getCurrentSolutionToken();
+            var point:Point = model.getPosition(token);
+            positionTouched(point.y, point.x);
+        }
+    }
+
     private function positionTouched(row:int, column:int):Boolean {
         var token:String = model.processSolution(row, column);
 

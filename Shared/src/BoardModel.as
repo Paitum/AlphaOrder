@@ -169,6 +169,20 @@ public class BoardModel {
         return solution;
     }
 
+    public function processNextSolution2():String {
+        var solution:String = getCurrentSolutionToken();
+        var point:Point = getPosition(solution);
+
+        if(solution != null) {
+            nextSolution++;
+            availablePositions.push(letterToPosition[solution]);
+            letterToPosition[solution] = null;
+            positionToToken[point.x][point.y] = null;
+        }
+
+        return solution;
+    }
+
     public function hasEmptyPosition():Boolean {
         return availablePositions.length > 0;
     }
@@ -200,6 +214,12 @@ public class BoardModel {
         }
     }
 
+    /**
+     * Get the column, row position of a token
+     * @param token the token to find
+     * @return  a point where the x is the column and y is the row, or null
+     *          if the token is not on the board
+     */
     public function getPosition(token:String):Point {
         return letterToPosition[token];
     }

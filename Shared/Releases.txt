@@ -8,3 +8,4 @@ September 19, 2014 07:12, In Review
 September 19, 2014 13:33, Pending Developer Release
 
 0.9.2
+Added "seconds" label to complete time

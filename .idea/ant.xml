@@ -10,6 +10,9 @@
     <buildFile url="file://$PROJECT_DIR$/Android/build.xml">
       <customJdkName value="Java JDK" />
     </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/Screenshots/build.xml">
+      <customJdkName value="Java JDK" />
+    </buildFile>
   </component>
 </project>
 

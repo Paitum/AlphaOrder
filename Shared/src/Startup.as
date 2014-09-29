@@ -1,6 +1,9 @@
 package {
 
+import aze.motion.eaze;
+
 import citrus.core.starling.StarlingCitrusEngine;
+import citrus.core.starling.StarlingState;
 import citrus.core.starling.ViewportMode;
 
 import flash.display.Bitmap;
@@ -9,6 +12,9 @@ import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.utils.getTimer;
 import starling.core.Starling;
+import starling.display.Image;
+import starling.textures.Texture;
+import starling.textures.TextureSmoothing;
 import starling.utils.AssetManager;
 
 public class Startup extends StarlingCitrusEngine {
@@ -18,6 +24,9 @@ public class Startup extends StarlingCitrusEngine {
     private var debug:Boolean;
     protected var background:Bitmap;
     protected var logo:Bitmap;
+    protected var backgroundImage:Image;
+    protected var logoImage:Image;
+    protected var splashState:StarlingState;
 
     // Splash Screen
     [Embed(source="../embedded/textures/UniversalSplash.png")]
@@ -52,6 +61,13 @@ public class Startup extends StarlingCitrusEngine {
 
         background = new SplashBitmap();
         scale = Math.max(width / background.width, height / background.height);
+
+// This logic attempts to perform cleaner scaling, but the effect was hardly noticable
+//        var textureWidth:Number = (aspect < 1 ? background.width : background.width / aspect);
+//        var textureHeight:Number = (aspect < 1 ? background.height * aspect : background.height);
+//        background.scaleX = width / (2 * Math.floor(textureWidth / 2));
+//        background.scaleY = height / (2 * Math.floor(textureHeight / 2));
+
         background.scaleX = background.scaleY = scale;
         background.x = Math.floor(width / 2 - background.width / 2);
         background.y = Math.floor(height/ 2 - background.height / 2);
@@ -68,6 +84,7 @@ public class Startup extends StarlingCitrusEngine {
         logo.scaleX = logo.scaleY = scale;
         logo.x = Math.floor(width * 0.5 - logo.width / 2);
         logo.y = height - logo.height * 2;
+trace(height + " " + logo.height + " " + logo.y);
         logo.smoothing = true;
         addChild(logo);
 
@@ -75,7 +92,39 @@ public class Startup extends StarlingCitrusEngine {
         LogoBitmap = null;
     }
 
-    private function hideNativeSplashScreen():void {
+    /**
+     * Transfer the native stage splash-screen bitmaps to Starling
+     * This enables screenshots and citrus state transitions
+     */
+    private function transferNativeSplashScreen():void {
+        splashState = new ColoredStarlingState(Constants.BACKGROUND_COLOR);
+        splashState.clipRect = new Rectangle(0, 0, getScreenWidth(), getScreenHeight());
+        var texture:Texture;
+
+        if(background != null) {
+            texture = Texture.fromBitmap(background);
+            backgroundImage = new Image(texture);
+            backgroundImage.x = background.x;
+            backgroundImage.y = background.y;
+            backgroundImage.scaleX = background.scaleX;
+            backgroundImage.scaleY = background.scaleY;
+            backgroundImage.smoothing = TextureSmoothing.TRILINEAR;
+            splashState.addChild(backgroundImage);
+        }
+
+        if(logo != null) {
+            texture = Texture.fromBitmap(logo);
+            logoImage = new Image(texture);
+            logoImage.x = logo.x;
+            logoImage.y = logo.y;
+            logoImage.scaleX = logo.scaleX;
+            logoImage.scaleY = logo.scaleY;
+            logoImage.smoothing = TextureSmoothing.TRILINEAR;
+            splashState.addChild(logoImage);
+        }
+
+        state = splashState;
+
         if(background != null) {
             removeChild(background);
             background = null;
@@ -84,6 +133,24 @@ public class Startup extends StarlingCitrusEngine {
         if(logo != null) {
             removeChild(logo);
             logo = null;
+        }
+    }
+
+    private function disposeSplashScreen():void {
+        if(splashState != null) {
+            splashState.removeChildren();
+            splashState.dispose();
+            splashState = null;
+        }
+
+        if(backgroundImage != null) {
+            backgroundImage.dispose();
+            backgroundImage = null;
+        }
+
+        if(logoImage != null) {
+            logoImage.dispose();
+            logoImage = null;
         }
     }
 
@@ -96,6 +163,7 @@ public class Startup extends StarlingCitrusEngine {
         super.handleStarlingReady();
 
         setupView();
+        transferNativeSplashScreen();
         initializeAssets(scale);
         loadAssets();
 
@@ -136,20 +204,33 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.verbose = debug;
         Assets.assets.loadQueue(function(ratio:Number):void {
             if(ratio == 1)  {
-                loadingComplete();
+                transitionToGameState();
             }
         });
     }
 
-    protected function loadingComplete():void {
+    protected function transitionToGameState():void {
         registerSounds();
 
         var diff:Number = (getTimer() - startTime) / 1000;
         diff = int(diff * 1000) / 1000;
         trace("Assets Loaded in " + diff + " seconds");
 
-        state = new GameState();
-        hideNativeSplashScreen();
+        var gameState:StarlingState = new GameState();
+        gameState.x = +stage.stageWidth;
+        futureState = gameState;
+
+        // Transition from loading state to game state
+        eaze(state).to(0.5,{x:-stage.stageWidth});
+        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
+            state = futureState;
+            disposeSplashScreen();
+            loadingComplete();
+        });
+    }
+
+    protected function loadingComplete():void {
+        // For subclasses to perform actions following the transition
     }
 
     private function registerSounds():void {
@@ -205,4 +286,20 @@ public class Startup extends StarlingCitrusEngine {
         return stage.fullScreenHeight;
     }
 }
+}
+
+import citrus.core.starling.StarlingState;
+
+internal class ColoredStarlingState extends StarlingState {
+    var _color:uint;
+
+    public function ColoredStarlingState(color:uint) {
+        _color = color;
+    }
+
+
+    override public function initialize():void {
+        super.initialize();
+        stage.color = _color;
+    }
 }
