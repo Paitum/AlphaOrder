@@ -84,7 +84,6 @@ public class Startup extends StarlingCitrusEngine {
         logo.scaleX = logo.scaleY = scale;
         logo.x = Math.floor(width * 0.5 - logo.width / 2);
         logo.y = height - logo.height * 2;
-trace(height + " " + logo.height + " " + logo.y);
         logo.smoothing = true;
         addChild(logo);
 

@@ -8,16 +8,25 @@ import flash.filesystem.FileMode;
 import flash.filesystem.FileStream;
 
 import flash.utils.ByteArray;
-import flash.utils.getTimer;
 
 import starling.core.Starling;
 
-[SWF(width="640", height="960", frameRate="30", backgroundColor="#0000AA")]
+//[SWF(width="768", height="1024")]
+//[SWF(width="1536", height="2048")]
+
+[SWF(width="640", height="960")]
+//[SWF(width="640", height="1136")]
+//[SWF(width="750", height="1334")]
+//[SWF(width="1242", height="2208")]
+
+//[SWF(width="480", height="800")]
 public class ScreenshotsStartup extends Startup {
     var prefix:String;
+    var superDirectory:String;
     var directory:String;
 
     public function ScreenshotsStartup() {
+        super();
     }
 
     override protected function getScreenWidth():int {
@@ -29,12 +38,33 @@ public class ScreenshotsStartup extends Startup {
     }
 
     override protected function transitionToGameState():void {
+        var dimensions:String = stage.stageWidth + "x" + stage.stageHeight;
+
         directory = "D:\\trash\\ss\\";
-        prefix = "AlphaOrder 0.9.2 " + stage.stageWidth + "x" + stage.stageHeight;
+        superDirectory = dimensions + " " + getDeviceName();
+        prefix = "AlphaOrder 0.9.2 " + dimensions;
 
         takeScreenshot(prefix + " Loading");
 
         super.transitionToGameState();
+    }
+
+    private function getDeviceName():String {
+        var w:int = getScreenWidth();
+        var h:int = getScreenHeight();
+
+
+        if(w == 768 && h == 1024) return "iPad";
+        if(w == 1536 && h == 2048) return "iPad Retina";
+
+        if(w == 640 && h == 960) return "iPhone 4x";
+        if(w == 640 && h == 1136) return "iPhone 5x";
+        if(w == 750 && h == 1334) return "iPhone 6";
+        if(w == 1242 && h == 2208) return "iPhone 6 Plus";
+
+        if(w == 480 && h == 800) return "Galaxy S2";
+
+        return ".";
     }
 
     override protected function loadingComplete():void {
@@ -71,8 +101,8 @@ public class ScreenshotsStartup extends Startup {
                 if(screenShotCount > 5) {
                     terminate();
                 }
-            }, 1, 6)
-        }, 1);
+            }, 2, 6)
+        }, 4);
     }
 
     private function terminate():void {
@@ -102,7 +132,7 @@ public class ScreenshotsStartup extends Startup {
 
     private function saveImageFile(image:ByteArray, name:String):void
     {
-        var fileName:String = directory + name;
+        var fileName:String = directory + superDirectory + "\\" + name;
 
         trace("Saving " + fileName + ".......");
 
