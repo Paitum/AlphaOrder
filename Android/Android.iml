@@ -26,6 +26,7 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media" path-in-package="media" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/system" path-in-package="." />
           </files-to-package>
+          <AirSigningOptions keystore-path="$MODULE_DIR$/../../../../Profiles/Level_Distribution.p12" use-temp-certificate="false" />
         </packaging-android>
         <packaging-ios package-file-name="Android" />
       </configuration>
