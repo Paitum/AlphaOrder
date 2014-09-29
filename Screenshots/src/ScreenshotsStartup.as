@@ -14,6 +14,7 @@ import starling.core.Starling;
 //[SWF(width="768", height="1024")]
 //[SWF(width="1536", height="2048")]
 
+//[SWF(width="320", height="480")]
 [SWF(width="640", height="960")]
 //[SWF(width="640", height="1136")]
 //[SWF(width="750", height="1334")]
@@ -64,7 +65,7 @@ public class ScreenshotsStartup extends Startup {
 
         if(w == 480 && h == 800) return "Galaxy S2";
 
-        return ".";
+        return "UNKNOWN";
     }
 
     override protected function loadingComplete():void {
