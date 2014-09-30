@@ -15,7 +15,7 @@
     <id>com.level-apps.AlphaOrder</id>
 
     <!-- Used as the filename for the application. Required. -->
-    <filename>AlphaOrder_1.0.0</filename>
+    <filename>AlphaOrder</filename>
 
     <!-- The name that is displayed in the AIR application installer. May have multiple values for each language. See samples or xsd schema file. Optional. -->
     <!--<name></name>-->
@@ -199,15 +199,11 @@
         </InfoAdditions>
 
         <!-- A list of plist key/value pairs to be added to the application Entitlements.plist -->
-        <!--<Entitlements>
+        <!--Entitlements>
             <![CDATA[
-            <key>keychain-access-groups</key>
-            <array>
-                <string></string>
-                <string></string>
-            </array>
+            <key>beta-reports-active</key><true/>
             ]]>
-        </Entitlements>-->
+        </Entitlements-->
 
         <!-- Display Resolution for the app (either "standard" or "high"). Optional. Default "standard" -->
         <requestedDisplayResolution>high</requestedDisplayResolution>
