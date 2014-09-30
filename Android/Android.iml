@@ -21,12 +21,12 @@
           <option name="additionalOptions" value="-inline" />
         </compiler-options>
         <packaging-air-desktop />
-        <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Android-app.xml" package-file-name="Android">
+        <packaging-android enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Android-app.xml" package-file-name="AlphaOrder">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media" path-in-package="media" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/system" path-in-package="." />
           </files-to-package>
-          <AirSigningOptions keystore-path="$MODULE_DIR$/../../../../Profiles/Level_Distribution.p12" use-temp-certificate="false" />
+          <AirSigningOptions keystore-path="$MODULE_DIR$/../../../../Profiles/LevelAppsCertificate.pfx" use-temp-certificate="false" />
         </packaging-android>
         <packaging-ios package-file-name="Android" />
       </configuration>

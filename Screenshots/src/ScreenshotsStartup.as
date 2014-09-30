@@ -15,12 +15,14 @@ import starling.core.Starling;
 //[SWF(width="1536", height="2048")]
 
 //[SWF(width="320", height="480")]
-[SWF(width="640", height="960")]
+//[SWF(width="640", height="960")]
 //[SWF(width="640", height="1136")]
 //[SWF(width="750", height="1334")]
 //[SWF(width="1242", height="2208")]
 
 //[SWF(width="480", height="800")]
+//[SWF(width="1080", height="1920")] // Galaxy S5
+[SWF(width="1600", height="2560")] // Nexus 10
 public class ScreenshotsStartup extends Startup {
     var prefix:String;
     var superDirectory:String;
@@ -64,6 +66,8 @@ public class ScreenshotsStartup extends Startup {
         if(w == 1242 && h == 2208) return "iPhone 6 Plus";
 
         if(w == 480 && h == 800) return "Galaxy S2";
+        if(w == 1080 && h == 1920) return "Galaxy S5";
+        if(w == 1600 && h == 2560) return "Nexus 10";
 
         return "UNKNOWN";
     }
