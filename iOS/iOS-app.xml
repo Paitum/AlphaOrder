@@ -199,11 +199,15 @@
         </InfoAdditions>
 
         <!-- A list of plist key/value pairs to be added to the application Entitlements.plist -->
-        <!--Entitlements>
+        <!--<Entitlements>
             <![CDATA[
-            <key>beta-reports-active</key><true/>
+            <key>keychain-access-groups</key>
+            <array>
+                <string></string>
+                <string></string>
+            </array>
             ]]>
-        </Entitlements-->
+        </Entitlements>-->
 
         <!-- Display Resolution for the app (either "standard" or "high"). Optional. Default "standard" -->
         <requestedDisplayResolution>high</requestedDisplayResolution>

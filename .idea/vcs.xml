@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../Libs/Citrus-Engine" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../Libs/Starling-Extension-Graphics" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../Libs/Starling-Framework" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../../Libs/as3commons-collections" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>
 

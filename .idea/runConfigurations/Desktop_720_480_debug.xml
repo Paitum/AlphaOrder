@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Desktop 720 x 480" type="FlashRunConfigurationType" factoryName="Flash App">
-    <option name="BCName" value="720x480Desktop" />
+  <configuration default="false" name="Desktop 720 480 debug" type="FlashRunConfigurationType" factoryName="Flash App">
+    <option name="BCName" value="Desktop" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />
-    <option name="airProgramParameters" value="" />
+    <option name="airProgramParameters" value="720 480 debug" />
     <option name="appDescriptorForEmulator" value="Android" />
     <option name="debugTransport" value="USB" />
     <option name="debuggerSdkRaw" value="BC SDK" />

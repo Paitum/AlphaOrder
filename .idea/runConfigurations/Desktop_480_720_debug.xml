@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Desktop 480 x 720" type="FlashRunConfigurationType" factoryName="Flash App">
-    <option name="BCName" value="480x720Desktop" />
+  <configuration default="false" name="Desktop 480 720 debug" type="FlashRunConfigurationType" factoryName="Flash App">
+    <option name="BCName" value="Desktop" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />
-    <option name="airProgramParameters" value="" />
+    <option name="airProgramParameters" value="480 720 debug" />
     <option name="appDescriptorForEmulator" value="Android" />
     <option name="debugTransport" value="USB" />
     <option name="debuggerSdkRaw" value="BC SDK" />
@@ -33,9 +33,7 @@
     <option name="url" value="http://" />
     <option name="usbDebugPort" value="7936" />
     <RunnerSettings RunnerId="FlexDebugRunner" />
-    <RunnerSettings RunnerId="FlexRunner" />
     <ConfigurationWrapper RunnerId="FlexDebugRunner" />
-    <ConfigurationWrapper RunnerId="FlexRunner" />
     <method>
       <option name="AntTarget" enabled="true" antfile="file://$PROJECT_DIR$/Desktop/build.xml" target="copyAssets" />
     </method>

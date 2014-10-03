@@ -7,17 +7,15 @@ public class IosStartup extends Startup {
     public function IosStartup() {
         super();
     }
-
-    override public function initialize():void {
+    override protected function launch():void {
         Starling.multitouchEnabled = true;
         Starling.handleLostContext = false; // Recommended to disable on iOS
 
-        super.initialize();
+        super.launch();
     }
 
-
-    override protected function loadingComplete():void {
-        super.loadingComplete();
+    override protected function start():void {
+        super.start();
 
 //        // testing code
 //        trace("Testing Logic Enabled in IosStartup");

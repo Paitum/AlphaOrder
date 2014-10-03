@@ -2,7 +2,7 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="Android">
     <configurations>
-      <configuration name="Android" target-platform="Mobile" pure-as="true" main-class="AndroidStartup" output-file="Android.swf" output-folder="$MODULE_DIR$/../out/production/Android">
+      <configuration name="Android" target-platform="Mobile" pure-as="true" main-class="AndroidStartup" output-file="AlphaOrder.swf" output-folder="$MODULE_DIR$/../out/production/Android">
         <dependencies target-player="14.0">
           <entries>
             <entry module-name="Shared" build-configuration-name="Shared">

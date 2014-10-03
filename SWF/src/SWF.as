@@ -9,15 +9,15 @@ public class SWF extends Startup {
     }
 
 
-    override protected function getScreenWidth():int {
+    override protected function getStageWidth():int {
         return 480;
     }
 
-    override protected function getScreenHeight():int {
+    override protected function getStageHeight():int {
         return 720;
     }
 
-    override protected function initializeAssets(scale:Number):void {
+    override protected function enqueueAssets():void {
         Assets.assets = new AssetManager(scale);
 
 //        if(scale == 1) {

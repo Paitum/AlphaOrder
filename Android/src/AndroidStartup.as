@@ -8,11 +8,11 @@ public class AndroidStartup extends Startup {
         super();
     }
 
-    override public function initialize():void {
+    override protected function launch():void {
         Starling.multitouchEnabled = true;
         Starling.handleLostContext = true;
 
-        super.initialize();
+        super.launch();
     }
 }
 }

@@ -15,14 +15,14 @@ import starling.core.Starling;
 //[SWF(width="1536", height="2048")]
 
 //[SWF(width="320", height="480")]
-//[SWF(width="640", height="960")]
+[SWF(width="640", height="960")]
 //[SWF(width="640", height="1136")]
 //[SWF(width="750", height="1334")]
 //[SWF(width="1242", height="2208")]
 
 //[SWF(width="480", height="800")]
 //[SWF(width="1080", height="1920")] // Galaxy S5
-[SWF(width="1600", height="2560")] // Nexus 10
+//[SWF(width="1600", height="2560")] // Nexus 10
 public class ScreenshotsStartup extends Startup {
     var prefix:String;
     var superDirectory:String;
@@ -32,15 +32,15 @@ public class ScreenshotsStartup extends Startup {
         super();
     }
 
-    override protected function getScreenWidth():int {
+    override protected function getStageWidth():int {
         return stage.stageWidth;
     }
 
-    override protected function getScreenHeight():int {
+    override protected function getStageHeight():int {
         return stage.stageHeight;
     }
 
-    override protected function transitionToGameState():void {
+    override protected function loadComplete():void {
         var dimensions:String = stage.stageWidth + "x" + stage.stageHeight;
 
         directory = "D:\\trash\\ss\\";
@@ -49,12 +49,12 @@ public class ScreenshotsStartup extends Startup {
 
         takeScreenshot(prefix + " Loading");
 
-        super.transitionToGameState();
+        super.loadComplete();
     }
 
     private function getDeviceName():String {
-        var w:int = getScreenWidth();
-        var h:int = getScreenHeight();
+        var w:int = getStageWidth();
+        var h:int = getStageHeight();
 
 
         if(w == 768 && h == 1024) return "iPad";
@@ -72,8 +72,8 @@ public class ScreenshotsStartup extends Startup {
         return "UNKNOWN";
     }
 
-    override protected function loadingComplete():void {
-        super.loadingComplete();
+    override protected function start():void {
+        super.start();
 
         var gameState:GameState = state as GameState;
         var solveCount:int = 7;

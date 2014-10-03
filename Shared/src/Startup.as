@@ -2,26 +2,20 @@ package {
 
 import aze.motion.eaze;
 
-import citrus.core.starling.StarlingCitrusEngine;
 import citrus.core.starling.StarlingState;
 import citrus.core.starling.ViewportMode;
 
 import flash.display.Bitmap;
 
-import flash.events.Event;
 import flash.geom.Rectangle;
 import flash.utils.getTimer;
-import starling.core.Starling;
 import starling.display.Image;
 import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
 import starling.utils.AssetManager;
 
-public class Startup extends StarlingCitrusEngine {
-    private var viewPort:Rectangle = new Rectangle();
-    private var scale:Number;
-    private var startTime:Number;
-    private var debug:Boolean;
+public class Startup extends StartupBase {
+    protected var scale:Number;
     protected var background:Bitmap;
     protected var logo:Bitmap;
     protected var backgroundImage:Image;
@@ -35,9 +29,10 @@ public class Startup extends StarlingCitrusEngine {
     private static var LogoBitmap:Class;
 
     public function Startup() {
-        startTime = getTimer();
         super();
+    }
 
+    override protected function launch():void {
         debug = false;
         scale = 1;
         _viewportMode = ViewportMode.MANUAL;
@@ -45,17 +40,12 @@ public class Startup extends StarlingCitrusEngine {
         stage.color = Constants.BACKGROUND_COLOR;
         stage.frameRate = 60;
 
-//        trace("**************************************************");
-//        Constants.getDeviceInfo();
-//        trace("(" + stage.stageWidth + ", " + stage.stageHeight + ") full(" + stage.fullScreenWidth + ", " + stage.fullScreenHeight + ")");
-//        trace("**************************************************");
-
-        showNativeSplashScreen();
+        super.launch();
     }
 
     protected function showNativeSplashScreen():void {
-        var width:int = getScreenWidth();
-        var height:int = getScreenHeight();
+        var width:int = getStageWidth();
+        var height:int = getStageHeight();
         var aspect:Number = height / width;
         var scale:Number = 1.0;
 
@@ -95,9 +85,9 @@ public class Startup extends StarlingCitrusEngine {
      * Transfer the native stage splash-screen bitmaps to Starling
      * This enables screenshots and citrus state transitions
      */
-    private function transferNativeSplashScreen():void {
+    protected function transferNativeSplashScreen():void {
         splashState = new ColoredStarlingState(Constants.BACKGROUND_COLOR);
-        splashState.clipRect = new Rectangle(0, 0, getScreenWidth(), getScreenHeight());
+        splashState.clipRect = new Rectangle(0, 0, getStageWidth(), getStageHeight());
         var texture:Texture;
 
         if(background != null) {
@@ -135,7 +125,7 @@ public class Startup extends StarlingCitrusEngine {
         }
     }
 
-    private function disposeSplashScreen():void {
+    protected function disposeSplashScreen():void {
         if(splashState != null) {
             splashState.removeChildren();
             splashState.dispose();
@@ -153,23 +143,19 @@ public class Startup extends StarlingCitrusEngine {
         }
     }
 
-    override public function initialize():void {
-        super.initialize();
-        setUpStarling(debug);
-    }
+    override protected function postConfigure():void {
+        // viewPort is the virtual space, stage is the pixel space
+        _starling.viewPort.width = _starling.stage.stageWidth = stage.stageWidth;
+        _starling.viewPort.height = _starling.stage.stageHeight = stage.stageHeight;
 
-    override public function handleStarlingReady():void {
-        super.handleStarlingReady();
+        trace("'");
+        trace("[Startup]: Starling's viewPort(" + _starling.viewPort.width + ", " + _starling.viewPort.height + ") stage(" + _starling.stage.stageWidth + ", " + _starling.stage.stageHeight + ")");
+        trace("'");
 
-        setupView();
         transferNativeSplashScreen();
-        initializeAssets(scale);
-        loadAssets();
-
-        stage.addEventListener(Event.RESIZE, handleResize1);
     }
 
-    protected function initializeAssets(scale:Number):void {
+    override protected function enqueueAssets():void {
         Assets.assets = new AssetManager(scale);
         Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".fnt");
         Assets.assets.enqueue("media/fonts/" + scale + "x/" + Constants.DEFAULT_FONT + ".png");
@@ -179,6 +165,31 @@ public class Startup extends StarlingCitrusEngine {
         Assets.assets.enqueue("media/particles/particleTexture.png");
 
         enqueueSounds();
+    }
+
+    override protected function loadComplete():void {
+        registerSounds();
+
+        var diff:Number = (getTimer() - startTime) / 1000;
+        diff = int(diff * 1000) / 1000;
+        trace("Assets Loaded in " + diff + " seconds");
+
+        var gameState:StarlingState = new GameState();
+        gameState.x = +stage.stageWidth;
+        futureState = gameState;
+
+        // Transition from loading state to game state
+        eaze(state).to(0.5,{x:-stage.stageWidth});
+        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
+            state = futureState;
+            disposeSplashScreen();
+            start();
+        });
+    }
+
+    protected function start():void {
+        trace("[Startup]: start");
+        // override in subclass
     }
 
     private function enqueueSounds():void {
@@ -199,39 +210,6 @@ public class Startup extends StarlingCitrusEngine {
         }
     }
 
-    protected function loadAssets():void {
-        Assets.assets.verbose = debug;
-        Assets.assets.loadQueue(function(ratio:Number):void {
-            if(ratio == 1)  {
-                transitionToGameState();
-            }
-        });
-    }
-
-    protected function transitionToGameState():void {
-        registerSounds();
-
-        var diff:Number = (getTimer() - startTime) / 1000;
-        diff = int(diff * 1000) / 1000;
-        trace("Assets Loaded in " + diff + " seconds");
-
-        var gameState:StarlingState = new GameState();
-        gameState.x = +stage.stageWidth;
-        futureState = gameState;
-
-        // Transition from loading state to game state
-        eaze(state).to(0.5,{x:-stage.stageWidth});
-        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
-            state = futureState;
-            disposeSplashScreen();
-            loadingComplete();
-        });
-    }
-
-    protected function loadingComplete():void {
-        // For subclasses to perform actions following the transition
-    }
-
     private function registerSounds():void {
         sound.addSound("AlphaOrder", {sound:Assets.assets.getSound("AlphaOrder")});
         sound.addSound("beep", {sound:Assets.assets.getSound("beep")});
@@ -249,40 +227,6 @@ public class Startup extends StarlingCitrusEngine {
             var letter:String = String.fromCharCode(charCode + i);
             sound.addSound(letter, {sound:Assets.assets.getSound(letter)});
         }
-    }
-
-    private function setupView():void {
-        // viewPort is the virtual space
-        Starling.current.viewPort = getViewPort();
-
-        // stage is the pixel space
-        _starling.stage.stageWidth = viewPort.width;
-        _starling.stage.stageHeight = viewPort.height;
-
-        trace("'");
-        trace("Setup Display: viewPort(" + viewPort.width + ", " + viewPort.height + ") stage(" + _starling.stage.stageWidth + ", " + _starling.stage.stageHeight + ")");
-        trace("'");
-    }
-
-    private function getViewPort():Rectangle {
-        viewPort.setTo(0, 0, stage.stageWidth, stage.stageHeight);
-
-//        trace("       Stage[" + stage.stageWidth + ", " + stage.stageHeight + "]");
-//        trace("Capabilities[" + Capabilities.screenResolutionX + ", " + Capabilities.screenResolutionY + "]");
-
-        return viewPort;
-    }
-
-    private function handleResize1(event:Event):void {
-        setupView();
-    }
-
-    protected function getScreenWidth():int {
-        return stage.fullScreenWidth;
-    }
-
-    protected function getScreenHeight():int {
-        return stage.fullScreenHeight;
     }
 }
 }
