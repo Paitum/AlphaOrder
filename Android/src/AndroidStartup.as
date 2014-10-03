@@ -2,7 +2,7 @@ package {
 
 import starling.core.Starling;
 
-public class AndroidStartup extends Startup {
+public class AndroidStartup extends MobileStartup {
 
     public function AndroidStartup() {
         super();

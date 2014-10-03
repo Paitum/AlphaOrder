@@ -21,6 +21,7 @@ import flash.utils.getTimer;
  */
 public class StartupBase extends StarlingCitrusEngine {
     protected var startTime:Number;
+    protected var assetsStartLoad:int;
     protected var debug:Boolean = false;
 
     public function StartupBase() {
@@ -29,6 +30,10 @@ public class StartupBase extends StarlingCitrusEngine {
         trace("[StartupBase]: Constructor");
 
         launch();
+    }
+
+    public function msSinceStart():int {
+        return getTimer() - startTime;
     }
 
     /**
@@ -52,6 +57,7 @@ public class StartupBase extends StarlingCitrusEngine {
         enqueueAssets();
 
         Assets.assets.verbose = debug;
+        assetsStartLoad = getTimer();
         Assets.assets.loadQueue(function(ratio:Number):void {
             loadingAssets(ratio);
 

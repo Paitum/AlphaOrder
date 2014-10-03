@@ -6,37 +6,16 @@ import flash.events.InvokeEvent;
 
 import starling.core.Starling;
 
-/**
- * Lifecycle:
- *
- * I. On NativeApplication INVOKE:
- *    1. processInvokeEvent()
- *    2. super.bootstrapLaunch()
- *
- */
-public class DesktopStartup extends Startup {
+public class DesktopStartup extends InvokableStartup {
+
     protected var explicitScreenWidth:int = -1;
     protected var explicitScreenHeight:int = -1;
 
     public function DesktopStartup() {
         super();
-        trace("Startup [Desktop]");
-
-        NativeApplication.nativeApplication.addEventListener(
-            InvokeEvent.INVOKE, onInvokeEvent);
     }
 
-    override protected function launch():void {
-        // Delay execution of super.launch() until after InvokeEvent.INVOKE
-    }
-
-    private function onInvokeEvent(invocation:InvokeEvent):void {
-        processInvokeEvent(invocation);
-
-        super.launch();
-    }
-
-    protected function processInvokeEvent(invocation:InvokeEvent):void {
+    override protected function processInvokeEvent(invocation:InvokeEvent):void {
         Starling.multitouchEnabled = false;
         Starling.handleLostContext = true;
 

@@ -2,7 +2,7 @@ package {
 
 import starling.core.Starling;
 
-public class IosStartup extends Startup {
+public class IosStartup extends MobileStartup {
 
     public function IosStartup() {
         super();

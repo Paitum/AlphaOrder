@@ -10,6 +10,7 @@ import flash.display.Bitmap;
 import flash.geom.Rectangle;
 import flash.utils.getTimer;
 import starling.display.Image;
+import starling.events.Event;
 import starling.textures.Texture;
 import starling.textures.TextureSmoothing;
 import starling.utils.AssetManager;
@@ -21,6 +22,7 @@ public class Startup extends StartupBase {
     protected var backgroundImage:Image;
     protected var logoImage:Image;
     protected var splashState:StarlingState;
+    private var isSplashNative:Boolean = true;
 
     // Splash Screen
     [Embed(source="../embedded/textures/UniversalSplash.png")]
@@ -46,15 +48,15 @@ public class Startup extends StartupBase {
     }
 
     protected function showNativeSplashScreen():void {
+        var showNativeSplashScreenStart:int = getTimer();
+
         var width:int = getStageWidth();
         var height:int = getStageHeight();
-        var aspect:Number = height / width;
-        var scale:Number = 1.0;
 
         background = new SplashBitmap();
-        scale = Math.max(width / background.width, height / background.height);
+        var scale:Number = Math.max(width / background.width, height / background.height);
 
-// This logic attempts to perform cleaner scaling, but the effect was hardly noticable
+//  This logic attempts to perform cleaner scaling, but the effect was hardly noticable
 //        var textureWidth:Number = (aspect < 1 ? background.width : background.width / aspect);
 //        var textureHeight:Number = (aspect < 1 ? background.height * aspect : background.height);
 //        background.scaleX = width / (2 * Math.floor(textureWidth / 2));
@@ -81,6 +83,10 @@ public class Startup extends StartupBase {
 
         SplashBitmap = null;
         LogoBitmap = null;
+
+        var diff:Number = (getTimer() - showNativeSplashScreenStart) / 1000;
+        diff = int(diff * 1000) / 1000;
+        trace("[Startup]: Show Native Splash (" + width + ", " + height + ") in " + diff + " seconds");
     }
 
     /**
@@ -88,7 +94,10 @@ public class Startup extends StartupBase {
      * This enables screenshots and citrus state transitions
      */
     protected function transferNativeSplashScreen():void {
-        splashState = new ColoredStarlingState(Constants.BACKGROUND_COLOR);
+        var transferStart:int = getTimer();
+
+        isSplashNative = false;
+        splashState = new StarlingState();
         splashState.clipRect = new Rectangle(0, 0, getStageWidth(), getStageHeight());
         var texture:Texture;
 
@@ -116,6 +125,14 @@ public class Startup extends StartupBase {
 
         state = splashState;
 
+        disposeNativeSplashScreen();
+
+        var diff:Number = (getTimer() - transferStart) / 1000;
+        diff = int(diff * 1000) / 1000;
+        trace("[Startup]: Transferred Splash in " + diff + " seconds");
+    }
+
+    protected function disposeNativeSplashScreen():void {
         if(background != null) {
             removeChild(background);
             background = null;
@@ -127,7 +144,7 @@ public class Startup extends StartupBase {
         }
     }
 
-    protected function disposeSplashScreen():void {
+    protected function disposeStarlingSplashScreen():void {
         if(splashState != null) {
             splashState.removeChildren();
             splashState.dispose();
@@ -145,16 +162,20 @@ public class Startup extends StartupBase {
         }
     }
 
+    protected function disposeSplashScreen():void {
+        if(isSplashNative) {
+            disposeNativeSplashScreen();
+        } else {
+            disposeStarlingSplashScreen();
+        }
+    }
+
     override protected function postConfigure():void {
         // viewPort is the virtual space, stage is the pixel space
         _starling.viewPort.width = _starling.stage.stageWidth = stage.stageWidth;
         _starling.viewPort.height = _starling.stage.stageHeight = stage.stageHeight;
 
-        trace("'");
         trace("[Startup]: Starling's viewPort(" + _starling.viewPort.width + ", " + _starling.viewPort.height + ") stage(" + _starling.stage.stageWidth + ", " + _starling.stage.stageHeight + ")");
-        trace("'");
-
-        transferNativeSplashScreen();
     }
 
     override protected function enqueueAssets():void {
@@ -172,25 +193,47 @@ public class Startup extends StartupBase {
     override protected function loadComplete():void {
         registerSounds();
 
-        var diff:Number = (getTimer() - startTime) / 1000;
+        var diff:Number = (getTimer() - assetsStartLoad) / 1000;
         diff = int(diff * 1000) / 1000;
-        trace("Assets Loaded in " + diff + " seconds");
+        trace("[Startup]: Assets Loaded in " + diff + " seconds");
 
         var gameState:StarlingState = new GameState();
-        gameState.x = +stage.stageWidth;
-        futureState = gameState;
+        var timePast:int = msSinceStart();
+        const FAST_LOAD:int = 2000;
 
-        // Transition from loading state to game state
-        eaze(state).to(0.5,{x:-stage.stageWidth});
-        eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
-            state = futureState;
-            disposeSplashScreen();
-            start();
-        });
+        if(timePast < FAST_LOAD) {
+            trace("[Startup]: Transfer Splash Screen (" + timePast + " <= " + FAST_LOAD + ")");
+            transferNativeSplashScreen();
+            gameState.x = +stage.stageWidth;
+            futureState = gameState;
+
+            // Transition from loading state to game state
+            eaze(state).to(0.5,{x:-stage.stageWidth});
+            eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
+                state = futureState;
+                proceedToStart();
+            });
+        } else {
+            trace("[Startup]: Do not transfer splash screen (" + timePast + ")");
+            gameState.addEventListener(Event.ADDED_TO_STAGE, gameStateAddedToStage);
+            state = gameState;
+        }
+    }
+
+    private function gameStateAddedToStage(event:Event):void {
+        event.target.removeEventListener(Event.ADDED_TO_STAGE, gameStateAddedToStage);
+        proceedToStart();
+    }
+
+    private function proceedToStart():void {
+        disposeSplashScreen();
+        start();
     }
 
     protected function start():void {
-        trace("[Startup]: start");
+        var diff:Number = (getTimer() - startTime) / 1000;
+        diff = int(diff * 1000) / 1000;
+        trace("[Startup]: Launch Completed in " + diff + " seconds");
         // override in subclass
     }
 
@@ -231,20 +274,4 @@ public class Startup extends StartupBase {
         }
     }
 }
-}
-
-import citrus.core.starling.StarlingState;
-
-internal class ColoredStarlingState extends StarlingState {
-    var _color:uint;
-
-    public function ColoredStarlingState(color:uint) {
-        _color = color;
-    }
-
-
-    override public function initialize():void {
-        super.initialize();
-        stage.color = _color;
-    }
 }
