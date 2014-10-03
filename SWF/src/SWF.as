@@ -8,13 +8,12 @@ public class SWF extends Startup {
         super();
     }
 
-
     override protected function getStageWidth():int {
-        return 480;
+        return stage.stageWidth;
     }
 
     override protected function getStageHeight():int {
-        return 720;
+        return stage.stageHeight;
     }
 
     override protected function enqueueAssets():void {

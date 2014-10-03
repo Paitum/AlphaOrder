@@ -40,6 +40,8 @@ public class Startup extends StartupBase {
         stage.color = Constants.BACKGROUND_COLOR;
         stage.frameRate = 60;
 
+        showNativeSplashScreen();
+
         super.launch();
     }
 
