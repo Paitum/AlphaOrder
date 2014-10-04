@@ -1,7 +1,5 @@
 package {
 
-import aze.motion.eaze;
-
 import citrus.core.starling.StarlingState;
 import citrus.core.starling.ViewportMode;
 
@@ -25,7 +23,7 @@ public class Startup extends StartupBase {
     private var isSplashNative:Boolean = true;
 
     // Splash Screen
-    [Embed(source="../embedded/textures/UniversalSplash.png")]
+    [Embed(source="../embedded/textures/UniversalSplash.jpg")]
     private static var SplashBitmap:Class;
     [Embed(source="../embedded/textures/Level_Standard_2x.png")]
     private static var LogoBitmap:Class;
@@ -94,8 +92,6 @@ public class Startup extends StartupBase {
      * This enables screenshots and citrus state transitions
      */
     protected function transferNativeSplashScreen():void {
-        var transferStart:int = getTimer();
-
         isSplashNative = false;
         splashState = new StarlingState();
         splashState.clipRect = new Rectangle(0, 0, getStageWidth(), getStageHeight());
@@ -126,10 +122,6 @@ public class Startup extends StartupBase {
         state = splashState;
 
         disposeNativeSplashScreen();
-
-        var diff:Number = (getTimer() - transferStart) / 1000;
-        diff = int(diff * 1000) / 1000;
-        trace("[Startup]: Transferred Splash in " + diff + " seconds");
     }
 
     protected function disposeNativeSplashScreen():void {
@@ -198,26 +190,8 @@ public class Startup extends StartupBase {
         trace("[Startup]: Assets Loaded in " + diff + " seconds");
 
         var gameState:StarlingState = new GameState();
-        var timePast:int = msSinceStart();
-        const FAST_LOAD:int = 2000;
-
-        if(timePast < FAST_LOAD) {
-            trace("[Startup]: Transfer Splash Screen (" + timePast + " <= " + FAST_LOAD + ")");
-            transferNativeSplashScreen();
-            gameState.x = +stage.stageWidth;
-            futureState = gameState;
-
-            // Transition from loading state to game state
-            eaze(state).to(0.5,{x:-stage.stageWidth});
-            eaze(futureState).to(0.5,{x:0}).onComplete(function():void {
-                state = futureState;
-                proceedToStart();
-            });
-        } else {
-            trace("[Startup]: Do not transfer splash screen (" + timePast + ")");
-            gameState.addEventListener(Event.ADDED_TO_STAGE, gameStateAddedToStage);
-            state = gameState;
-        }
+        gameState.addEventListener(Event.ADDED_TO_STAGE, gameStateAddedToStage);
+        state = gameState;
     }
 
     private function gameStateAddedToStage(event:Event):void {

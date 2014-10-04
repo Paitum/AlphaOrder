@@ -15,7 +15,7 @@ public class InvokableStartup extends Startup {
 
     public function InvokableStartup() {
         super();
-        trace("Startup [Desktop]");
+        trace("[InvokableStartup]: Constructor");
 
         NativeApplication.nativeApplication.addEventListener(
             InvokeEvent.INVOKE, onInvokeEvent);

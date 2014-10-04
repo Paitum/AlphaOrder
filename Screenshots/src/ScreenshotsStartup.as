@@ -1,4 +1,6 @@
 package {
+import citrus.events.CitrusEvent;
+
 import com.adobe.images.PNGEncoder;
 
 import flash.desktop.NativeApplication;
@@ -40,6 +42,11 @@ public class ScreenshotsStartup extends Startup {
         return stage.stageHeight;
     }
 
+    override protected function postConfigure():void {
+        transferNativeSplashScreen();
+        super.postConfigure();
+    }
+
     override protected function loadComplete():void {
         var dimensions:String = stage.stageWidth + "x" + stage.stageHeight;
 
@@ -75,6 +82,7 @@ public class ScreenshotsStartup extends Startup {
     override protected function start():void {
         super.start();
 
+        // TODO Find a way to know when GameState has been initialized
         var gameState:GameState = state as GameState;
         var solveCount:int = 7;
         gameState.mute();
