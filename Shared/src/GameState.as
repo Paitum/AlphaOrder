@@ -11,6 +11,7 @@ import starling.display.BlendMode;
 import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.display.Quad;
+import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
@@ -40,6 +41,10 @@ public class GameState extends StarlingState {
     private var modeTextField:TextField;
     private var particleSystem:ParticleSystem;
     private var fadeWallResetTime:int;
+
+    // initialized Event triggered at the end of the initalize() method
+    [Event(name="initialized", type="starling.events.Event")]
+    public static const INITIALIZED_EVENT:String = "initialized";
 
     public function GameState() {
         super();
@@ -258,6 +263,8 @@ public class GameState extends StarlingState {
 
         board.resetAndStart();
         Starling.juggler.add(board);
+
+        dispatchEvent(new Event(INITIALIZED_EVENT, false));
     }
 
     public function getBoard():Board {
