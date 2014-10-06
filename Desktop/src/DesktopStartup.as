@@ -51,12 +51,12 @@ public class DesktopStartup extends InvokableStartup {
         }
     }
 
-    override protected function getStageWidth():int {
-        return explicitScreenWidth == -1 ? super.getStageWidth() : explicitScreenWidth;
-    }
-
-    override protected function getStageHeight():int {
-        return explicitScreenHeight == - 1 ? super.getStageHeight() : explicitScreenHeight;
-    }
+//    override protected function getStageWidth():int {
+//        return explicitScreenWidth == -1 ? super.getStageWidth() : explicitScreenWidth;
+//    }
+//
+//    override protected function getStageHeight():int {
+//        return explicitScreenHeight == - 1 ? super.getStageHeight() : explicitScreenHeight;
+//    }
 }
 }
