@@ -12,6 +12,7 @@ import flash.filesystem.FileStream;
 import flash.utils.ByteArray;
 
 import starling.core.Starling;
+import starling.events.Event;
 
 //[SWF(width="768", height="1024")]
 //[SWF(width="1536", height="2048")]
@@ -82,10 +83,15 @@ public class ScreenshotsStartup extends Startup {
     override protected function start():void {
         super.start();
 
-        // TODO Find a way to know when GameState has been initialized
         var gameState:GameState = state as GameState;
-        var solveCount:int = 7;
         gameState.mute();
+        gameState.addEventListener(GameState.INITIALIZED_EVENT, function (event:Event):void {
+            start0(gameState);
+        });
+    }
+
+    protected function start0(gameState:GameState):void {
+        var solveCount:int = 7;
 
         // ABC
         gameState.getBoard().solve(solveCount);
