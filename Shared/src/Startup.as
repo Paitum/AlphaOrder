@@ -1,5 +1,8 @@
 package {
 
+import alphaOrder.Constants;
+import alphaOrder.GameState;
+
 import citrus.core.starling.StarlingState;
 import citrus.core.starling.ViewportMode;
 
@@ -7,6 +10,7 @@ import flash.display.Bitmap;
 
 import flash.geom.Rectangle;
 import flash.utils.getTimer;
+
 import starling.display.Image;
 import starling.events.Event;
 import starling.textures.Texture;

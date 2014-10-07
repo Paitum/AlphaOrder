@@ -1,4 +1,4 @@
-package {
+package alphaOrder {
 
 public class RandomCaseModel extends BoardModel {
 

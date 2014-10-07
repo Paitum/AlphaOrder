@@ -1,4 +1,4 @@
-package {
+package alphaOrder {
 
 import flash.geom.Point;
 import flash.utils.Dictionary;

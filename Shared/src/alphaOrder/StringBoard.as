@@ -1,4 +1,4 @@
-package {
+package alphaOrder {
 
 import flash.utils.Dictionary;
 
