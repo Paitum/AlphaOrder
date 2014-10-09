@@ -28,6 +28,7 @@ public class GameState extends StarlingState {
     private var endStopwatchTween:Tween;
     private var secondsText:TextField;
     private var models:Vector.<BoardModel> = new Vector.<BoardModel>(2);
+    private var displayTokens:DisplayTokens;
     private var modelLabels:Vector.<String> = new Vector.<String>();
     private var currentModelLabel:String;
     private var currentModel:int = -1;
@@ -129,6 +130,9 @@ public class GameState extends StarlingState {
         logo.touchable = false;
         addChild(logo);
 
+        displayTokens = StringDisplayTokens.createStringDisplayTokensForLetters(
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", Constants.DEFAULT_FONT);
+
 //        var alphabet:String = "ABCXYZ";
 //        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
 //        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
@@ -142,7 +146,7 @@ public class GameState extends StarlingState {
         currentModelLabel = modelLabels[currentModel];
 
         var scale:int = Math.min(boardWidth / columns, boardHeight / rows);
-        board = new StringBoard(models[0], Constants.DEFAULT_FONT, boardCallback);
+        board = new Board(models[0], displayTokens, boardCallback);
         board.pivotX = board.width / 2;
         board.pivotY = board.height / 2;
         board.x = boardCenterX;
@@ -316,7 +320,7 @@ public class GameState extends StarlingState {
     public function nextGameMode():void {
         currentModel = (currentModel + 1) % models.length;
         currentModelLabel = modelLabels[currentModel];
-        board.changeModel(models[currentModel]);
+        board.changeModel(models[currentModel], displayTokens);
         modeTextField.text = modelLabels[currentModel];
     }
 

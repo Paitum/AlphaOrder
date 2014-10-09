@@ -1,11 +1,11 @@
 package {
 import starling.animation.IAnimatable;
-import starling.display.DisplayObjectContainer;
+import starling.display.DisplayObject;
 import starling.events.Event;
 import starling.events.EventDispatcher;
 
 public class ShakeTween extends EventDispatcher implements IAnimatable {
-    private var target:DisplayObjectContainer;
+    private var target:DisplayObject;
     private var distance:Number;
     private var duration:Number;
     private var totalTime:Number = 0;
@@ -17,11 +17,11 @@ public class ShakeTween extends EventDispatcher implements IAnimatable {
         this.duration = duration;
     }
 
-    public function getTarget():DisplayObjectContainer {
+    public function getTarget():DisplayObject {
         return target;
     }
 
-    public function setTarget(target:DisplayObjectContainer):void {
+    public function setTarget(target:DisplayObject):void {
         this.target = target;
         startX = NaN;
         startY = NaN;

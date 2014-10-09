@@ -1,13 +1,12 @@
 package alphaOrder {
 
 import flash.geom.Point;
-import flash.utils.Dictionary;
 
 import starling.animation.IAnimatable;
 import starling.animation.Tween;
 import starling.core.Starling;
+import starling.display.DisplayObject;
 
-import starling.display.DisplayObjectContainer;
 import starling.display.Image;
 import starling.display.Quad;
 import starling.display.Sprite;
@@ -24,8 +23,6 @@ public class Board extends Sprite implements IAnimatable {
     protected var highlightTiles:Vector.<Vector.<Quad>>;
     // [r][c] -> tween:Tween
     protected var highlightTweens:Vector.<Vector.<Tween>>;
-    // name:String -> DisplayObjectContainer
-    protected var pieces:Dictionary;
     protected var wiggleTween:ShakeTween;
     protected var wiggleToken:String;
 
@@ -34,6 +31,7 @@ public class Board extends Sprite implements IAnimatable {
 
     protected var callback:Function;
     protected var model:BoardModel;
+    protected var displayTokens:DisplayTokens;
 
     private var mark:Quad;
     private var lastTileTouched:Point = new Point(-1, -1);
@@ -51,9 +49,10 @@ public class Board extends Sprite implements IAnimatable {
     public static const INCORRECT:int = 3;
     private const DEBUG:Boolean = false;
 
-    public function Board(model:BoardModel, callback:Function) {
+    public function Board(model:BoardModel, displayTokens:DisplayTokens, callback:Function) {
         super();
         this.model = model;
+        this.displayTokens = displayTokens;
         this.callback = callback;
 
         addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
@@ -63,13 +62,14 @@ public class Board extends Sprite implements IAnimatable {
         return model;
     }
 
-    public function changeModel(model:BoardModel):void {
+    public function changeModel(model:BoardModel, displayTokens:DisplayTokens):void {
         if(this.model.getColumns() != model.getColumns() || this.model.getRows() != model.getRows()) {
             throw new Error("New Model mustn't change board dimensions")
         }
 
         reset();
         this.model = model;
+        this.displayTokens = displayTokens;
         resetAndStart();
     }
 
@@ -92,33 +92,43 @@ public class Board extends Sprite implements IAnimatable {
     protected function initialize():void {
         var r:int, c:int;
 
-        wiggleTween = new ShakeTween(0.05, 0.3);
-        Starling.juggler.add(wiggleTween);
+        if(wiggleTween == null) {
+            wiggleTween = new ShakeTween(0.05, 0.3);
+            Starling.juggler.add(wiggleTween);
+        }
 
-        tiles = new Vector.<Vector.<Quad>>();
-        highlightTiles = new Vector.<Vector.<Quad>>();
-        highlightTweens = new Vector.<Vector.<Tween>>();
+        if(tiles == null) {
+            tiles = new Vector.<Vector.<Quad>>();
+            highlightTiles = new Vector.<Vector.<Quad>>();
+            highlightTweens = new Vector.<Vector.<Tween>>();
+        }
+
         for(r = 0; r < model.getRows(); r++) {
-            tiles[r] = new Vector.<Quad>();
-            highlightTiles[r] = new Vector.<Quad>();
-            highlightTweens[r] = new Vector.<Tween>();
+            if(!tiles.hasOwnProperty(String(r))) tiles[r] = new Vector.<Quad>();
+            if(!highlightTiles.hasOwnProperty(String(r))) highlightTiles[r] = new Vector.<Quad>();
+            if(!highlightTweens.hasOwnProperty(String(r))) highlightTweens[r] = new Vector.<Tween>();
+
+            // this will shrink the vectors, if needed
+            tiles[r].length = model.getColumns();
+            highlightTiles[r].length = model.getColumns();
+            highlightTweens[r].length = model.getColumns();
 
             for(c = 0; c < model.getColumns(); c++) {
-                tiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
+                if(tiles[r][c] == null) tiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
                 tiles[r][c].width = 1;
                 tiles[r][c].height = 1;
                 tiles[r][c].color = getTileColor(r,c);
                 tiles[r][c].x = c;
                 tiles[r][c].y = r;
                 tiles[r][c].alpha = 1.0;
-                highlightTiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
+                if(highlightTiles[r][c] == null) highlightTiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
                 highlightTiles[r][c].width = 1;
                 highlightTiles[r][c].height = 1;
                 highlightTiles[r][c].x = c;
                 highlightTiles[r][c].y = r;
                 highlightTiles[r][c].alpha = 0.0;
                 highlightTiles[r][c].touchable = false;
-                highlightTweens[r][c] = new Tween(highlightTiles[r][c], 0.25, "easeOut");   // this declaration does nothing
+                if(highlightTweens[r][c] == null) highlightTweens[r][c] = new Tween(highlightTiles[r][c], 0.25, "easeOut");
                 highlightTweens[r][c].animate("alpha", 0.0);
                 Starling.juggler.add(highlightTweens[r][c]);
                 addChild(tiles[r][c]);
@@ -134,8 +144,6 @@ public class Board extends Sprite implements IAnimatable {
 //        background.setVertexColor(3, 0xFFFFFF);
 //        background.blendMode = BlendMode.MULTIPLY;
 //        addChild(background);
-
-        initializePieces();
 
         if(DEBUG) {
             mark = new Quad(0.05, 0.05, 0xFF0000);
@@ -158,7 +166,7 @@ public class Board extends Sprite implements IAnimatable {
         var tokenCount:int = model.getTokenCount();
         for(var i:int = 0; i < tokenCount; i++) {
             var token:String = model.getToken(i);
-            removeChild(pieces[token]);
+            removeChild(displayTokens.getDisplayObject(token));
         }
     }
 
@@ -175,9 +183,10 @@ public class Board extends Sprite implements IAnimatable {
     }
 
     protected function addPiece(token:String, position:Point):void {
-        pieces[token].x = position.x + 0.5;
-        pieces[token].y = position.y + 0.5;
-        addChild(pieces[token]);
+        var piece:DisplayObject = displayTokens.getDisplayObject(token);
+        piece.x = position.x + 0.5;
+        piece.y = position.y + 0.5;
+        addChild(piece);
     }
 
     private static function getTileColor(row:int, columns:int):uint {
@@ -276,6 +285,7 @@ public class Board extends Sprite implements IAnimatable {
         }
 
         var point:Point;
+        var piece:DisplayObject;
 
         // Undo active wiggling
         if(wiggleToken != token) {
@@ -283,8 +293,9 @@ public class Board extends Sprite implements IAnimatable {
             Starling.juggler.remove(wiggleTween);
             point = model.getPosition(wiggleToken);
             if(point != null) {
-                pieces[wiggleToken].x = point.x + 0.5;
-                pieces[wiggleToken].y = point.y + 0.5;
+                piece = displayTokens.getDisplayObject(wiggleToken);
+                piece.x = point.x + 0.5;
+                piece.y = point.y + 0.5;
             }
         }
 
@@ -293,7 +304,7 @@ public class Board extends Sprite implements IAnimatable {
             return;
         }
 
-        var piece:DisplayObjectContainer = pieces[token];
+        piece = displayTokens.getDisplayObject(token);
         wiggleToken = token;
         if(wiggleToken != token || wiggleTween.isComplete()) {
             wiggleTween.setTarget(piece);
@@ -314,7 +325,7 @@ public class Board extends Sprite implements IAnimatable {
 
         if(token != null) {
             callback(CORRECT, token);
-            removeChild(pieces[token]);
+            removeChild( displayTokens.getDisplayObject(token));
 
             if(model.hasNextToken()) {
                 populateBoard();
