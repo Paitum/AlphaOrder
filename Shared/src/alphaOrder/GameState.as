@@ -136,7 +136,7 @@ public class GameState extends StarlingState {
 //        var alphabet:String = "ABCXYZ";
 //        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
 //        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
-        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "Z");
+        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         modelLabels[0] = "ABC";
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
         modelLabels[1] = "abc";
@@ -371,16 +371,16 @@ public class GameState extends StarlingState {
         } else if(op == Board.FINISH) {
             stopwatch.stop();
             fadeWall.alpha = 0.0;
-            Starling.juggler.tween(fadeWall, 0.5, {alpha: 1.0});
-            particleSystem.alpha = 0.0;
-            particleSystem.start();
-            particleSystem.populate(100);
-            Starling.juggler.add(particleSystem);
-            Starling.juggler.tween(particleSystem, 1, {alpha: 1.0});
+            Starling.juggler.tween(fadeWall, 2, {alpha: 1.0});
 
             Starling.juggler.delayCall(function():void {
                 _ce.sound.playSound("celebrate");
                 showEndTime();
+                particleSystem.alpha = 0.0;
+                particleSystem.start();
+                particleSystem.populate(100);
+                Starling.juggler.add(particleSystem);
+                Starling.juggler.tween(particleSystem, 1, {alpha: 1.0});
             }, 1);
         }
     }
