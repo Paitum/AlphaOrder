@@ -136,7 +136,7 @@ public class GameState extends StarlingState {
 //        var alphabet:String = "ABCXYZ";
 //        models[0] = RandomCaseModel.createBoardModelForLetters(rows, columns, "a");
 //        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "A");
-        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        models[0] = BoardModel.createBoardModelForLetters(rows, columns, "Z");
         modelLabels[0] = "ABC";
         models[1] = BoardModel.createBoardModelForLetters(rows, columns, "abcdefghijklmnopqrstuvwxyz");
         modelLabels[1] = "abc";
@@ -177,8 +177,11 @@ public class GameState extends StarlingState {
         var xml:XML = XML(Assets.assets.getXml("particleConfig"));
         texture = Assets.assets.getTexture("particleTexture");
         particleSystem = new PDParticleSystem(xml, texture);
-        particleSystem.emitterX = board.x;
-        particleSystem.emitterY = stageHeight;
+        particleSystem.scaleX = particleSystem.scaleY = board.x / 300;
+        particleSystem.x = board.x;
+        particleSystem.y = stageHeight;
+//trace(particleSystem.scaleX + " " + particleSystem.scaleY + " " + particleSystem.emitterX + ", " + particleSystem.emitterY);
+//trace(particleSystem.x + ", " + particleSystem.y + " " + particleSystem.width + " " + particleSystem.height);
         particleSystem.alpha = 0;
         PDParticleSystem(particleSystem).emitterXVariance = boardWidth;
         addChild(particleSystem);
@@ -366,15 +369,19 @@ public class GameState extends StarlingState {
             particleSystem.stop();
             Starling.juggler.remove(particleSystem);
         } else if(op == Board.FINISH) {
-
-            _ce.sound.playSound("celebrate");
             stopwatch.stop();
-            showEndTime();
-            fadeWall.alpha = 0.9;
-            particleSystem.alpha = 1;
+            fadeWall.alpha = 0.0;
+            Starling.juggler.tween(fadeWall, 0.5, {alpha: 1.0});
+            particleSystem.alpha = 0.0;
             particleSystem.start();
             particleSystem.populate(100);
             Starling.juggler.add(particleSystem);
+            Starling.juggler.tween(particleSystem, 1, {alpha: 1.0});
+
+            Starling.juggler.delayCall(function():void {
+                _ce.sound.playSound("celebrate");
+                showEndTime();
+            }, 1);
         }
     }
 
