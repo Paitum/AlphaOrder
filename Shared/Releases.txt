@@ -9,3 +9,6 @@ September 19, 2014 13:33, Pending Developer Release
 
 0.9.2
 Added "seconds" label to complete time
+
+1.0.1
+October 16, 2014 14:48 Published AlphaOrder on Google Play Store
