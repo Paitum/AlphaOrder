@@ -146,7 +146,8 @@ public class GameState extends StarlingState {
         currentModelLabel = modelLabels[currentModel];
 
         var scale:int = Math.min(boardWidth / columns, boardHeight / rows);
-        board = new Board(models[0], displayTokens, boardCallback);
+        board = new Board(models[0], displayTokens);
+        board.addEventListener(Board.BOARD_EVENT, boardCallback0);
         board.pivotX = board.width / 2;
         board.pivotY = board.height / 2;
         board.x = boardCenterX;
@@ -349,15 +350,17 @@ public class GameState extends StarlingState {
         _ce.sound.playSound("beep");
     }
 
-    private function boardCallback(op:int, token:String = null):void {
+    private function boardCallback0(event:BoardEvent):void {
+        var op:int = event.getState();
+        var token:String = event.getToken();
         var nextToken:String = board.getModel().getCurrentSolutionToken();
 
-        if(op == Board.CORRECT) {
+        if(op == BoardEvent.CORRECT) {
             breadcrumbs.addToken(token, nextToken);
             playCorrectSound(token);
-        } else if(op == Board.INCORRECT) {
+        } else if(op == BoardEvent.INCORRECT) {
             playWrongSound();
-        } else if(op == Board.START) {
+        } else if(op == BoardEvent.START) {
             breadcrumbs.reset();
             if(nextToken != null) breadcrumbs.setNextToken(nextToken);
             hideEndTime();
@@ -368,7 +371,7 @@ public class GameState extends StarlingState {
             particleSystem.alpha = 0;
             particleSystem.stop();
             Starling.juggler.remove(particleSystem);
-        } else if(op == Board.FINISH) {
+        } else if(op == BoardEvent.FINISH) {
             stopwatch.stop();
             fadeWall.alpha = 0.0;
             Starling.juggler.tween(fadeWall, 2, {alpha: 1.0});

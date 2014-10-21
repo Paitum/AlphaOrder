@@ -16,7 +16,7 @@ public class DesktopStartup extends InvokableStartup {
     }
 
     override protected function processInvokeEvent(invocation:InvokeEvent):void {
-        Starling.multitouchEnabled = false;
+        Starling.multitouchEnabled = true;
         Starling.handleLostContext = true;
 
         var window:NativeWindow = NativeApplication.nativeApplication.activeWindow;

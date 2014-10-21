@@ -29,7 +29,6 @@ public class Board extends Sprite implements IAnimatable {
     protected var celebrate:Boolean = false;
     protected var lastCelebrateTime:Number = 0;
 
-    protected var callback:Function;
     protected var model:BoardModel;
     protected var displayTokens:DisplayTokens;
 
@@ -42,18 +41,15 @@ public class Board extends Sprite implements IAnimatable {
 
     // cache
     private var touchPoint:Point = new Point();
-
-    public static const START:int = 0;
-    public static const FINISH:int = 1;
-    public static const CORRECT:int = 2;
-    public static const INCORRECT:int = 3;
     private const DEBUG:Boolean = false;
 
-    public function Board(model:BoardModel, displayTokens:DisplayTokens, callback:Function) {
+    [Event(name="boardEvent", type="starling.events.Event")]
+    public static const BOARD_EVENT:String = "boardEvent";
+
+    public function Board(model:BoardModel, displayTokens:DisplayTokens) {
         super();
         this.model = model;
         this.displayTokens = displayTokens;
-        this.callback = callback;
 
         addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
     }
@@ -77,7 +73,11 @@ public class Board extends Sprite implements IAnimatable {
         reset();
         model.reset();
         populateBoard();
-        callback(START);
+        dispatchStateEvent(BoardEvent.START);
+    }
+
+    public function dispatchStateEvent(state:int, token:String = null):void {
+        dispatchEvent(new BoardEvent(BOARD_EVENT, state, token));
     }
 
     private function handleAddedToStage(event:Event):void {
@@ -152,7 +152,7 @@ public class Board extends Sprite implements IAnimatable {
             addChild(mark);
         }
 
-        addEventListener(TouchEvent.TOUCH, handleTouch);
+        addEventListener(TouchEvent.TOUCH, handleTouchEvent);
     }
 
     /**
@@ -204,13 +204,20 @@ public class Board extends Sprite implements IAnimatable {
         return model.getRows();
     }
 
-    private function handleTouch(event:TouchEvent):void {
-        var touch:Touch = event.getTouch(this);
+    private function handleTouchEvent(event:TouchEvent):void {
+        var touches:Vector.<Touch> = event.getTouches(this);
 
-        if(touch == null) {
+        if(touches.length == 0) {
             return;
         }
 
+        var length:int = touches.length;
+        for(var i:int = 0; i < length; i++) {
+            handleTouch(touches[i]);
+        }
+    }
+
+    private function handleTouch(touch:Touch):void {
         touch.getLocation(this, touchPoint);
 
         if(DEBUG) {
@@ -324,7 +331,7 @@ public class Board extends Sprite implements IAnimatable {
         var token:String = model.processSolution(row, column);
 
         if(token != null) {
-            callback(CORRECT, token);
+            dispatchStateEvent(BoardEvent.CORRECT, token);
             removeChild( displayTokens.getDisplayObject(token));
 
             if(model.hasNextToken()) {
@@ -332,11 +339,11 @@ public class Board extends Sprite implements IAnimatable {
             }
 
             if(model.getCurrentSolutionToken() == null) {
-                callback(FINISH);
+                dispatchStateEvent(BoardEvent.FINISH);
                 startCelebration();
             }
         } else {
-            callback(INCORRECT);
+            dispatchStateEvent(BoardEvent.INCORRECT);
         }
 
         return token != null;

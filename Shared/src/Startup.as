@@ -37,7 +37,6 @@ public class Startup extends StartupBase {
     }
 
     override protected function launch():void {
-        debug = false;
         scale = 1;
         _viewportMode = ViewportMode.MANUAL;
 
@@ -170,6 +169,7 @@ public class Startup extends StartupBase {
         // viewPort is the virtual space, stage is the pixel space
         _starling.viewPort.width = _starling.stage.stageWidth = stage.stageWidth;
         _starling.viewPort.height = _starling.stage.stageHeight = stage.stageHeight;
+        _starling.simulateMultitouch = debug;
 
         trace("[Startup]: Starling's viewPort(" + _starling.viewPort.width + ", " + _starling.viewPort.height + ") stage(" + _starling.stage.stageWidth + ", " + _starling.stage.stageHeight + ")");
     }
