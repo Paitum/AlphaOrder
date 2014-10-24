@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="iOS Deployment" type="FlashRunConfigurationType" factoryName="Flash App">
+  <configuration default="false" name="iOS Device" type="FlashRunConfigurationType" factoryName="Flash App">
     <option name="BCName" value="iOS" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />

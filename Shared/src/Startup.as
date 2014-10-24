@@ -25,6 +25,9 @@ public class Startup extends StartupBase {
     protected var logoImage:Image;
     protected var splashState:StarlingState;
     private var isSplashNative:Boolean = true;
+    protected var gameState:GameState = null;
+    protected var isGameLandscape:Boolean;
+    protected var lastOrientation:String;
 
     // Splash Screen
     [Embed(source="../embedded/textures/UniversalSplash.jpg")]
@@ -170,8 +173,44 @@ public class Startup extends StartupBase {
         _starling.viewPort.width = _starling.stage.stageWidth = stage.stageWidth;
         _starling.viewPort.height = _starling.stage.stageHeight = stage.stageHeight;
         _starling.simulateMultitouch = debug;
+    }
 
-        trace("[Startup]: Starling's viewPort(" + _starling.viewPort.width + ", " + _starling.viewPort.height + ") stage(" + _starling.stage.stageWidth + ", " + _starling.stage.stageHeight + ")");
+    override protected function postUpdate():void {
+        // Update StarlingCitrusEngine container
+        baseWidth = _viewport.width = stage.stageWidth;
+        baseHeight = _viewport.height = stage.stageHeight;
+
+        // Update Starling
+        _starling.viewPort.width = _starling.stage.stageWidth = stage.stageWidth;
+        _starling.viewPort.height = _starling.stage.stageHeight = stage.stageHeight;
+
+        // Reset the scale of the debug stats to 1.0
+        if(_starling.showStats) {
+            _starling.showStatsAt("left", "top", 1);
+        }
+
+        // Do not trust stage.orientation -- it was incorrect in at least iOS
+        var isCurrentLandscape:Boolean = stage.stageWidth > stage.stageHeight;
+//        trace("[Startup]: stage[" + stage.stageWidth + ", " + stage.stageHeight + "] orientation[" + lastOrientation + " -> " + stage.orientation + "]");
+
+        if(gameState != null) {
+            var rotation:Number;
+            const COUNTER_CLOCKWISE:Number = -Math.PI / 2;
+
+            if(isGameLandscape) {
+                rotation = isCurrentLandscape ? 0 : COUNTER_CLOCKWISE;
+            } else {
+                rotation = isCurrentLandscape ? COUNTER_CLOCKWISE : 0;
+            }
+
+            gameState.rotation = rotation;
+            gameState.x = stage.stageWidth / 2;
+            gameState.y = stage.stageHeight / 2;
+
+//            trace("[Startup]: game[" + (isGameLandscape ? "landscape" : "portrait") + "] current[" + (isCurrentLandscape ? "landscape" : "portrait") + "]");
+        }
+
+        lastOrientation = stage.orientation;
     }
 
     override protected function enqueueAssets():void {
@@ -193,7 +232,13 @@ public class Startup extends StartupBase {
         diff = int(diff * 1000) / 1000;
         trace("[Startup]: Assets Loaded in " + diff + " seconds");
 
-        var gameState:StarlingState = new GameState();
+        isGameLandscape = stage.stageWidth > stage.stageHeight;
+
+        gameState = new GameState();
+        gameState.pivotX = stage.stageWidth / 2;
+        gameState.pivotY = stage.stageHeight / 2;
+        gameState.x = stage.stageWidth / 2;
+        gameState.y = stage.stageHeight / 2;
         gameState.addEventListener(Event.ADDED_TO_STAGE, gameStateAddedToStage);
         state = gameState;
     }

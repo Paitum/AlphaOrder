@@ -2,6 +2,9 @@ package {
 
 import citrus.core.starling.StarlingCitrusEngine;
 
+import flash.desktop.NativeApplication;
+import flash.display.StageAspectRatio;
+
 import flash.events.Event;
 import flash.utils.getTimer;
 
@@ -15,14 +18,21 @@ import flash.utils.getTimer;
  *
  * II. Starling and Citrus Engine initialized
  *    1. postConfigure()
- *    2. enqueueAssets()
- *    3. loadingAssets(ratio) called many times ratio 0 through 1.0 inclusive
- *    4. loadComplete()       called called once after assets are loaded
+ *    2. postUpdate()
+ *    3. enqueueAssets()
+ *    4. loadingAssets(ratio) called many times ratio 0 through 1.0 inclusive
+ *    5. loadComplete()       called called once after assets are loaded
+ *
+ * III. on resize or orientation change
+ *    1. postUpdate()
  */
 public class StartupBase extends StarlingCitrusEngine {
     protected var startTime:Number;
     protected var assetsStartLoad:int;
-    protected var debug:Boolean = false;
+    protected var debug:Boolean = true;
+
+    private var lastWidth:int = -1;
+    private var lastHeight:int = -1;
 
     public function StartupBase() {
         startTime = getTimer();
@@ -54,6 +64,7 @@ public class StartupBase extends StarlingCitrusEngine {
         super.handleStarlingReady();
 
         postConfigure();
+        postUpdate();
         enqueueAssets();
 
         Assets.assets.verbose = debug;
@@ -63,6 +74,10 @@ public class StartupBase extends StarlingCitrusEngine {
 
             if(ratio >= 1.0) {
                 loadComplete();
+
+                // Allow auto orientation after loading is complete
+//                stage.setAspectRatio(StageAspectRatio.ANY);
+//                stage.autoOrients = true;
             }
         });
 
@@ -73,6 +88,8 @@ public class StartupBase extends StarlingCitrusEngine {
      * Called after the CitrusEngine calls handleStarlingReady.
      *
      * Subclasses should configure the Starling and Citrus environment
+     *
+     * This should only be called once.
      */
     protected function postConfigure():void {
         // override in subclass
@@ -102,7 +119,25 @@ public class StartupBase extends StarlingCitrusEngine {
     }
 
     protected function handleResize(event:Event):void {
-        postConfigure();
+        // While developing, the resize trigger happens twice, ignore duplicates
+        if(stage.stageWidth == lastWidth &&
+           stage.stageHeight == lastHeight)
+        {
+            return;
+        }
+
+        lastWidth = stage.stageWidth;
+        lastHeight = stage.stageHeight;
+
+        postUpdate();
+    }
+
+    /**
+     * Called after the postConfigure, but also after all size and orientation
+     * changes.
+     */
+    protected function postUpdate():void {
+        // override in subclass
     }
 
     protected function getStageWidth():int {
