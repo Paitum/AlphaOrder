@@ -76,8 +76,8 @@ public class StartupBase extends StarlingCitrusEngine {
                 loadComplete();
 
                 // Allow auto orientation after loading is complete
-//                stage.setAspectRatio(StageAspectRatio.ANY);
-//                stage.autoOrients = true;
+                stage.setAspectRatio(StageAspectRatio.ANY);
+                stage.autoOrients = true;
             }
         });
 

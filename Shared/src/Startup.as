@@ -194,18 +194,26 @@ public class Startup extends StartupBase {
 //        trace("[Startup]: stage[" + stage.stageWidth + ", " + stage.stageHeight + "] orientation[" + lastOrientation + " -> " + stage.orientation + "]");
 
         if(gameState != null) {
-            var rotation:Number;
-            const COUNTER_CLOCKWISE:Number = -Math.PI / 2;
-
-            if(isGameLandscape) {
-                rotation = isCurrentLandscape ? 0 : COUNTER_CLOCKWISE;
-            } else {
-                rotation = isCurrentLandscape ? COUNTER_CLOCKWISE : 0;
-            }
-
-            gameState.rotation = rotation;
+//            var rotation:Number;
+//            const COUNTER_CLOCKWISE:Number = -Math.PI / 2;
+//
+//            if(isGameLandscape) {
+//                rotation = isCurrentLandscape ? 0 : COUNTER_CLOCKWISE;
+//            } else {
+//                rotation = isCurrentLandscape ? COUNTER_CLOCKWISE : 0;
+//            }
+//
+//            gameState.rotation = rotation;
+//            gameState.x = stage.stageWidth / 2;
+//            gameState.y = stage.stageHeight / 2;
+            gameState.width = stage.stageWidth;
+            gameState.height = stage.stageHeight;
+            gameState.scaleX = gameState.scaleY = 1.0;
+            gameState.pivotX = stage.stageWidth / 2;
+            gameState.pivotY = stage.stageHeight / 2;
             gameState.x = stage.stageWidth / 2;
             gameState.y = stage.stageHeight / 2;
+            gameState.setupState();
 
 //            trace("[Startup]: game[" + (isGameLandscape ? "landscape" : "portrait") + "] current[" + (isCurrentLandscape ? "landscape" : "portrait") + "]");
         }

@@ -1,7 +1,5 @@
 package alphaOrder {
 
-import citrus.core.CitrusEngine;
-
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.events.Touch;
@@ -13,107 +11,145 @@ import starling.utils.HAlign;
 
 public class StringBreadcrumbs extends Sprite {
     protected var divisions:int;
+    protected var isLandscape:Boolean;
     protected var fields:Vector.<TextField> = new Vector.<TextField>();
-    protected var fontSize:Number;
-    protected var _ce:CitrusEngine;
+    protected var model:AlphaOrderBoardModel;
 
-    public function StringBreadcrumbs(divisions:int, citrusEngine:CitrusEngine) {
+    [Event(name="crumbEvent", type="starling.events.Event")]
+    public static const BOARD_EVENT:String = "crumbEvent";
+
+    public function StringBreadcrumbs(width:Number, height:Number, model:AlphaOrderBoardModel) {
         super();
-        this.divisions = divisions;
-        this._ce = citrusEngine;
 
+        this.model = model;
+        setDimensions(width, height);
         addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
     }
 
-    public function reset():void {
+    public function setDimensions(width:Number, height:Number):void {
+        isLandscape = width > height;
+        divisions = isLandscape ? width / height : height / width;
+        scaleX = scaleY = isLandscape ? height : width;
+        initialize();
+    }
+
+    public function setModel(model:AlphaOrderBoardModel):void {
+        this.model = model;
+        initialize();
+    }
+
+    override public function get width():Number {
+        return isLandscape ? divisions : 1;
+    }
+
+    override public function get height():Number {
+        return isLandscape ? 1 : divisions;
+    }
+
+    private function handleAddedToStage(event:Event):void {
+        initialize();
+    }
+
+    private function initialize():void {
+        // Wait until added to stage
+        if(stage == null) {
+            return;
+        }
+
+        var i:int;
+        var currentLength:int = fields.length;
+
+        // Remove unneeded fields
+        if(divisions < currentLength) {
+            for(i = currentLength; i < divisions; i++) {
+                fields[i].removeEventListener(TouchEvent.TOUCH, handleTouch);
+                removeChild(fields[i]);
+                fields[i] = null;
+            }
+        }
+
+        fields.length = divisions;
+
+        // Determine font-size to accomodate the largest letter
+        var testField:TextField = createTextField(1,"A");
+        var largestLetter:String = null;
+        var largestLetterSize:Number = -1;
+        for(i = 0; i < 26; i++) {
+            testField.text = String.fromCharCode(i + "A".charCodeAt());
+            if(testField.textBounds.width > largestLetterSize) {
+                largestLetterSize = testField.textBounds.width;
+                largestLetter = testField.text;
+            }
+        }
+
+        if(currentLength < divisions) {
+            for(i = 0; i < divisions; i++) {
+                if(fields[i] == null) {
+                    fields[i] = createTextField(largestLetterSize, largestLetter);
+                    fields[i].addEventListener(TouchEvent.TOUCH, handleTouch);
+                    addChild(fields[i]);
+                }
+            }
+        }
+
+        for(i = 0; i < divisions; i++) {
+            fields[i].fontSize = largestLetterSize;
+            fields[i].hAlign = HAlign.CENTER;
+            fields[i].color = Constants.TEXT_COLOR;
+            fields[i].pivotX = fields[i].width / 2;
+            fields[i].pivotY = fields[i].height / 2;
+            fields[i].x = isLandscape ? i + 0.5 : 0.5;
+            fields[i].y = isLandscape ? 0.5 : i + 0.5;
+        }
+
+        clear();
+    }
+
+    /**
+     * Clears the breadcrumbs
+     */
+    public function clear():void {
         var length:int = fields.length;
-        for(var i:int = 0; i < length; i++) {
+        var i:int;
+        for(i = 0; i < length; i++) {
             fields[i].text = "_";
             fields[i].alpha = 0.0;
         }
 
-        fields[length-1].text = "_";
-        fields[length-1].alpha = 1.0;
+        var count:int = model.getPastTokenCount();
+        for(i = count; i >= 0; i--) {
+            var token:String = model.getPastToken(i);
+
+            if(token != null) {
+                shiftTokens();
+                setNextToken(token, false);
+            }
+        }
+
+        var solution:String = model.getCurrentSolutionToken();
+        if(solution != null) {
+            setNextToken(solution, true);
+        }
     }
 
-    public function addToken(string:String, nextToken:String = null):void {
+    public function shiftTokens():void {
         var length:int = fields.length;
 
-        if(nextToken == null) {
-            fields[length-1].text = string;
-            fields[length-1].alpha = 1.0;
-            fields[length-1].color = Constants.TEXT_COLOR;
-            fixTextFieldSize(fields[length-1]);
-        } else {
-            for(var i:int = 0; i < length - 2; i++) {
-                fields[i].text = fields[i+1].text;
-                fields[i].alpha = fields[i+1].alpha;
-                fields[i].color = Constants.TEXT_COLOR;
-                fixTextFieldSize(fields[i]);
-            }
-
-            fields[length-2].text = string;
-            fields[length-2].alpha = 1.0;
-            fields[length-2].color = Constants.TEXT_COLOR;
-            fixTextFieldSize(fields[length-2]);
-
-            setNextToken(nextToken);
+        // scroll fields
+        for(var i:int = 0; i < length - 1; i++) {
+            fields[i].text = fields[i+1].text;
+            fields[i].alpha = fields[i+1].alpha;
+            fields[i].color = Constants.TEXT_COLOR;
+            fixTextFieldSize(fields[i]);
         }
     }
 
-    public function setNextToken(string:String):void {
+    public function setNextToken(string:String, isHint:Boolean):void {
         var lastToken:int = fields.length - 1;
         fields[lastToken].text = string;
-        fields[lastToken].alpha = 0.75;
-        fields[lastToken].color = Constants.BREADCRUMB_TEXT_COLOR;
+        fields[lastToken].alpha = isHint ? 0.75 : 1.0;
+        fields[lastToken].color = isHint ? Constants.BREADCRUMB_TEXT_COLOR : Constants.TEXT_COLOR;
         fixTextFieldSize(fields[lastToken]);
-    }
-
-    override public function get width():Number {
-        return divisions;
-    }
-
-    override public function get height():Number {
-        return 1;
-    }
-
-    private function handleAddedToStage(event:Event):void {
-        var length:int = divisions;
-        for(var i:int = 0; i < length; i++) {
-//            var image:Image = new Image(Assets.assets.getTexture("Tile"));
-//            image.width = 1;
-//            image.height = 1;
-//            image.x = i;
-//            image.y = 0;
-//            image.color = 0x4897FC;
-//            addChild(image);
-
-            var testField:TextField = createTextField(1,"A");
-            var i2:int;
-            var largestLetter:String = null;
-            var largestLetterWidth:Number = -1;
-            for(i2 = 0; i2 < 26; i2++) {
-                var letter:String = String.fromCharCode(i2 + "A".charCodeAt());
-                testField.text = letter;
-                if(testField.textBounds.width > largestLetterWidth) {
-                    largestLetterWidth = testField.textBounds.width;
-                    largestLetter = testField.text;
-                }
-            }
-            fontSize = largestLetterWidth;
-
-            const size:Number = 1;
-            var textField:TextField = createTextField(fontSize, largestLetter);
-            addChild(textField);
-            textField.hAlign = HAlign.CENTER;
-            textField.color = Constants.TEXT_COLOR;
-            textField.pivotX = textField.width / 2;
-            textField.pivotY = textField.height / 2;
-            textField.x = i + 0.5;
-            textField.y = 0.5;
-            textField.addEventListener(TouchEvent.TOUCH, handleTouch);
-            fields.push(textField);
-        }
     }
 
     private function handleTouch(event:TouchEvent):void {
@@ -128,7 +164,7 @@ public class StringBreadcrumbs extends Sprite {
 
             if(textField != null && textField.alpha > 0.2) {
                 if(textField.text != null) {
-                    _ce.sound.playSound(textField.text.toLowerCase());
+                    dispatchEvent(new BreadcrumbEvent(BreadcrumbEvent.TOKEN_TOUCHED, textField.text));
                 }
             }
         }

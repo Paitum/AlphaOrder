@@ -1,24 +1,23 @@
 package alphaOrder {
 
-public class RandomCaseModel extends BoardModel {
+public class RandomCaseModel extends AlphaOrderBoardModel {
 
     private var original:Vector.<String>;
 
-    public static function createBoardModelForLetters(
-            rows:int, columns:int, letters:String):BoardModel
+    public static function createBoardModelForLetters(letters:String, totalPositions:int):AlphaOrderBoardModel
     {
         var names:Vector.<String> = new Vector.<String>();
         for(var i:int = 0; i < letters.length; i++) {
             names.push(letters.charAt(i));
         }
 
-        return new RandomCaseModel(rows, columns, names);
+        return new RandomCaseModel(names, totalPositions);
     }
 
-    public function RandomCaseModel(rows:int, columns:int, original:Vector.<String>) {
+    public function RandomCaseModel(original:Vector.<String>, totalPositions:int) {
         this.original = original;
         var tokens:Vector.<String> = randomizeCase();
-        super(rows, columns, tokens);
+        super(tokens, totalPositions);
     }
 
     private function randomizeCase(result:Vector.<String> = null):Vector.<String> {
@@ -33,8 +32,8 @@ public class RandomCaseModel extends BoardModel {
         return result;
     }
 
-    override public function reset():void {
-        super.reset();
+    override protected function clear():void {
+        super.clear();
         // Allow superclass to reset first before changing the tokens
         randomizeCase(tokens);
     }

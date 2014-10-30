@@ -2,7 +2,6 @@ package alphaOrder {
 
 import flash.geom.Point;
 
-import starling.animation.IAnimatable;
 import starling.animation.Tween;
 import starling.core.Starling;
 import starling.display.DisplayObject;
@@ -15,7 +14,14 @@ import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
 
-public class Board extends Sprite implements IAnimatable {
+public class Board extends Sprite {
+    protected var rows:int;
+    protected var columns:int;
+
+    // isLandscape, is used to change col/row mapping to the model
+    protected var isLandscape:Boolean;
+    protected var model:AlphaOrderBoardModel;
+    protected var displayTokens:DisplayTokens;
 
     // [r][c] -> tile:Quad
     protected var tiles:Vector.<Vector.<Quad>>;
@@ -23,57 +29,69 @@ public class Board extends Sprite implements IAnimatable {
     protected var highlightTiles:Vector.<Vector.<Quad>>;
     // [r][c] -> tween:Tween
     protected var highlightTweens:Vector.<Vector.<Tween>>;
-    protected var wiggleTween:ShakeTween;
-    protected var wiggleToken:String;
-
-    protected var celebrate:Boolean = false;
-    protected var lastCelebrateTime:Number = 0;
-
-    protected var model:BoardModel;
-    protected var displayTokens:DisplayTokens;
-
-    private var mark:Quad;
-    private var lastTileTouched:Point = new Point(-1, -1);
-    private var celebrateX:int = 0;
-    private var celebrateY:int = 0;
-    private var celebrateXDir:int = 0;
-    private var celebrateYDir:int = 0;
 
     // cache
     private var touchPoint:Point = new Point();
-    private const DEBUG:Boolean = false;
+    protected var tempPoint:Point = new Point();
 
     [Event(name="boardEvent", type="starling.events.Event")]
     public static const BOARD_EVENT:String = "boardEvent";
 
-    public function Board(model:BoardModel, displayTokens:DisplayTokens) {
+    public function Board(columns:int, rows:int, isLandscape:Boolean, model:AlphaOrderBoardModel, displayTokens:DisplayTokens) {
         super();
-        this.model = model;
-        this.displayTokens = displayTokens;
+
+        setupBoard(columns, rows, isLandscape, model, displayTokens);
 
         addEventListener(Event.ADDED_TO_STAGE, handleAddedToStage);
     }
 
-    public function getModel():BoardModel {
+    public function getModel():AlphaOrderBoardModel {
         return model;
     }
 
-    public function changeModel(model:BoardModel, displayTokens:DisplayTokens):void {
-        if(this.model.getColumns() != model.getColumns() || this.model.getRows() != model.getRows()) {
-            throw new Error("New Model mustn't change board dimensions")
-        }
-
-        reset();
-        this.model = model;
-        this.displayTokens = displayTokens;
-        resetAndStart();
+    public function setModel(model:AlphaOrderBoardModel, displayTokens:DisplayTokens):void {
+        setupBoard(columns, rows, isLandscape, model, displayTokens);
     }
 
-    public function resetAndStart():void {
-        reset();
+    public function setDimensions(columns:int, rows:int, isLandscape:Boolean):void {
+        if(columns != this.columns || rows != this.rows || isLandscape != this.isLandscape) {
+            setupBoard(columns, rows, isLandscape, model, displayTokens);
+        }
+    }
+
+    public function setupBoard(columns:int, rows:int, isLandscape:Boolean, model:AlphaOrderBoardModel, displayTokens:DisplayTokens):void {
+        if(columns * rows != model.getTotalPositions()) {
+            throw new Error("Failed to setup board. Positions mismatch [" +
+                model.getTotalPositions() + "] vs CR[" + columns + ", " + rows + "]");
+        }
+
+        var shouldReset:Boolean = model != this.model ||
+                columns * rows != this.model.getTotalPositions() ||
+                displayTokens != this.displayTokens;
+
+        this.columns = columns;
+        this.rows = rows;
+        this.isLandscape = isLandscape;
+        this.model = model;
+        this.displayTokens = displayTokens;
+
+        if(shouldReset) {
+            restart();
+        } else {
+            update();
+        }
+    }
+
+    public function restart():void {
         model.reset();
-        populateBoard();
+        update();
         dispatchStateEvent(BoardEvent.START);
+    }
+
+    public function update():void {
+        initialize();
+        reset();
+        populateBoard();
     }
 
     public function dispatchStateEvent(state:int, token:String = null):void {
@@ -92,64 +110,81 @@ public class Board extends Sprite implements IAnimatable {
     protected function initialize():void {
         var r:int, c:int;
 
-        if(wiggleTween == null) {
-            wiggleTween = new ShakeTween(0.05, 0.3);
-            Starling.juggler.add(wiggleTween);
-        }
-
         if(tiles == null) {
             tiles = new Vector.<Vector.<Quad>>();
             highlightTiles = new Vector.<Vector.<Quad>>();
             highlightTweens = new Vector.<Vector.<Tween>>();
+        } else if(tiles.length > rows) {
+            // Cull extra rows
+            for(r = rows; r < tiles.length; r++) {
+                if(tiles[r] == null) continue;
+
+                for(c = 0; c < tiles[r].length; c++) {
+                    removeChild(tiles[r][c]);
+                    removeChild(highlightTiles[r][c]);
+                    tiles[r][c] = null;
+                    highlightTiles[r][c] = null;
+                    highlightTweens[r][c] = null;
+                }
+                tiles[r] = null;
+                highlightTiles[r] = null;
+                highlightTweens[r] = null;
+            }
         }
 
-        for(r = 0; r < model.getRows(); r++) {
-            if(!tiles.hasOwnProperty(String(r))) tiles[r] = new Vector.<Quad>();
-            if(!highlightTiles.hasOwnProperty(String(r))) highlightTiles[r] = new Vector.<Quad>();
-            if(!highlightTweens.hasOwnProperty(String(r))) highlightTweens[r] = new Vector.<Tween>();
+        // TODO clean up these loops and conditionals
+        for(r = 0; r < rows; r++) {
+            if(!tiles.hasOwnProperty(String(r)) || tiles[r] == null) tiles[r] = new Vector.<Quad>();
+            if(!highlightTiles.hasOwnProperty(String(r)) || highlightTiles[r] == null) highlightTiles[r] = new Vector.<Quad>();
+            if(!highlightTweens.hasOwnProperty(String(r)) || highlightTweens[r] == null) highlightTweens[r] = new Vector.<Tween>();
 
             // this will shrink the vectors, if needed
-            tiles[r].length = model.getColumns();
-            highlightTiles[r].length = model.getColumns();
-            highlightTweens[r].length = model.getColumns();
+            if(tiles[r].length > columns) {
+                // Cull extra columns
+                for(c = columns; c < tiles[r].length; c++) {
+                    removeChild(tiles[r][c]);
+                    removeChild(highlightTiles[r][c]);
+                    tiles[r][c] = null;
+                    highlightTiles[r][c] = null;
+                    highlightTweens[r][c] = null;
+                }
+            }
 
-            for(c = 0; c < model.getColumns(); c++) {
-                if(tiles[r][c] == null) tiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
+            tiles[r].length = columns;
+            highlightTiles[r].length = columns;
+            highlightTweens[r].length = columns;
+
+            for(c = 0; c < columns; c++) {
+                if(tiles[r][c] == null) {
+                    tiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
+                    addChild(tiles[r][c]);
+                }
+
                 tiles[r][c].width = 1;
                 tiles[r][c].height = 1;
                 tiles[r][c].color = getTileColor(r,c);
                 tiles[r][c].x = c;
                 tiles[r][c].y = r;
                 tiles[r][c].alpha = 1.0;
-                if(highlightTiles[r][c] == null) highlightTiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
+
+                if(highlightTiles[r][c] == null) {
+                    highlightTiles[r][c] = new Image(Assets.assets.getTexture("Tile"));
+                    addChild(highlightTiles[r][c]);
+                }
+
                 highlightTiles[r][c].width = 1;
                 highlightTiles[r][c].height = 1;
                 highlightTiles[r][c].x = c;
                 highlightTiles[r][c].y = r;
                 highlightTiles[r][c].alpha = 0.0;
                 highlightTiles[r][c].touchable = false;
-                if(highlightTweens[r][c] == null) highlightTweens[r][c] = new Tween(highlightTiles[r][c], 0.25, "easeOut");
-                highlightTweens[r][c].animate("alpha", 0.0);
-                Starling.juggler.add(highlightTweens[r][c]);
-                addChild(tiles[r][c]);
-                addChild(highlightTiles[r][c]);
+
+                if(highlightTweens[r][c] == null) {
+                    highlightTweens[r][c] = new Tween(highlightTiles[r][c], 0.25, "easeOut");
+                    highlightTweens[r][c].animate("alpha", 0.0);
+                    Starling.juggler.add(highlightTweens[r][c]);
+                }
             }
-        }
-
-        // Add a gradient to make less repetitive
-//        var background:Quad = new Quad(model.getColumns(), model.getRows(), 0xFF0000);
-//        background.setVertexColor(0, 0xBBBBBB);
-//        background.setVertexColor(1, 0xEEEEEE);
-//        background.setVertexColor(2, 0xFFFFFF);
-//        background.setVertexColor(3, 0xFFFFFF);
-//        background.blendMode = BlendMode.MULTIPLY;
-//        addChild(background);
-
-        if(DEBUG) {
-            mark = new Quad(0.05, 0.05, 0xFF0000);
-            mark.pivotX = mark.width / 2;
-            mark.pivotY = mark.width / 2;
-            addChild(mark);
         }
 
         addEventListener(TouchEvent.TOUCH, handleTouchEvent);
@@ -159,9 +194,6 @@ public class Board extends Sprite implements IAnimatable {
      * Sets the data structures to neutral values
      */
     protected function reset():void {
-        celebrate = false;
-        lastCelebrateTime = 0;
-        lastTileTouched.setTo(-1, -1);
 
         var tokenCount:int = model.getTokenCount();
         for(var i:int = 0; i < tokenCount; i++) {
@@ -170,23 +202,51 @@ public class Board extends Sprite implements IAnimatable {
         }
     }
 
-    protected function initializePieces():void {
-        throw new Error("Subclass to implement");
-    }
+    public function populateBoard():void {
+        var length:int = model.getTotalPositions();
 
-    protected function populateBoard():void {
-        while(model.hasEmptyPosition() && model.hasNextToken()) {
-            var position:Point = model.getNextEmptyPosition();
-            var token:String = model.placeNextToken(int(position.y), int(position.x));
-            addPiece(token, position)
+        for(var i:int = 0; i < length; i++) {
+            var token:String = model.getTokenAtPosition(i);
+
+            if(token != null) {
+                addPiece(token, i);
+            }
         }
     }
 
-    protected function addPiece(token:String, position:Point):void {
+    protected function addPiece(token:String, position:int):void {
+        getCoordinateFromPosition(position, tempPoint);
         var piece:DisplayObject = displayTokens.getDisplayObject(token);
-        piece.x = position.x + 0.5;
-        piece.y = position.y + 0.5;
+        piece.x = tempPoint.x + 0.5;
+        piece.y = tempPoint.y + 0.5;
         addChild(piece);
+    }
+
+    protected function getCoordinateFromPosition(position:int, result:Point):Point {
+        if(result == null) result = new Point();
+        var r:int, c:int;
+
+        if(isLandscape) {
+            r = (rows - 1) - position % rows;
+            c = Math.floor(position / rows);
+        } else {
+            r = Math.floor(position / columns);
+            c = position % columns;
+        }
+
+        result.setTo(c, r);
+        return result;
+    }
+
+    protected function getPositionFromCoordinate(column:int, row:int):int {
+        var result:int;
+        if(isLandscape) {
+            result = ((rows - 1) - row) + column * rows;
+        } else {
+            result = column + row * columns;
+        }
+
+        return result;
     }
 
     private static function getTileColor(row:int, columns:int):uint {
@@ -197,11 +257,11 @@ public class Board extends Sprite implements IAnimatable {
     }
 
     override public function get width():Number {
-        return model.getColumns();
+        return columns;
     }
 
     override public function get height():Number {
-        return model.getRows();
+        return rows;
     }
 
     private function handleTouchEvent(event:TouchEvent):void {
@@ -220,65 +280,38 @@ public class Board extends Sprite implements IAnimatable {
     private function handleTouch(touch:Touch):void {
         touch.getLocation(this, touchPoint);
 
-        if(DEBUG) {
-            mark.x = touchPoint.x;
-            mark.y = touchPoint.y;
-        }
-
         var column:int = Math.floor(touchPoint.x);
         var row:int = Math.floor(touchPoint.y);
         var success:Boolean = false;
-        var newTileTouched:Boolean = column != lastTileTouched.x || row != lastTileTouched.y;
+        var position:int = getPositionFromCoordinate(column, row);
 
 //trace(touch.phase + " (" + column + ", " + row + ") (" + touchPoint.x + ", " + touchPoint.y + ") " + newTileTouched + " " + lastTileTouched);
-        if(touchPoint.x < 0 || touchPoint.x >= model.getColumns() ||
-                touchPoint.y < 0 || touchPoint.y >= model.getRows())
-        {
-            if(newTileTouched && lastTileTouched.y != -1 && lastTileTouched.x != -1) {
-                fadeHighlightTile(lastTileTouched.y, lastTileTouched.x);
-            }
-            lastTileTouched.setTo(-1, -1);
-            return;
-        }
 
         if(touch.phase == TouchPhase.HOVER) {
             return;
         }
 
-        if(touch.phase == TouchPhase.BEGAN) {
-            success = positionTouched(row, column);
-            setHighlightTileColor(row, column, success ? Constants.TILE_HIGHLIGHT_CORRECT : Constants.TILE_HIGHLIGHT_INCORRECT);
-        }
-        else if(touch.phase == TouchPhase.MOVED) {
-            success = model.isSolution(row, column);
-//            success = positionTouched(row, column);
-
-            if(newTileTouched) {
-                setHighlightTileColor(row, column, success ? Constants.TILE_HIGHLIGHT_CORRECT : Constants.TILE_HIGHLIGHT_INCORRECT);
-            }
-        } else if(touch.phase == TouchPhase.ENDED) {
-            fadeHighlightTile(row, column);
-        }
-
-        if(!success && touch.phase == TouchPhase.BEGAN) {
-            wigglePiece(model.getTokenOnBoard(row, column));
-        }
-
-        if(newTileTouched && lastTileTouched.y != -1 && lastTileTouched.x != -1) {
-            fadeHighlightTile(lastTileTouched.y, lastTileTouched.x);
-        }
-
-        lastTileTouched.setTo(column, row);
+        processUITouch(column, row, touch.phase);
     }
 
-    private function setHighlightTileColor(row:int, column:int, color:uint):void {
+    /**
+     *
+     * @param column    the column touched, MAY BE OUT OF BOUNDS
+     * @param row       the row touched, , MAY BE OUT OF BOUNDS
+     * @param phase     the touch phase
+     */
+    protected function processUITouch(column:int, row:int, phase:String):void {
+        throw new Error("subclass implement");
+    }
+
+    protected function setHighlightTileColor(row:int, column:int, color:uint):void {
         var tile:Quad = highlightTiles[row][column];
         Starling.juggler.remove(highlightTweens[row][column]);
         tile.color = color;
         tile.alpha = 1.0;
     }
 
-    private function fadeHighlightTile(row:int, column:int):void {
+    protected function fadeHighlightTile(row:int, column:int):void {
         var tile:Quad = highlightTiles[row][column];
         var tween:Tween = highlightTweens[row][column];
         tween.reset(tile, 0.5, "easeOut");
@@ -286,107 +319,9 @@ public class Board extends Sprite implements IAnimatable {
         Starling.juggler.add(tween);
     }
 
-    private function wigglePiece(token:String):void {
-        if(token == null) {
-            return;
-        }
-
-        var point:Point;
-        var piece:DisplayObject;
-
-        // Undo active wiggling
-        if(wiggleToken != token) {
-            wiggleTween.stop();
-            Starling.juggler.remove(wiggleTween);
-            point = model.getPosition(wiggleToken);
-            if(point != null) {
-                piece = displayTokens.getDisplayObject(wiggleToken);
-                piece.x = point.x + 0.5;
-                piece.y = point.y + 0.5;
-            }
-        }
-
-        point = model.getPosition(token);
-        if(point == null) {
-            return;
-        }
-
-        piece = displayTokens.getDisplayObject(token);
-        wiggleToken = token;
-        if(wiggleToken != token || wiggleTween.isComplete()) {
-            wiggleTween.setTarget(piece);
-            Starling.juggler.add(wiggleTween);
-        }
+    protected function positionTouched(position:int):Boolean {
+        throw new Error("subclass must implement");
     }
 
-    public function solve(count:int):void {
-        for(var i:int = 0; i < count; i++) {
-            var token:String = model.getCurrentSolutionToken();
-            var point:Point = model.getPosition(token);
-            positionTouched(point.y, point.x);
-        }
-    }
-
-    private function positionTouched(row:int, column:int):Boolean {
-        var token:String = model.processSolution(row, column);
-
-        if(token != null) {
-            dispatchStateEvent(BoardEvent.CORRECT, token);
-            removeChild( displayTokens.getDisplayObject(token));
-
-            if(model.hasNextToken()) {
-                populateBoard();
-            }
-
-            if(model.getCurrentSolutionToken() == null) {
-                dispatchStateEvent(BoardEvent.FINISH);
-                startCelebration();
-            }
-        } else {
-            dispatchStateEvent(BoardEvent.INCORRECT);
-        }
-
-        return token != null;
-    }
-
-    private function startCelebration():void {
-        celebrate = true;
-        celebrateX = 0;
-        celebrateY = 0;
-        celebrateXDir = 1;
-        celebrateYDir = 0;
-    }
-
-    public function advanceTime(time:Number):void {
-        if(!celebrate) return;
-
-        lastCelebrateTime += time;
-
-        const interval:Number = 0.05;
-        if(lastCelebrateTime > interval) {
-            celebrateX += celebrateXDir;
-            celebrateY += celebrateYDir;
-
-            if(celebrateXDir > 0 && celebrateX == model.getColumns() - 1) {
-                celebrateXDir = 0;
-                celebrateYDir = 1;
-            } else if(celebrateXDir < 0 && celebrateX == 0) {
-                celebrateXDir = 0;
-                celebrateYDir = -1;
-            } else if(celebrateYDir > 0 && celebrateY >= model.getRows() - 1) {
-                celebrateXDir = -1;
-                celebrateYDir = 0;
-            } else if(celebrateYDir < 0 && celebrateY < 1) {
-                celebrateXDir = 1;
-                celebrateYDir = 0;
-            }
-
-            setHighlightTileColor(celebrateY, celebrateX, Constants.TILE_HIGHLIGHT_CORRECT);
-            fadeHighlightTile(celebrateY, celebrateX);
-
-            lastCelebrateTime -= interval;
-        }
-
-    }
 }
 }
