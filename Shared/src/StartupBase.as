@@ -29,7 +29,7 @@ import flash.utils.getTimer;
 public class StartupBase extends StarlingCitrusEngine {
     protected var startTime:Number;
     protected var assetsStartLoad:int;
-    protected var debug:Boolean = true;
+    protected var debug:Boolean = false;
 
     private var lastWidth:int = -1;
     private var lastHeight:int = -1;

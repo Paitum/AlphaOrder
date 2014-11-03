@@ -193,8 +193,8 @@ public class GameState extends StarlingState {
         var totalPositions:int = rows * columns;
         var shouldReset:Boolean = true;
         if(models[0] == null) {
-            models[0] = AlphaOrderBoardModel.createBoardModelForLetters("AB", totalPositions);
-//            models[0] = AlphaOrderBoardModel.createBoardModelForLetters("ABCDEFGHIJKLMNOPQRSTUVWXYZ", totalPositions);
+//            models[0] = AlphaOrderBoardModel.createBoardModelForLetters("AB", totalPositions);
+            models[0] = AlphaOrderBoardModel.createBoardModelForLetters("ABCDEFGHIJKLMNOPQRSTUVWXYZ", totalPositions);
             modelLabels[0] = "ABC";
             models[1] = AlphaOrderBoardModel.createBoardModelForLetters("abcdefghijklmnopqrstuvwxyz", totalPositions);
             modelLabels[1] = "abc";
@@ -228,48 +228,17 @@ public class GameState extends StarlingState {
         board.scaleY = scale;
 
         if(breadcrumbs == null) {
-            breadcrumbs = new StringBreadcrumbs(breadcrumbWidth, breadcrumbHeight, models[currentModel]);
+            breadcrumbs = new StringBreadcrumbs(breadcrumbWidth, breadcrumbHeight, isLandscape, models[currentModel]);
             breadcrumbs.addEventListener(BreadcrumbEvent.TOKEN_TOUCHED, breadcrumbCallback0);
             addChild(breadcrumbs);
         } else {
-            breadcrumbs.setDimensions(breadcrumbWidth, breadcrumbHeight);
-            breadcrumbs.setModel(models[currentModel]);
+            breadcrumbs.setup(breadcrumbWidth, breadcrumbHeight, isLandscape, models[currentModel]);
         }
 
         breadcrumbs.pivotX = breadcrumbs.width / 2;
         breadcrumbs.pivotY = breadcrumbs.height / 2;
         breadcrumbs.x = breadcrumbCenterX;
         breadcrumbs.y = breadcrumbCenterY;
-
-        if(fadeWall == null) {
-            fadeWall = new Quad(1, 1, 0x888888);
-            fadeWall.blendMode = BlendMode.MULTIPLY;
-            fadeWall.touchable = false;
-            fadeWall.alpha = 0;
-            addChild(fadeWall);
-        }
-
-        fadeWall.x = 0;
-        fadeWall.y = 0;
-        fadeWall.scaleX = stageWidth;
-        fadeWall.scaleY = stageHeight;
-
-        if(particleSystem == null) {
-            var xml:XML = XML(Assets.assets.getXml("particleConfig"));
-            var texture:Texture = Assets.assets.getTexture("particleTexture");
-            particleSystem = new PDParticleSystem(xml, texture);
-            particleSystem.alpha = 0;
-            addChild(particleSystem);
-        }
-
-        particleSystem.emitterX = stageWidth / 2;
-        particleSystem.emitterY = stageHeight;
-        particleSystem.x = 0;
-        particleSystem.y = 0;
-//        particleSystem.scaleX = particleSystem.scaleY = stageWidth / 300;
-//trace(particleSystem.scaleX + " " + particleSystem.scaleY + " " + particleSystem.emitterX + ", " + particleSystem.emitterY);
-//trace(particleSystem.x + ", " + particleSystem.y + " " + particleSystem.width + " " + particleSystem.height);
-        PDParticleSystem(particleSystem).emitterXVariance = boardWidth;
 
         if(leftButton == null) {
             leftButton = createButton(HAlign.LEFT, stageWidth / 3, controlsDivider);
@@ -300,6 +269,86 @@ public class GameState extends StarlingState {
         rightButton.x = isLandscape ? 0 : stageWidth / 3 * 2;
         rightButton.y = isLandscape ? stageHeight / 3 : 0;
         rightButton.rotation = isLandscape ? -Math.PI / 2 : 0;
+
+
+        if(modeTextField == null) {
+            modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.40, "ABC");
+            modeTextField.color = Constants.TEXT_COLOR;
+            modeTextField.pivotX = modeTextField.width / 2;
+            modeTextField.pivotY = modeTextField.height / 2;
+            addChild(modeTextField);
+        }
+
+        modeTextField.x = isLandscape ? controlsCenterX : padding + modeTextField.pivotX;
+        modeTextField.y = isLandscape ? padding + controlsHeight - modeTextField.pivotX : controlsCenterY;
+//        modeTextField.rotation = isLandscape ? -Math.PI / 2 : 0;
+
+        if(title == null) {
+            title = new Image(Assets.assets.getTexture("AlphaOrder"));
+            title.pivotX = title.width / 2;
+            title.pivotY = title.height / 2;
+            title.color = 0xFFFFFF;
+            title.scaleX = title.scaleY = controlsDivider / title.height;
+            title.touchable = false;
+            addChild(title);
+        }
+
+// Rotate
+//        title.scaleX = title.scaleY = 1.0;
+//        title.rotation = 0;
+//        title.scaleX = title.scaleY = isLandscape ? controlsDivider / title.width : controlsDivider / title.height;
+//        title.x = isLandscape ? controlsCenterX : controlsCenterX;
+//        title.y = isLandscape ? controlsCenterY : controlsCenterY * 1.4;
+
+        title.x = isLandscape ? controlsCenterX * 1.4 : controlsCenterX;
+        title.y = isLandscape ? controlsCenterY : controlsCenterY * 1.4;
+        title.rotation = isLandscape ? -Math.PI / 2 : 0;
+
+        if(restartIcon == null) {
+            restartIcon = new Image(Assets.assets.getTexture("restart"));
+            restartIcon.color = Constants.TEXT_COLOR;
+            restartIcon.pivotX = restartIcon.width;
+            restartIcon.pivotY = restartIcon.height / 2;
+            restartIcon.height = controlsHeight / 2;
+            //noinspection JSSuspiciousNameCombination
+            restartIcon.width = restartIcon.height;
+            restartIcon.touchable = false;
+            addChild(restartIcon);
+        }
+
+        restartIcon.x = isLandscape ? controlsCenterX : controlsWidth;
+        restartIcon.y = isLandscape ? padding : controlsCenterY;
+        restartIcon.rotation = isLandscape ? -Math.PI / 2 : 0;
+
+        if(particleSystem == null) {
+            var xml:XML = XML(Assets.assets.getXml("particleConfig"));
+            var texture:Texture = Assets.assets.getTexture("particleTexture");
+            particleSystem = new PDParticleSystem(xml, texture);
+            particleSystem.alpha = 0;
+            addChild(particleSystem);
+        }
+
+        if(fadeWall == null) {
+            fadeWall = new Quad(1, 1, 0x888888);
+            fadeWall.blendMode = BlendMode.MULTIPLY;
+            fadeWall.touchable = false;
+            fadeWall.alpha = 0;
+            addChild(fadeWall);
+        }
+
+        fadeWall.x = 0;
+        fadeWall.y = 0;
+        fadeWall.scaleX = stageWidth;
+        fadeWall.scaleY = stageHeight;
+
+        particleSystem.emitterX = stageWidth / 2;
+        particleSystem.emitterY = stageHeight;
+        particleSystem.x = 0;
+        particleSystem.y = 0;
+//        particleSystem.scaleX = particleSystem.scaleY = stageWidth / 300;
+//trace(particleSystem.scaleX + " " + particleSystem.scaleY + " " + particleSystem.emitterX + ", " + particleSystem.emitterY);
+//trace(particleSystem.x + ", " + particleSystem.y + " " + particleSystem.width + " " + particleSystem.height);
+        PDParticleSystem(particleSystem).emitterXVariance = boardWidth;
 
         if(stopwatch == null) {
             stopwatch = new Stopwatch();
@@ -340,51 +389,6 @@ public class GameState extends StarlingState {
         secondsText.pivotY = secondsText.height / 2;
         secondsText.scaleX = 1;
         secondsText.scaleY = 1;
-
-        if(modeTextField == null) {
-            modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.45, "ABC");
-            modeTextField.color = Constants.TEXT_COLOR;
-            modeTextField.pivotX = modeTextField.width / 2;
-            modeTextField.pivotY = modeTextField.height / 2;
-            addChild(modeTextField);
-        }
-
-//        modeTextField.width = controlsWidth / 3;
-//        modeTextField.height = controlsHeight * 0.45;
-//        modeTextField.scaleX = modeTextField.scaleY = 1.0;
-        modeTextField.x = isLandscape ? controlsCenterX : padding + modeTextField.pivotX;
-        modeTextField.y = isLandscape ? padding + controlsHeight - modeTextField.pivotX : controlsCenterY;
-        modeTextField.rotation = isLandscape ? -Math.PI / 2 : 0;
-
-        if(title == null) {
-            title = new Image(Assets.assets.getTexture("AlphaOrder"));
-            title.pivotX = title.width / 2;
-            title.pivotY = title.height / 2;
-            title.color = 0xFFFFFF;
-            title.scaleX = title.scaleY = controlsDivider / title.height;
-            title.touchable = false;
-            addChild(title);
-        }
-
-        title.x = isLandscape ? controlsCenterX * 1.4 : controlsCenterX;
-        title.y = isLandscape ? controlsCenterY : controlsCenterY * 1.4;
-        title.rotation = isLandscape ? -Math.PI / 2 : 0;
-
-        if(restartIcon == null) {
-            restartIcon = new Image(Assets.assets.getTexture("restart"));
-            restartIcon.color = Constants.TEXT_COLOR;
-            restartIcon.pivotX = restartIcon.width;
-            restartIcon.pivotY = restartIcon.height / 2;
-            restartIcon.height = controlsHeight / 2;
-            //noinspection JSSuspiciousNameCombination
-            restartIcon.width = restartIcon.height;
-            restartIcon.touchable = false;
-            addChild(restartIcon);
-        }
-
-        restartIcon.x = isLandscape ? controlsCenterX : controlsWidth;
-        restartIcon.y = isLandscape ? padding : controlsCenterY;
-        restartIcon.rotation = isLandscape ? -Math.PI / 2 : 0;
 
 //        if(optionsSprite == null) {
 //            optionsSprite = new OptionsSprite();
@@ -483,6 +487,7 @@ public class GameState extends StarlingState {
         currentModel = (currentModel + 1) % models.length;
         currentModelLabel = modelLabels[currentModel];
         board.setModel(models[currentModel], displayTokens);
+        breadcrumbs.setModel(models[currentModel]);
         modeTextField.text = modelLabels[currentModel];
     }
 
