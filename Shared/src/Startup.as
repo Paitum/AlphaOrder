@@ -56,7 +56,7 @@ public class Startup extends StartupBase {
 
         var width:int = getStageWidth();
         var height:int = getStageHeight();
-
+trace("Show Native Splash Screen (" + width + ", " + height + ")");
         background = new SplashBitmap();
         var scale:Number = Math.max(width / background.width, height / background.height);
 

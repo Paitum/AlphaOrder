@@ -26,26 +26,33 @@ public class GameState extends StarlingState {
     private var rows:int;
     private var columns:int;
     private var stopwatch:Stopwatch;
-    private var stopwatchText:TextField;
     private var endStopwatchTween:Tween;
-    private var secondsText:TextField;
     private var models:Vector.<AlphaOrderBoardModel> = new Vector.<AlphaOrderBoardModel>(2);
-    private var displayTokens:DisplayTokens;
     private var modelLabels:Vector.<String> = new Vector.<String>();
     private var currentModelLabel:String;
     private var currentModel:int = -1;
-    private var board:AlphaOrderBoard;
-    private var breadcrumbs:StringBreadcrumbs;
-    private var fadeWall:Quad;
-    private var fullScreenTouch:Quad;
-    private var xDivider:int;
-    private var yDivider:int = 5;
     private var padding:int;
-    private var modeTextField:TextField;
-    private var particleSystem:ParticleSystem;
     private var fadeWallResetTime:int;
 
+    // UI Components
     private var backgroundImage:Image;
+    private var controlsBackgroundFade:Quad;
+    private var breadcrumbBackgroundFade:Quad;
+    private var breadcrumbs:StringBreadcrumbs;
+    private var board:AlphaOrderBoard;
+    private var stopwatchText:TextField;
+    private var secondsText:TextField;
+    private var displayTokens:DisplayTokens;
+    private var fadeWall:Quad;
+    private var fullScreenTouch:Quad;
+    private var modeTextField:TextField;
+    private var title:Image;
+    private var restartIcon:Image;
+    private var particleSystem:ParticleSystem;
+    private var optionsSprite:OptionsSprite;
+    private var leftButton:DisplayObject;
+    private var centerButton:DisplayObject;
+    private var rightButton:DisplayObject;
 
     // initialized Event triggered at the end of the initalize() method
     [Event(name="initialized", type="starling.events.Event")]
@@ -83,20 +90,36 @@ public class GameState extends StarlingState {
         trace("GameState setupState(" + stageWidth + ", " + stageHeight + ")");
 
         padding = 10;
-        xDivider = stageWidth / 50;
-        var breadcrumbWidth:int = isLandscape ? stageWidth / 10 : stageWidth - 2 * padding;
-        var breadcrumbHeight:int = isLandscape ? stageHeight - 2 * padding : stageHeight / 10;
-        var breadcrumbCenterX:int = xDivider + padding + breadcrumbWidth / 2;
-        var breadcrumbCenterY:int = padding + breadcrumbHeight / 2;
+        // Assume Portrait
+        var portraitHeight:int = isLandscape ? stageWidth : stageHeight;
+        var portraitWidth:int = isLandscape ? stageHeight : stageWidth;
 
-        var boardWidth:int = isLandscape ?
-                stageWidth - (xDivider + breadcrumbWidth + 2 * padding) :
-                breadcrumbWidth;
-        var boardHeight:int = isLandscape ?
-                breadcrumbHeight :
-                stageHeight - (breadcrumbHeight + 2 * padding);
-        var boardCenterX:int = xDivider + padding + boardWidth / 2 + (isLandscape ? breadcrumbWidth : 0);
-        var boardCenterY:int = padding + boardHeight / 2 + (isLandscape ? 0 : breadcrumbHeight);
+        var controlsWidth:int = portraitWidth - 2 * padding;
+        var controlsHeight:int = portraitHeight / 10;
+        var controlsDivider:int = controlsHeight;
+        var controlsCenterX:int = padding + controlsWidth / 2;
+        var controlsCenterY:int = controlsHeight / 2;
+
+        var breadcrumbWidth:int = controlsWidth;
+        var breadcrumbHeight:int = portraitHeight / 10;
+        var breadcrumbsDivider:int = controlsDivider + breadcrumbHeight + padding;
+        var breadcrumbCenterX:int = padding + breadcrumbWidth / 2;
+        var breadcrumbCenterY:int = controlsDivider + padding / 2 + breadcrumbHeight / 2;
+
+        var boardWidth:int = controlsWidth;
+        var boardHeight:int = portraitHeight - (breadcrumbsDivider + padding * 1.5);
+        var boardCenterX:int = padding + boardWidth / 2;
+        var boardCenterY:int = breadcrumbsDivider + padding / 2 + boardHeight / 2;
+
+        if(isLandscape) {
+            var temp:int;
+            temp = controlsWidth; controlsWidth = controlsHeight; controlsHeight = temp;
+            temp = controlsCenterX; controlsCenterX = controlsCenterY; controlsCenterY = temp;
+            temp = breadcrumbWidth; breadcrumbWidth = breadcrumbHeight; breadcrumbHeight = temp;
+            temp = breadcrumbCenterX; breadcrumbCenterX = breadcrumbCenterY; breadcrumbCenterY = temp;
+            temp = boardWidth; boardWidth = boardHeight; boardHeight = temp;
+            temp = boardCenterX; boardCenterX = boardCenterY; boardCenterY = temp;
+        }
 
         var smallEdge:int = Math.min(boardWidth, boardHeight);
         var tileSize:int = smallEdge / 3;
@@ -112,13 +135,30 @@ public class GameState extends StarlingState {
             backgroundImage.color = Constants.BACKGROUND_COLOR;
         }
 
-//        var tempQuad:Quad;
-//        tempQuad = new Quad(stageWidth, yDivider, 0x000000);
-//        tempQuad.alpha = 0.4;
-//        tempQuad.x = 0;
-//        tempQuad.y = 0;
-//        tempQuad.touchable = false;
-//        addChild(tempQuad);
+        if(controlsBackgroundFade == null) {
+            controlsBackgroundFade = new Quad(1, 1, 0x000000);
+            controlsBackgroundFade.touchable = false;
+            controlsBackgroundFade.alpha = 0.4;
+            controlsBackgroundFade.x = 0;
+            controlsBackgroundFade.y = 0;
+            addChild(controlsBackgroundFade);
+        }
+
+        controlsBackgroundFade.scaleX = isLandscape ? controlsDivider : portraitWidth;
+        controlsBackgroundFade.scaleY = isLandscape ? portraitWidth : controlsDivider;
+
+        if(breadcrumbBackgroundFade == null) {
+            breadcrumbBackgroundFade = new Quad(1, 1, 0x000000);
+            breadcrumbBackgroundFade.touchable = false;
+            breadcrumbBackgroundFade.alpha = 0.2;
+            breadcrumbBackgroundFade.x = 0;
+            breadcrumbBackgroundFade.y = 0;
+            addChild(breadcrumbBackgroundFade);
+        }
+
+        breadcrumbBackgroundFade.scaleX = isLandscape ? breadcrumbsDivider : portraitWidth;
+        breadcrumbBackgroundFade.scaleY = isLandscape ? portraitWidth : breadcrumbsDivider;
+
 //
 //        tempQuad = new Quad(stageWidth, breadcrumbDivider - yDivider, 0x000000);
 //        tempQuad.alpha = 0.2;
@@ -142,18 +182,6 @@ public class GameState extends StarlingState {
 //        dividerQuad.touchable = false;
 //        addChild(dividerQuad);
 
-//        var logoOffset:int = 7;
-//        var logo:Image = new Image(Assets.assets.getTexture("levelHalf"));
-//        logo.pivotX = Math.floor(logo.width / 2);
-//        logo.pivotY = Math.floor(logo.height / 2);
-//        logo.rotation = -Math.PI / 4;
-//        logo.x = Math.floor(stageWidth - logo.width / 2 + logoOffset);
-//        logo.y = Math.floor(stageHeight - logo.height / 2 + logoOffset);
-//        logo.color = Constants.BACKGROUND_COLOR;
-//        logo.alpha = 0.5;
-//        logo.touchable = false;
-//        addChild(logo);
-
         if(displayTokens == null) {
             displayTokens = StringDisplayTokens.createStringDisplayTokensForLetters(
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz", Constants.DEFAULT_FONT);
@@ -165,8 +193,8 @@ public class GameState extends StarlingState {
         var totalPositions:int = rows * columns;
         var shouldReset:Boolean = true;
         if(models[0] == null) {
-            models[0] = AlphaOrderBoardModel.createBoardModelForLetters("ABCXYZ", totalPositions);
-//            models[0] = BoardModel.createBoardModelForLetters("ABCDEFGHIJKLMNOPQRSTUVWXYZ", totalPositions);
+            models[0] = AlphaOrderBoardModel.createBoardModelForLetters("AB", totalPositions);
+//            models[0] = AlphaOrderBoardModel.createBoardModelForLetters("ABCDEFGHIJKLMNOPQRSTUVWXYZ", totalPositions);
             modelLabels[0] = "ABC";
             models[1] = AlphaOrderBoardModel.createBoardModelForLetters("abcdefghijklmnopqrstuvwxyz", totalPositions);
             modelLabels[1] = "abc";
@@ -243,22 +271,35 @@ public class GameState extends StarlingState {
 //trace(particleSystem.x + ", " + particleSystem.y + " " + particleSystem.width + " " + particleSystem.height);
         PDParticleSystem(particleSystem).emitterXVariance = boardWidth;
 
-        var controlsWidth:int = boardWidth;
-        var controlsHeight:int = yDivider - 2 * padding;
-        var controlsCenterX:int = boardCenterX;
-        var controlsCenterY:int = padding + controlsHeight / 2;
+        if(leftButton == null) {
+            leftButton = createButton(HAlign.LEFT, stageWidth / 3, controlsDivider);
+            leftButton.addEventListener(TouchEvent.TOUCH, handleLeftButtonTrigger);
+            addChild(leftButton);
+        }
 
-//        var leftButton:DisplayObject = createButton(HAlign.LEFT);
-//        leftButton.addEventListener(TouchEvent.TOUCH, handleLeftButtonTrigger);
-//        addChild(leftButton);
-//
-//        var centerButton:DisplayObject = createButton(HAlign.CENTER);
-//        centerButton.addEventListener(TouchEvent.TOUCH, handleCenterButtonTrigger);
-//        addChild(centerButton);
-//
-//        var rightButton:DisplayObject = createButton(HAlign.RIGHT);
-//        rightButton.addEventListener(TouchEvent.TOUCH, handleRightButtonTrigger);
-//        addChild(rightButton);
+        leftButton.x = 0;
+        leftButton.y = isLandscape ? stageHeight : 0;
+        leftButton.rotation = isLandscape ? -Math.PI / 2 : 0;
+
+        if(centerButton == null) {
+            centerButton = createButton(HAlign.CENTER, stageWidth / 3, controlsDivider);
+            centerButton.addEventListener(TouchEvent.TOUCH, handleCenterButtonTrigger);
+            addChild(centerButton);
+        }
+
+        centerButton.x = isLandscape ? 0 : stageWidth / 3;
+        centerButton.y = isLandscape ? stageHeight / 3 * 2 : 0;
+        centerButton.rotation = isLandscape ? -Math.PI / 2 : 0;
+
+        if(rightButton == null) {
+            rightButton = createButton(HAlign.RIGHT, stageWidth / 3, controlsDivider);
+            rightButton.addEventListener(TouchEvent.TOUCH, handleRightButtonTrigger);
+            addChild(rightButton);
+        }
+
+        rightButton.x = isLandscape ? 0 : stageWidth / 3 * 2;
+        rightButton.y = isLandscape ? stageHeight / 3 : 0;
+        rightButton.rotation = isLandscape ? -Math.PI / 2 : 0;
 
         if(stopwatch == null) {
             stopwatch = new Stopwatch();
@@ -300,37 +341,61 @@ public class GameState extends StarlingState {
         secondsText.scaleX = 1;
         secondsText.scaleY = 1;
 
-//        modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.45, "ABC");
-//        modeTextField.color = Constants.TEXT_COLOR;
-//        modeTextField.pivotX = 0;
-//        modeTextField.pivotY = modeTextField.height / 2;
-//        modeTextField.x = padding * 2;
-//        modeTextField.y = controlsCenterY;
-//        addChild(modeTextField);
+        if(modeTextField == null) {
+            modeTextField = createTextField(controlsWidth / 3, controlsHeight * 0.45, "ABC");
+            modeTextField.color = Constants.TEXT_COLOR;
+            modeTextField.pivotX = modeTextField.width / 2;
+            modeTextField.pivotY = modeTextField.height / 2;
+            addChild(modeTextField);
+        }
 
-//        var title:Image;
-//        title = new Image(Assets.assets.getTexture("AlphaOrder"));
-//        title.color = 0xFFFFFF;
-//        title.pivotX = title.width / 2;
-//        title.pivotY = 0;
-//        title.x = controlsCenterX;
-//        title.y = controlsHeight * 0.2;
-//        title.scaleX = title.scaleY = yDivider / title.height;
-//        title.touchable = false;
-//        addChild(title);
+//        modeTextField.width = controlsWidth / 3;
+//        modeTextField.height = controlsHeight * 0.45;
+//        modeTextField.scaleX = modeTextField.scaleY = 1.0;
+        modeTextField.x = isLandscape ? controlsCenterX : padding + modeTextField.pivotX;
+        modeTextField.y = isLandscape ? padding + controlsHeight - modeTextField.pivotX : controlsCenterY;
+        modeTextField.rotation = isLandscape ? -Math.PI / 2 : 0;
+
+        if(title == null) {
+            title = new Image(Assets.assets.getTexture("AlphaOrder"));
+            title.pivotX = title.width / 2;
+            title.pivotY = title.height / 2;
+            title.color = 0xFFFFFF;
+            title.scaleX = title.scaleY = controlsDivider / title.height;
+            title.touchable = false;
+            addChild(title);
+        }
+
+        title.x = isLandscape ? controlsCenterX * 1.4 : controlsCenterX;
+        title.y = isLandscape ? controlsCenterY : controlsCenterY * 1.4;
+        title.rotation = isLandscape ? -Math.PI / 2 : 0;
+
+        if(restartIcon == null) {
+            restartIcon = new Image(Assets.assets.getTexture("restart"));
+            restartIcon.color = Constants.TEXT_COLOR;
+            restartIcon.pivotX = restartIcon.width;
+            restartIcon.pivotY = restartIcon.height / 2;
+            restartIcon.height = controlsHeight / 2;
+            //noinspection JSSuspiciousNameCombination
+            restartIcon.width = restartIcon.height;
+            restartIcon.touchable = false;
+            addChild(restartIcon);
+        }
+
+        restartIcon.x = isLandscape ? controlsCenterX : controlsWidth;
+        restartIcon.y = isLandscape ? padding : controlsCenterY;
+        restartIcon.rotation = isLandscape ? -Math.PI / 2 : 0;
+
+//        if(optionsSprite == null) {
+//            optionsSprite = new OptionsSprite();
+//            addChild(optionsSprite);
+//            optionsSprite.pivotX = optionsSprite.width / 2;
+//            optionsSprite.pivotY = optionsSprite.height / 2;
+//        }
 //
-//        var restartIcon:Image;
-//        restartIcon = new Image(Assets.assets.getTexture("restart"));
-//        restartIcon.color = Constants.TEXT_COLOR;
-//        restartIcon.pivotX = restartIcon.width;
-//        restartIcon.pivotY = restartIcon.height / 2;
-//        restartIcon.height = controlsHeight / 2;
-//        //noinspection JSSuspiciousNameCombination
-//        restartIcon.width = restartIcon.height;
-//        restartIcon.x = controlsWidth;
-//        restartIcon.y = controlsCenterY;
-//        restartIcon.touchable = false;
-//        addChild(restartIcon);
+//        optionsSprite.scaleX = optionsSprite.scaleY = portraitWidth - 2 * padding;
+//        optionsSprite.x = stageWidth / 2;
+//        optionsSprite.y = stageHeight / 2;
 
         if(fullScreenTouch == null) {
             fullScreenTouch = new Quad(1, 1, 0xFFFFFF);
@@ -391,8 +456,8 @@ public class GameState extends StarlingState {
         }
     }
 
-    private function createButton(hAlign:String):Quad {
-        var button:Quad = new Quad(stage.stageWidth / 3, yDivider, 0x000000);
+    private function createButton(hAlign:String, width:int, height:int):Quad {
+        var button:Quad = new Quad(width, height, 0x000000);
         button.alpha = 0.0;
         button.pivotX = 0;
         button.pivotY = 0;
@@ -473,7 +538,7 @@ public class GameState extends StarlingState {
             stopwatch.stop();
             fadeWall.alpha = 0.0;
             Starling.juggler.tween(fadeWall, 2, {alpha: 1.0});
-            fadeWallResetTime = getTimer() + 3 * 1000;
+            fadeWallResetTime = getTimer() + 2000;
             fullScreenTouch.touchable = true;
 
             Starling.juggler.delayCall(function():void {

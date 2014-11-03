@@ -194,12 +194,7 @@ public class Board extends Sprite {
      * Sets the data structures to neutral values
      */
     protected function reset():void {
-
-        var tokenCount:int = model.getTokenCount();
-        for(var i:int = 0; i < tokenCount; i++) {
-            var token:String = model.getToken(i);
-            removeChild(displayTokens.getDisplayObject(token));
-        }
+        displayTokens.removeFromDisplayContrainer(this);
     }
 
     public function populateBoard():void {
@@ -219,7 +214,9 @@ public class Board extends Sprite {
         var piece:DisplayObject = displayTokens.getDisplayObject(token);
         piece.x = tempPoint.x + 0.5;
         piece.y = tempPoint.y + 0.5;
-        addChild(piece);
+        if(!contains(piece)) {
+            addChild(piece);
+        }
     }
 
     protected function getCoordinateFromPosition(position:int, result:Point):Point {

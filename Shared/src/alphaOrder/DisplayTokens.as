@@ -2,6 +2,7 @@ package alphaOrder {
 import flash.utils.Dictionary;
 
 import starling.display.DisplayObject;
+import starling.display.DisplayObjectContainer;
 
 public class DisplayTokens {
     // name:String -> DisplayObject
@@ -22,6 +23,12 @@ public class DisplayTokens {
 
     public function getDisplayObject(token:String):DisplayObject {
         return displayObjects[token];
+    }
+
+    public function removeFromDisplayContrainer(parent:DisplayObjectContainer):void {
+        for(var key:Object in displayObjects) {
+            parent.removeChild(displayObjects[key]);
+        }
     }
 }
 }
