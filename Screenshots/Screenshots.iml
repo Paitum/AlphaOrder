@@ -11,7 +11,7 @@
             <entry library-name="as3corelib" library-level="application">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-name="Citrus-Engine" library-level="application">
+            <entry library-name="Citrus-Engine-Vanilla" library-level="application">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -36,7 +36,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="as3corelib" level="application" />
     <orderEntry type="module" module-name="Shared" exported="" />
-    <orderEntry type="library" exported="" name="Citrus-Engine" level="application" />
+    <orderEntry type="library" exported="" name="Citrus-Engine-Vanilla" level="application" />
   </component>
 </module>
 

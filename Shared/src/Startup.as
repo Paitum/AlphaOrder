@@ -27,7 +27,6 @@ public class Startup extends StartupBase {
     private var isSplashNative:Boolean = true;
     protected var gameState:GameState = null;
     protected var isGameLandscape:Boolean;
-    protected var lastOrientation:String;
 
     // Splash Screen
     [Embed(source="../embedded/textures/UniversalSplash.jpg")]
@@ -56,7 +55,7 @@ public class Startup extends StartupBase {
 
         var width:int = getStageWidth();
         var height:int = getStageHeight();
-
+trace("Show Native Splash Screen (" + width + ", " + height + ")");
         background = new SplashBitmap();
         var scale:Number = Math.max(width / background.width, height / background.height);
 
@@ -217,8 +216,6 @@ public class Startup extends StartupBase {
 
 //            trace("[Startup]: game[" + (isGameLandscape ? "landscape" : "portrait") + "] current[" + (isCurrentLandscape ? "landscape" : "portrait") + "]");
         }
-
-        lastOrientation = stage.orientation;
     }
 
     override protected function enqueueAssets():void {

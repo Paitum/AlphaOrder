@@ -40,11 +40,16 @@ public class AlphaOrderBoard extends Board implements IAnimatable  {
     }
 
 
-    override protected function reset():void {
-        super.reset();
+    override public function restart():void {
+        super.restart();
 
         celebrate = false;
         lastCelebrateTime = 0;
+    }
+
+    override protected function reset():void {
+        super.reset();
+
         wigglePieceStop();
 
         lastTileTouched.setTo(-1, -1);
@@ -106,9 +111,7 @@ public class AlphaOrderBoard extends Board implements IAnimatable  {
             dispatchStateEvent(BoardEvent.CORRECT, token);
             removeChild(displayTokens.getDisplayObject(token));
 
-            if(model.hasNextToken()) {
-                populateBoard();
-            }
+            populateBoard();
 
             if(model.getCurrentSolutionToken() == null) {
                 dispatchStateEvent(BoardEvent.FINISH);
