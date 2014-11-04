@@ -11,14 +11,14 @@
 <application xmlns="http://ns.adobe.com/air/application/15.0">
 
     <!-- ### DEV ID, FILENAME, and VERSION ### -->
-    <id>com.level-apps.AlphaOrderDEV</id>
-    <filename>AlphaOrderDEV</filename>
-    <versionNumber>1.0.2</versionNumber>
+    <!--<id>com.level-apps.AlphaOrderDEV</id>-->
+    <!--<filename>AlphaOrderDEV</filename>-->
+    <!--<versionNumber>1.0.2</versionNumber>-->
 
     <!-- ### RELEASE ID, FILENAME, and VERSION ### -->
-    <!--<id>com.level-apps.AlphaOrder</id>-->
-    <!--<filename>AlphaOrder</filename>-->
-    <!--<versionNumber>1.0.0</versionNumber>-->
+    <id>com.level-apps.AlphaOrder</id>
+    <filename>AlphaOrder</filename>
+    <versionNumber>1.0.2</versionNumber>
 
     <!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
     <!--<versionLabel></versionLabel>-->

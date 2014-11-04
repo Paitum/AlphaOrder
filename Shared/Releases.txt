@@ -12,3 +12,6 @@ Added "seconds" label to complete time
 
 1.0.1
 October 16, 2014 14:48 Published AlphaOrder on Google Play Store
+
+1.0.2, New AlphaOrder Build Supporting Orientation Change
+November 3, 2014
