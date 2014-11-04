@@ -1,6 +1,7 @@
 package {
 
 import flash.desktop.NativeApplication;
+import flash.display.StageAspectRatio;
 import flash.events.InvokeEvent;
 
 /**
@@ -35,6 +36,15 @@ public class InvokableStartup extends Startup {
 
     protected function processInvokeEvent(invocation:InvokeEvent):void {
 
+    }
+
+
+    override protected function loadComplete():void {
+        super.loadComplete();
+
+        // Allow auto orientation after loading is complete
+        stage.setAspectRatio(StageAspectRatio.ANY);
+        stage.autoOrients = true;
     }
 }
 }

@@ -2,9 +2,6 @@ package {
 
 import citrus.core.starling.StarlingCitrusEngine;
 
-import flash.desktop.NativeApplication;
-import flash.display.StageAspectRatio;
-
 import flash.events.Event;
 import flash.utils.getTimer;
 
@@ -74,10 +71,6 @@ public class StartupBase extends StarlingCitrusEngine {
 
             if(ratio >= 1.0) {
                 loadComplete();
-
-                // Allow auto orientation after loading is complete
-                stage.setAspectRatio(StageAspectRatio.ANY);
-                stage.autoOrients = true;
             }
         });
 
