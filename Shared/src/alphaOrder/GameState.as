@@ -90,18 +90,19 @@ public class GameState extends StarlingState {
         trace("GameState setupState(" + stageWidth + ", " + stageHeight + ")");
 
         padding = 10;
+        var division:int = 11;
         // Assume Portrait
         var portraitHeight:int = isLandscape ? stageWidth : stageHeight;
         var portraitWidth:int = isLandscape ? stageHeight : stageWidth;
 
         var controlsWidth:int = portraitWidth - 2 * padding;
-        var controlsHeight:int = portraitHeight / 10;
+        var controlsHeight:int = portraitHeight / division;
         var controlsDivider:int = controlsHeight;
         var controlsCenterX:int = padding + controlsWidth / 2;
         var controlsCenterY:int = controlsHeight / 2;
 
         var breadcrumbWidth:int = controlsWidth;
-        var breadcrumbHeight:int = portraitHeight / 10;
+        var breadcrumbHeight:int = portraitHeight / division;
         var breadcrumbsDivider:int = controlsDivider + breadcrumbHeight + padding;
         var breadcrumbCenterX:int = padding + breadcrumbWidth / 2;
         var breadcrumbCenterY:int = controlsDivider + padding / 2 + breadcrumbHeight / 2;
