@@ -6,6 +6,8 @@ import alphaOrder.GameState;
 import citrus.core.starling.StarlingState;
 import citrus.core.starling.ViewportMode;
 
+import flash.desktop.NativeApplication;
+
 import flash.display.Bitmap;
 
 import flash.geom.Rectangle;
@@ -55,7 +57,7 @@ public class Startup extends StartupBase {
 
         var width:int = getStageWidth();
         var height:int = getStageHeight();
-trace("Show Native Splash Screen (" + width + ", " + height + ")");
+//trace("Show Native Splash Screen (" + width + ", " + height + ") stage(" + stage.stageWidth + ", " + stage.stageHeight + ") full(" + stage.fullScreenWidth + ", " + stage.fullScreenHeight + ")");
         background = new SplashBitmap();
         var scale:Number = Math.max(width / background.width, height / background.height);
 
@@ -171,6 +173,7 @@ trace("Show Native Splash Screen (" + width + ", " + height + ")");
         // viewPort is the virtual space, stage is the pixel space
         _starling.viewPort.width = _starling.stage.stageWidth = stage.stageWidth;
         _starling.viewPort.height = _starling.stage.stageHeight = stage.stageHeight;
+trace("Viewport and Stage set to (" + stage.stageWidth + ", " + stage.stageHeight + ")");
         _starling.simulateMultitouch = debug;
     }
 

@@ -289,7 +289,7 @@ public class GameState extends StarlingState {
             title.pivotX = title.width / 2;
             title.pivotY = title.height / 2;
             title.color = 0xFFFFFF;
-            title.scaleX = title.scaleY = controlsDivider / title.height;
+            title.scaleX = title.scaleY = controlsDivider / title.height * 1.1;
             title.touchable = false;
             addChild(title);
         }

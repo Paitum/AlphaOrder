@@ -16,7 +16,8 @@ public class InvokableStartup extends Startup {
 
     public function InvokableStartup() {
         super();
-        trace("[InvokableStartup]: Constructor");
+        trace("[InvokableStartup]: Constructor (AIR Version: " +
+            NativeApplication.nativeApplication.runtimeVersion + ")");
 
         NativeApplication.nativeApplication.addEventListener(
             InvokeEvent.INVOKE, onInvokeEvent);
