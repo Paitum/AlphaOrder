@@ -1,0 +1,1415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AirPackageProjectParameters">
+    <option name="iosPackageType" value="Apple App Store distribution" />
+    <option name="iosFastPackaging" value="false" />
+    <option name="deselectedBCs" value="Desktop&#9;Desktop&#10;Screenshots&#9;Screenshots&#10;iOS&#9;iOS" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9678e774-87d9-4a14-89f4-4fe82ab9852c" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/Desktop_480_720.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Desktop_480_720.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/Desktop_480_720_debug.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Desktop_480_720_debug.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/Desktop_720_480_debug.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Desktop_720_480_debug.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/Screenshots.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Screenshots.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ant.xml" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/iOS/iOS.iml" afterPath="$PROJECT_DIR$/iOS/iOS.iml" />
+    </list>
+    <ignored path="ABCProject.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="Commander">
+    <leftPanel url="file://$PROJECT_DIR$/Desktop" />
+    <rightPanel />
+    <splitter proportion="0.5" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="ABCProject" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="OptionsSprite.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/OptionsSprite.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DisplayTokens.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/DisplayTokens.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BoardEvent.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/BoardEvent.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AlphaOrderBoard.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/AlphaOrderBoard.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="162" column="23" selection-start-line="162" selection-start-column="23" selection-end-line="162" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StartupBase.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/src/StartupBase.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="106" column="7" selection-start-line="106" selection-start-column="7" selection-end-line="106" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StringBreadcrumbs.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/StringBreadcrumbs.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="179" column="54" selection-start-line="179" selection-start-column="54" selection-end-line="179" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Assets.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/src/Assets.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MobileStartup.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/src/MobileStartup.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Startup.as" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Shared/src/Startup.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.35207102">
+              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Stopwatch.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Shared/src/Stopwatch.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="true" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myStructureFilterPaths" />
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState />
+  </component>
+  <component name="NamedScopeManager">
+    <order />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1176" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AlphaOrder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AlphaOrder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Shared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Shared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AlphaOrder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Shared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Shared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AlphaOrder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Shared" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="recentsLimit" value="5" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FullScreen" value="false" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15015641" />
+    <property name="project.structure.side.proportion" value="0.2450495" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="options.lastSelected" value="configurable.group.build" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="290" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="289" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="290" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="964" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="290" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="289" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="290" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="964" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateActionScriptClassDialog.DESTINATION_PACKAGE_RECENT_KEY">
+      <recent name="alphaOrder" />
+      <recent name="ui" />
+      <recent name="unused" />
+      <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\A\Dev\Air\Projects\NewBaseStarlingProject\Shared\src" />
+      <recent name="D:\A\Dev\Air\Projects\ABC\Screenshots" />
+      <recent name="D:\A\Dev\Air\Projects\ABC\iOS\media\textures" />
+      <recent name="D:\A\Dev\Air\Projects\ABC\Android" />
+      <recent name="D:\A\Dev\Air\Projects\ABC\Android\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\A\Dev\Air\Projects\ABC\Shared\src\alphaOrder" />
+      <recent name="D:\A\Dev\Air\Projects\ABC\Shared\src\unused" />
+      <recent name="D:\A\Dev\Air\Projects\ABC\Shared" />
+      <recent name="D:\A\Dev\Air\Projects\ABC\iOS\media\textures" />
+      <recent name="D:\A\Dev\Air\Projects\ABC\iOS\system" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Flash App.Emu iPhone 4 640 x 960">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <list size="18">
+      <item index="0" class="java.lang.String" itemvalue="Flash App.Desktop 480 720 debug" />
+      <item index="1" class="java.lang.String" itemvalue="Flash App.Desktop 480 720" />
+      <item index="2" class="java.lang.String" itemvalue="Flash App.Desktop 720 480 debug" />
+      <item index="3" class="java.lang.String" itemvalue="Flash App.Emu iPad 3rd Gen 1536 x 2048" />
+      <item index="4" class="java.lang.String" itemvalue="Flash App.Emu iPhone 4 640 x 960" />
+      <item index="5" class="java.lang.String" itemvalue="Flash App.Emu iPhone 5 640 x 1136" />
+      <item index="6" class="java.lang.String" itemvalue="Flash App.Emu iPhone 6 750 x 1334" />
+      <item index="7" class="java.lang.String" itemvalue="Flash App.Emu iPhone 6 Plus 540 x 960" />
+      <item index="8" class="java.lang.String" itemvalue="Flash App.Emu iPhone 6 Plus 1242 x 2208" />
+      <item index="9" class="java.lang.String" itemvalue="Flash App.Emu iPhone X 640 x 640" />
+      <item index="10" class="java.lang.String" itemvalue="Flash App.Android Device" />
+      <item index="11" class="java.lang.String" itemvalue="Flash App.Emu Android Galaxy S2 480x800" />
+      <item index="12" class="java.lang.String" itemvalue="Flash App.Emu Android Galaxy S3 720x1280" />
+      <item index="13" class="java.lang.String" itemvalue="Flash App.Emu Android Galaxy S4 1080x1920" />
+      <item index="14" class="java.lang.String" itemvalue="Flash App.Emu Android Nexus 7 800x1280" />
+      <item index="15" class="java.lang.String" itemvalue="Flash App.iOS Device" />
+      <item index="16" class="java.lang.String" itemvalue="Flash App.SWF" />
+      <item index="17" class="java.lang.String" itemvalue="Flash App.Screenshots" />
+    </list>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9678e774-87d9-4a14-89f4-4fe82ab9852c" name="Default" comment="" />
+      <created>1409172131379</created>
+      <option name="number" value="Default" />
+      <updated>1409172131379</updated>
+      <workItem from="1409172132076" duration="444000" />
+      <workItem from="1409172616290" duration="1609000" />
+      <workItem from="1409629008546" duration="13450000" />
+      <workItem from="1409804152899" duration="33000" />
+      <workItem from="1409805493835" duration="2181000" />
+      <workItem from="1409939898945" duration="2760000" />
+      <workItem from="1409943479425" duration="2994000" />
+      <workItem from="1409946911806" duration="2822000" />
+      <workItem from="1410025802810" duration="1464000" />
+      <workItem from="1410027379233" duration="16000" />
+      <workItem from="1410037098475" duration="1221000" />
+      <workItem from="1410198493289" duration="2176000" />
+      <workItem from="1410208240568" duration="1270000" />
+      <workItem from="1410297732292" duration="5000" />
+      <workItem from="1410298150776" duration="709000" />
+      <workItem from="1410569779272" duration="3245000" />
+      <workItem from="1410805195797" duration="1068000" />
+      <workItem from="1410812368072" duration="334000" />
+      <workItem from="1410982152716" duration="76000" />
+      <workItem from="1410982271769" duration="1239000" />
+      <workItem from="1411156213103" duration="2930000" />
+      <workItem from="1411159293349" duration="3241000" />
+      <workItem from="1411235732437" duration="4209000" />
+      <workItem from="1411243363265" duration="70000" />
+      <workItem from="1411243522588" duration="28000" />
+      <workItem from="1411243558820" duration="456000" />
+      <workItem from="1411395938064" duration="3071000" />
+      <workItem from="1411402112401" duration="13000" />
+      <workItem from="1411402126135" duration="167000" />
+      <workItem from="1411495611453" duration="1328000" />
+      <workItem from="1411655853582" duration="9051000" />
+      <workItem from="1411670409980" duration="977000" />
+      <workItem from="1411671395453" duration="3170000" />
+      <workItem from="1411747234674" duration="17512000" />
+      <workItem from="1411990644861" duration="12223000" />
+      <workItem from="1412012042235" duration="5567000" />
+      <workItem from="1412092319125" duration="1231000" />
+      <workItem from="1412260169501" duration="197000" />
+      <workItem from="1412260393820" duration="617000" />
+      <workItem from="1412280807340" duration="1127000" />
+      <workItem from="1412282039466" duration="594000" />
+      <workItem from="1412290709822" duration="607000" />
+      <workItem from="1412292230088" duration="223000" />
+      <workItem from="1412304342564" duration="7216000" />
+      <workItem from="1412311813316" duration="364000" />
+      <workItem from="1412337997541" duration="1961000" />
+      <workItem from="1412343677621" duration="3000" />
+      <workItem from="1412343764367" duration="162000" />
+      <workItem from="1412347442241" duration="15791000" />
+      <workItem from="1412447581538" duration="1933000" />
+      <workItem from="1412604592919" duration="5957000" />
+      <workItem from="1412612251626" duration="11326000" />
+      <workItem from="1412655552259" duration="241000" />
+      <workItem from="1412735688452" duration="560000" />
+      <workItem from="1412884408793" duration="4362000" />
+      <workItem from="1412906198449" duration="597000" />
+      <workItem from="1413076594839" duration="599000" />
+      <workItem from="1413209203836" duration="8864000" />
+      <workItem from="1413913938503" duration="4933000" />
+      <workItem from="1414093571683" duration="7635000" />
+      <workItem from="1414122544269" duration="370000" />
+      <workItem from="1414122999342" duration="5273000" />
+      <workItem from="1414159204685" duration="21776000" />
+      <workItem from="1414209265614" duration="1490000" />
+      <workItem from="1414261416677" duration="7149000" />
+      <workItem from="1414290874620" duration="1261000" />
+      <workItem from="1414330063813" duration="14266000" />
+      <workItem from="1414425052047" duration="10508000" />
+      <workItem from="1414449880613" duration="893000" />
+      <workItem from="1414506128683" duration="17583000" />
+      <workItem from="1414632684428" duration="1664000" />
+      <workItem from="1414634494536" duration="1932000" />
+      <workItem from="1415073537961" duration="1258000" />
+      <workItem from="1415287330715" duration="5834000" />
+      <workItem from="1415483087850" duration="29000" />
+      <workItem from="1415925368902" duration="9000" />
+      <workItem from="1419306640155" duration="70000" />
+      <workItem from="1419306717040" duration="145000" />
+      <workItem from="1419627718683" duration="14000" />
+      <workItem from="1422972968845" duration="631000" />
+      <workItem from="1423580361140" duration="22000" />
+    </task>
+    <task id="LOCAL-00001" summary="loading state, scale refactor to 1x, logos">
+      <created>1409172518139</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1409172518139</updated>
+    </task>
+    <task id="LOCAL-00002" summary="SWF asset update">
+      <created>1409172831422</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1409172831422</updated>
+    </task>
+    <task id="LOCAL-00003" summary="increase logo visibility">
+      <created>1409189535759</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1409189535759</updated>
+    </task>
+    <task id="LOCAL-00004" summary="brand AlphaOrder system assets">
+      <created>1409702801439</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1409702801439</updated>
+    </task>
+    <task id="LOCAL-00005" summary="updated sounds and branding">
+      <created>1409802104331</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1409802104331</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Loading Title">
+      <created>1409803873728</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1409803873728</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added new title image">
+      <created>1409804180300</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1409804180300</updated>
+    </task>
+    <task id="LOCAL-00008" summary="minor changes">
+      <created>1409807651429</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1409807651429</updated>
+    </task>
+    <task id="LOCAL-00009" summary="delay loading sounds">
+      <created>1409941787203</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1409941787203</updated>
+    </task>
+    <task id="LOCAL-00010" summary="texture atlas">
+      <created>1409942716555</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1409942716555</updated>
+    </task>
+    <task id="LOCAL-00011" summary="native bitmap splash screen">
+      <created>1409946469381</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1409946469381</updated>
+    </task>
+    <task id="LOCAL-00012" summary="native bitmap splash screen 2">
+      <created>1409949726957</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1409949726957</updated>
+    </task>
+    <task id="LOCAL-00013" summary="native bitmap splash screen 3">
+      <created>1410027212533</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1410027212533</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix SWF and cleanup assets">
+      <created>1410038314624</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1410038314624</updated>
+    </task>
+    <task id="LOCAL-00015" summary="prepare for packaging">
+      <created>1410205836629</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1410205836629</updated>
+    </task>
+    <task id="LOCAL-00016" summary="ios7 app icons">
+      <created>1410209487061</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1410209487061</updated>
+    </task>
+    <task id="LOCAL-00017" summary="add Design artifacts">
+      <created>1410298554323</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1410298554323</updated>
+    </task>
+    <task id="LOCAL-00018" summary="restructure projects, split iOS and Android">
+      <created>1411158629152</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1411158629152</updated>
+    </task>
+    <task id="LOCAL-00019" summary="handleLostContext disabled for iOS">
+      <created>1411159750242</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1411159750242</updated>
+    </task>
+    <task id="LOCAL-00020" summary="update to Adobe Air 15">
+      <created>1411162184146</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1411162184146</updated>
+    </task>
+    <task id="LOCAL-00021" summary="refactor splash screen handling, added new iPhone 6 phones">
+      <created>1411243633088</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1411243633088</updated>
+    </task>
+    <task id="LOCAL-00022" summary="20140922 Temp Dir Output Directory">
+      <created>1411397442246</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1411397442246</updated>
+    </task>
+    <task id="LOCAL-00023" summary="new iphone run configurations">
+      <created>1411399036751</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1411399036751</updated>
+    </task>
+    <task id="LOCAL-00024" summary="updated iphone 6 splash configuration">
+      <created>1411499361278</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1411499361278</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Android Support, shared Splash Screen system">
+      <created>1411758816618</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1411758816618</updated>
+    </task>
+    <task id="LOCAL-00026" summary="screenshot generator">
+      <created>1412000578201</created>
+      <option name="number" value="00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1412000578201</updated>
+    </task>
+    <task id="LOCAL-00027" summary="updated background, updated screenshot naming">
+      <created>1412004480283</created>
+      <option name="number" value="00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1412004480283</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Updated iOS System Splash Screens">
+      <created>1412006063590</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1412006063590</updated>
+    </task>
+    <task id="LOCAL-00029" summary="added android keystore">
+      <created>1412006897019</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1412006897019</updated>
+    </task>
+    <task id="LOCAL-00030" summary="android signing">
+      <created>1412038314552</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1412038314552</updated>
+    </task>
+    <task id="LOCAL-00031" summary="ios v1.0.0">
+      <created>1412093544667</created>
+      <option name="number" value="00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1412093544667</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Startup Refactoring">
+      <created>1412347779370</created>
+      <option name="number" value="00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1412347779370</updated>
+    </task>
+    <task id="LOCAL-00033" summary="fix to splashscreen">
+      <created>1412349451711</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1412349451711</updated>
+    </task>
+    <task id="LOCAL-00034" summary="loading performance logic to skip transfering splash to native">
+      <created>1412357150777</created>
+      <option name="number" value="00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1412357150777</updated>
+    </task>
+    <task id="LOCAL-00035" summary="reduce splash size using JPG, eliminate Citrus state transition logic completely">
+      <created>1412388481637</created>
+      <option name="number" value="00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1412388481637</updated>
+    </task>
+    <task id="LOCAL-00036" summary="added event to trigger after GameState has initialized for screenshot">
+      <created>1412449004985</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1412449004985</updated>
+    </task>
+    <task id="LOCAL-00037" summary="screenshot, wait for initialize completion">
+      <created>1412606518572</created>
+      <option name="number" value="00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1412606518572</updated>
+    </task>
+    <task id="LOCAL-00038" summary="commented out Desktop explicit handling of stage width/height">
+      <created>1412629106674</created>
+      <option name="number" value="00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1412629106674</updated>
+    </task>
+    <task id="LOCAL-00039" summary="refactor AlphaOrder away from Core files">
+      <created>1412655775143</created>
+      <option name="number" value="00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1412655775143</updated>
+    </task>
+    <task id="LOCAL-00040" summary="factor out the display token out of Board and into its own DisplayTokens class">
+      <created>1412888192900</created>
+      <option name="number" value="00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1412888192900</updated>
+    </task>
+    <task id="LOCAL-00041" summary="updated sounds, delay celebration, scale particle system">
+      <created>1413222584555</created>
+      <option name="number" value="00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1413222584555</updated>
+    </task>
+    <task id="LOCAL-00042" summary="full ABC, longer fade-in during celebration">
+      <created>1413222800694</created>
+      <option name="number" value="00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1413222800694</updated>
+    </task>
+    <task id="LOCAL-00043" summary="1.0.1 release">
+      <created>1413914081955</created>
+      <option name="number" value="00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1413914081955</updated>
+    </task>
+    <task id="LOCAL-00044" summary="multitouch support">
+      <created>1413920760781</created>
+      <option name="number" value="00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1413920760781</updated>
+    </task>
+    <task id="LOCAL-00045" summary="orientation support">
+      <created>1414185411876</created>
+      <option name="number" value="00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1414185411876</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Release 1.0.2">
+      <created>1415074421117</created>
+      <option name="number" value="00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1415074421117</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Release 1.0.2 R2, tweak layout to be closer to v0.9.2">
+      <created>1415287432080</created>
+      <option name="number" value="00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1415287432080</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Release 1.0.2 R3, minor changes">
+      <created>1415296565294</created>
+      <option name="number" value="00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1415296565294</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="275518000" />
+  </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32950193" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3275862" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854405" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3256705" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22892721" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16950959" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16471216" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32553607" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="-1199" y="631" width="1198" height="369" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29856458" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32950193" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21839081" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854405" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16684435" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3256705" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="-1199" y="631" width="1198" height="369" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29856458" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32950193" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3275862" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3263158" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22988506" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32950193" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1716418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21839081" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="updated iphone 6 splash configuration" />
+    <MESSAGE value="Android Support, shared Splash Screen system" />
+    <MESSAGE value="screenshot generator" />
+    <MESSAGE value="updated background, updated screenshot naming" />
+    <MESSAGE value="Updated iOS System Splash Screens" />
+    <MESSAGE value="added android keystore" />
+    <MESSAGE value="android signing" />
+    <MESSAGE value="ios v1.0.0" />
+    <MESSAGE value="Startup Refactoring" />
+    <MESSAGE value="fix to splashscreen" />
+    <MESSAGE value="loading performance logic to skip transfering splash to native" />
+    <MESSAGE value="reduce splash size using JPG, eliminate Citrus state transition logic completely" />
+    <MESSAGE value="added event to trigger after GameState has initialized for screenshot" />
+    <MESSAGE value="screenshot, wait for initialize completion" />
+    <MESSAGE value="commented out Desktop explicit handling of stage width/height" />
+    <MESSAGE value="refactor AlphaOrder away from Core files" />
+    <MESSAGE value="factor out the display token out of Board and into its own DisplayTokens class" />
+    <MESSAGE value="updated sounds, delay celebration, scale particle system" />
+    <MESSAGE value="full ABC, longer fade-in during celebration" />
+    <MESSAGE value="1.0.1 release" />
+    <MESSAGE value="multitouch support" />
+    <MESSAGE value="orientation support" />
+    <MESSAGE value="Release 1.0.2" />
+    <MESSAGE value="Release 1.0.2 R2, tweak layout to be closer to v0.9.2" />
+    <MESSAGE value="Release 1.0.2 R3, minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Release 1.0.2 R3, minor changes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="15" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+    <buildFile url="file://$PROJECT_DIR$/Desktop/build.xml">
+      <targetFilters>
+        <filter targetName="copyAssets" isVisible="false" />
+      </targetFilters>
+      <expanded value="true" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/iOS/build.xml">
+      <targetFilters>
+        <filter targetName="copyAssets" isVisible="false" />
+      </targetFilters>
+      <expanded value="true" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/Android/build.xml">
+      <targetFilters>
+        <filter targetName="copyAssets" isVisible="false" />
+      </targetFilters>
+      <expanded value="true" />
+    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/Screenshots/build.xml">
+      <targetFilters>
+        <filter targetName="copyAssets" isVisible="false" />
+      </targetFilters>
+      <expanded value="true" />
+    </buildFile>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/srclib/starling/extensions/particles/ParticleSystem.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8897638">
+          <caret line="483" column="0" selection-start-line="483" selection-start-column="0" selection-end-line="483" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/events/TouchEvent.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11155379">
+          <caret line="55" column="17" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/runConfigurations/Emu_Android_Galaxy_S4_1080x1920.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Desktop/src/DesktopStartup.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="20" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/iOS/iOS.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/events/ResizeEvent.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37388724">
+          <caret line="26" column="17" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/core/Console.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3318182">
+          <caret line="285" column="0" selection-start-line="285" selection-start-column="0" selection-end-line="285" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/iOS/src/IosStartup.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33383012">
+          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/display/Sprite.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.91803277">
+          <caret line="52" column="39" selection-start-line="52" selection-start-column="39" selection-end-line="52" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/display/DisplayObjectContainer.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3323398">
+          <caret line="201" column="24" selection-start-line="201" selection-start-column="24" selection-end-line="201" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/core/Starling.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="972" column="52" selection-start-line="972" selection-start-column="52" selection-end-line="972" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/display/Stage.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33284023">
+          <caret line="191" column="0" selection-start-line="191" selection-start-column="0" selection-end-line="191" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Screenshots/Screenshots.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7567568">
+          <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/runConfigurations/iOS_Device.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4547244">
+          <caret line="33" column="48" selection-start-line="33" selection-start-column="48" selection-end-line="33" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/utils/SoundChannelUtil.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/sounds/SoundManager.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="77" column="36" selection-start-line="77" selection-start-column="36" selection-end-line="77" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/core/IState.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/core/State.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="30" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/core/starling/StarlingCitrusEngine.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.661442">
+          <caret line="294" column="35" selection-start-line="294" selection-start-column="35" selection-end-line="294" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/core/CitrusEngine.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6505295">
+          <caret line="356" column="27" selection-start-line="356" selection-start-column="27" selection-end-line="356" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/display/DisplayObject.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="735" column="28" selection-start-line="735" selection-start-column="28" selection-end-line="735" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/core/starling/StarlingState.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33266932">
+          <caret line="59" column="24" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/ECMAScript.js2">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23728813">
+          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/display/Quad.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35194418">
+          <caret line="63" column="12" selection-start-line="63" selection-start-column="12" selection-end-line="63" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/text/TextFieldAutoSize.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35246727">
+          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/media/particles/particleConfig.pex">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.68">
+          <caret line="3" column="25" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/text/TextField.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="502" column="21" selection-start-line="502" selection-start-column="21" selection-end-line="502" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/sounds/CitrusSoundInstance.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33243242">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Starling-Framework/starling/src/starling/events/Touch.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="188" column="28" selection-start-line="188" selection-start-column="28" selection-end-line="188" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/Releases.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Dev/AdobeAir/Adobe Air 15 SDK/frameworks/libs/air/airglobal.swc!/library.swf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3328125">
+          <caret line="7970" column="42" selection-start-line="7970" selection-start-column="42" selection-end-line="7970" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Android/src/AndroidStartup.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08575804">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Libs/Citrus-Engine/src/citrus/sounds/CitrusSound.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="70" column="52" selection-start-line="70" selection-start-column="52" selection-end-line="70" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/GameState.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53763443">
+          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/BoardModel.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.15210843">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/Board.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39631337">
+          <caret line="291" column="0" selection-start-line="291" selection-start-column="0" selection-end-line="291" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/RandomCaseModel.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71686745">
+          <caret line="34" column="6" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Android/Android-app.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2580645">
+          <caret line="80" column="22" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/iOS/iOS-app.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="38" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/InvokableStartup.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21987952">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Screenshots/src/ScreenshotsStartup.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="14" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/OptionsSprite.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/DisplayTokens.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/BoardEvent.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/StringBreadcrumbs.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="179" column="54" selection-start-line="179" selection-start-column="54" selection-end-line="179" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/Assets.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/MobileStartup.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/alphaOrder/AlphaOrderBoard.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="162" column="23" selection-start-line="162" selection-start-column="23" selection-end-line="162" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/StartupBase.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="106" column="7" selection-start-line="106" selection-start-column="7" selection-end-line="106" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/Stopwatch.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shared/src/Startup.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35207102">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Citrus-Engine-Vanilla</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2450495" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>Adobe Air SDK</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2450495" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>iOS|iOS</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2450495" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2450495" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

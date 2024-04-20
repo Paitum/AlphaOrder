@@ -5,7 +5,7 @@
       <customJdkName value="Java JDK" />
     </buildFile>
     <buildFile url="file://$PROJECT_DIR$/iOS/build.xml">
-      <customJdkName value="Java JDK" />
+      <customJdkName value="1.7" />
     </buildFile>
     <buildFile url="file://$PROJECT_DIR$/Android/build.xml">
       <customJdkName value="Java JDK" />
@@ -15,4 +15,3 @@
     </buildFile>
   </component>
 </project>
-

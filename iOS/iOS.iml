@@ -27,7 +27,7 @@
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/system" path-in-package="." />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/../Shared/media" path-in-package="media" />
           </files-to-package>
-          <AirSigningOptions keystore-path="$MODULE_DIR$/../../../../Profiles/Level_Development.p12" provisioning-profile-path="$MODULE_DIR$/../../../../Profiles/Level_Development.mobileprovision" />
+          <AirSigningOptions keystore-path="$MODULE_DIR$/../../../../Profiles/Level_Distribution.p12" provisioning-profile-path="$MODULE_DIR$/../../../../Profiles/Level_App_Store_Distribution.mobileprovision" />
         </packaging-ios>
       </configuration>
     </configurations>

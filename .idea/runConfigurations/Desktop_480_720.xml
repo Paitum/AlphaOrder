@@ -34,8 +34,6 @@
     <option name="usbDebugPort" value="7936" />
     <RunnerSettings RunnerId="FlexRunner" />
     <ConfigurationWrapper RunnerId="FlexRunner" />
-    <method>
-      <option name="AntTarget" enabled="true" antfile="file://$PROJECT_DIR$/Desktop/build.xml" target="copyAssets" />
-    </method>
+    <method />
   </configuration>
 </component>
